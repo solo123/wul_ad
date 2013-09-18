@@ -1,0 +1,36 @@
+= link_to 'New Invest', new_invest_path
+= will_paginate @collection
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 借款编号 
+      %th 交易编号
+      %th 地址
+      %th 借款用途
+      %th 信用等级
+      %th 借款金额
+      %th 年化利率
+      %th 还款方式
+      %th 每期还款金额
+      %th 可投金额
+      %th 结束时间
+      %th
+  %tbody
+    - @collection.each do |i|
+      %tr
+        %td= i.jkbh
+        %td= i.jybh
+        %td= i.dz
+        %td= i.jkyt
+        %td= i.xydj
+        %td= i.jkje
+        %td= i.nhll
+        %td= i.hkfs
+        %td= i.mqhkje
+        %td= i.ktje
+        %td= i.jssj
+        %td
+          = link_to 'Show', i
+          = link_to 'Edit', edit_invest_path(i)
+          = link_to 'Destroy', i, method: :delete, data: { confirm: 'Are you sure?' }
+= will_paginate @collection
