@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-WooulAdmin::Application.config.secret_key_base = 'b0cf4cf3b4777c68cece0c452d0d78e6fb17a31c75129cc47997600f6fa190e7a73e0fa746ed339cd22c456c80298e43c3ac5602ea879cad5558d904d50ad07d'
+WooulAdmin::Application.config.secret_key_base = '016ec5a52fc625d03f87c6112cf30cc67810a43f701c4fa142e22081fdc2a90a79f2e9f0479a60dd00bbd5f10c473fad82e2bc69f0fe03a01e74696ec28a6516'
