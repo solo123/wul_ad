@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130905040516) do
+ActiveRecord::Schema.define(version: 20130926061641) do
 
   create_table "cms_blocks", force: true do |t|
     t.integer  "page_id",                     null: false
@@ -130,6 +130,36 @@ ActiveRecord::Schema.define(version: 20130905040516) do
   add_index "cms_snippets", ["site_id", "identifier"], name: "index_cms_snippets_on_site_id_and_identifier", unique: true
   add_index "cms_snippets", ["site_id", "position"], name: "index_cms_snippets_on_site_id_and_position"
 
+  create_table "employees", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "show_name"
+    t.string   "login_name"
+    t.string   "phone"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.integer  "failed_attempts",        default: 0,  null: false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "employees", ["email"], name: "index_employees_on_email", unique: true
+  add_index "employees", ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true
+  add_index "employees", ["unlock_token"], name: "index_employees_on_unlock_token", unique: true
+
+  create_table "employees_roles", force: true do |t|
+    t.integer "employee_id"
+    t.integer "role_id"
+  end
+
   create_table "invests", force: true do |t|
     t.string   "jkbh"
     t.string   "jybh"
@@ -157,6 +187,12 @@ ActiveRecord::Schema.define(version: 20130905040516) do
     t.datetime "release_time"
     t.datetime "expiration_time"
     t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "role_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

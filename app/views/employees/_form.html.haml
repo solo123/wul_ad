@@ -1,0 +1,10 @@
+= simple_form_for @object do |f|
+  = f.input :login_name
+  = f.input :show_name
+  = f.input :email
+  = f.input :phone
+  = f.association :roles,   as: :check_boxes
+  = f.input :password
+  = f.input :password_confirmation
+  = f.submit
+

@@ -1,0 +1,20 @@
+.navbar.navbar-inverse.navbar-fixed-top
+  .container
+    .navbar-header
+      %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "/"} Wooul Admin
+    .collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li.active
+          %a{:href => "/"} Home
+        %li= link_to '投资产品', invests_path
+        %li= link_to '通告', notices_path
+        %li= link_to '员工', employees_path
+        %li= link_to 'Roles', roles_path
+        - if current_employee && current_employee.roles && current_employee.roles.index('admin')
+          %li= link_to 'Employees', employees_path
+      = render 'shared/login_indicator'
+

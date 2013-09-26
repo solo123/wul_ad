@@ -1,0 +1,20 @@
+body {padding-top: 60px;}
+
+.clear {clear:both;}
+
+div.login-indicator {
+  margin-top:10px;
+  float:right;
+  color: #999;
+  a { color: #999; }
+}
+
+div.alert{background-color:#f2dede;}
+
+form.simple_form{
+  label {display:block;}
+}
+div.checkbox-list{
+  label {display:inline;}
+}
+

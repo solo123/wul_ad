@@ -11,5 +11,10 @@
 
     %script{src: "//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"}
     = csrf_meta_tags
+    = yield :head
   %body
-    = yield
+    = render 'shared/main_menu'
+    .container
+      = bootstrap_flash 
+      = yield
+      = render 'shared/footer'
