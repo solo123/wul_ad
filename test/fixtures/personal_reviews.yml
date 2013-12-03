@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_info_id: 1
+  id_card_verify_date: 2013-10-23
+  credit_report_date: 2013-10-23
+  work_verify_date: 2013-10-23
+  income_verify_date: 2013-10-23
+  guarantee_institution_id: 1
+
+two:
+  user_info_id: 1
+  id_card_verify_date: 2013-10-23
+  credit_report_date: 2013-10-23
+  work_verify_date: 2013-10-23
+  income_verify_date: 2013-10-23
+  guarantee_institution_id: 1

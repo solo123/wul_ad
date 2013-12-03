@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  house_property: MyString
+  housing_loan: MyString
+  purchase_date: MyString
+  car_property: MyString
+
+two:
+  house_property: MyString
+  housing_loan: MyString
+  purchase_date: MyString
+  car_property: MyString

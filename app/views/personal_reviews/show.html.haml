@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b User info:
+  = @personal_review.user_info_id
+%p
+  %b Id card verify date:
+  = @personal_review.id_card_verify_date
+%p
+  %b Credit report date:
+  = @personal_review.credit_report_date
+%p
+  %b Work verify date:
+  = @personal_review.work_verify_date
+%p
+  %b Income verify date:
+  = @personal_review.income_verify_date
+%p
+  %b Guarantee institution:
+  = @personal_review.guarantee_institution_id
+
+= link_to 'Edit', edit_personal_review_path(@personal_review)
+\|
+= link_to 'Back', personal_reviews_path

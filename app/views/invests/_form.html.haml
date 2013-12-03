@@ -1,16 +1,19 @@
 = simple_form_for @object do |f|
-  = f.input :jkbh
-  = f.input :jybh
-  = f.input :dz
-  = f.input :jkyt
-  = f.input :jkytsm
-  = f.input :xydj
-  = f.input :nhll
-  = f.input :jkje
-  = f.input :hkqx
-  = f.input :hkfs
-  = f.input :mqhkje
-  = f.input :ktje
-  = f.input :jssj
-  = f.input :bz
+  = f.input :loan_number
+  = f.association :user_info
+  = f.input :transaction_number
+  = f.input :address
+  = f.input :usage
+  = f.input :usage_detail
+  = f.input :credit_level
+  = f.input :annual_rate
+  = f.input :amount
+  = f.input :repayment_period
+  = f.input :repayment_method
+  = f.input :each_repayment_amount
+  = f.input :free_invest_amount
+  = f.input :invest_end_date
+  = f.input :remark
   = f.submit
+  = button_tag '检查和计算', type: :button,  'data-calculate-rate' => true 
+  = link_to 'recal', '#', 'data-calculate-rate' => true

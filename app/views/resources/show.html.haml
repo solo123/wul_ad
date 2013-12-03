@@ -1,5 +1,7 @@
+= link_to '返回列表', polymorphic_url(@object.class)
+|
+= link_to 'Edit', edit_polymorphic_url(@object)
 
-= link_to '返回列表', send("#{@object.class.name.underscore.split('/').last.pluralize}_path")
 %table.table.table-bordered.table-striped.table-hover
   %thead
     %tr
@@ -8,6 +10,6 @@
   %tbody
     - @object.attributes.each do |attr|
       %tr
-        %td= attr[0]
+        %td= t attr[0], scope: 'simple_form.labels.invest'
         %td= attr[1]
 

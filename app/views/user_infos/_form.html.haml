@@ -1,0 +1,17 @@
+= simple_form_for(@object) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :show_id
+    = f.input :gender
+    = f.input :age
+    = f.input :birthday
+    = f.input :education
+    = f.input :education_from
+    = f.input :marital_status
+    = f.input :childs_status
+    = f.input :domiciliary_reg
+    = f.input :status
+
+  .actions
+    = f.button :submit

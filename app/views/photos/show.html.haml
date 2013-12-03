@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Photo data type:
+  = @photo.photo_data_type
+%p
+  %b Photo data:
+  = @photo.photo_data_id
+%p
+  %b Creator:
+  = @photo.creator_id
+
+= link_to 'Edit', edit_photo_path(@photo)
+\|
+= link_to 'Back', photos_path

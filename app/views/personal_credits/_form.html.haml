@@ -1,0 +1,10 @@
+= simple_form_for(@personal_credit) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :other_credit
+    = f.input :credit_cards
+    = f.input :credit_utilization_rate
+
+  .actions
+    = f.button :submit

@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b House property:
+  = @personal_asset.house_property
+%p
+  %b Housing loan:
+  = @personal_asset.housing_loan
+%p
+  %b Purchase date:
+  = @personal_asset.purchase_date
+%p
+  %b Car property:
+  = @personal_asset.car_property
+
+= link_to 'Edit', edit_personal_asset_path(@personal_asset)
+\|
+= link_to 'Back', personal_assets_path

@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  show_id: MyString
+  gender: MyString
+  age: 1
+  birthday: 2013-10-15
+  education: MyString
+  education_from: MyString
+  marital_status: MyString
+  childs_status: 1
+  domiciliary_reg: MyString
+  status: 1
+
+two:
+  show_id: MyString
+  gender: MyString
+  age: 1
+  birthday: 2013-10-15
+  education: MyString
+  education_from: MyString
+  marital_status: MyString
+  childs_status: 1
+  domiciliary_reg: MyString
+  status: 1

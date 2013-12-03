@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130926061641) do
+ActiveRecord::Schema.define(version: 20131203024957) do
 
   create_table "cms_blocks", force: true do |t|
     t.integer  "page_id",                     null: false
@@ -160,21 +160,50 @@ ActiveRecord::Schema.define(version: 20130926061641) do
     t.integer "role_id"
   end
 
+  create_table "fixed_deposits", force: true do |t|
+    t.string   "deposit_number"
+    t.decimal  "total_amount",         precision: 5, scale: 2
+    t.decimal  "annual_rate",          precision: 5, scale: 2
+    t.integer  "repayment_period"
+    t.string   "guarantee"
+    t.decimal  "free_invest_amount",   precision: 5, scale: 2
+    t.string   "detail"
+    t.string   "income_method"
+    t.string   "join_date"
+    t.string   "join_condition"
+    t.date     "expiring_date"
+    t.string   "repayment_method"
+    t.string   "premature_redemption"
+    t.string   "fee"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "guarantee_companies", force: true do |t|
+    t.integer  "invest_id"
+    t.integer  "company_id"
+    t.string   "report"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invests", force: true do |t|
-    t.string   "jkbh"
-    t.string   "jybh"
-    t.string   "dz"
-    t.string   "jkyt"
-    t.text     "jkytsm"
-    t.string   "xydj"
-    t.decimal  "nhll"
-    t.decimal  "jkje"
-    t.integer  "hkqx"
-    t.string   "hkfs"
-    t.decimal  "mqhkje"
-    t.decimal  "ktje"
-    t.datetime "jssj"
-    t.string   "bz"
+    t.integer  "user_info_id"
+    t.string   "loan_number"
+    t.string   "transaction_number"
+    t.string   "address"
+    t.string   "usage"
+    t.text     "usage_detail"
+    t.string   "credit_level"
+    t.decimal  "annual_rate"
+    t.decimal  "amount"
+    t.integer  "repayment_period"
+    t.string   "repayment_method"
+    t.decimal  "each_repayment_amount"
+    t.decimal  "free_invest_amount"
+    t.datetime "invest_end_date"
+    t.string   "remark"
+    t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -191,8 +220,91 @@ ActiveRecord::Schema.define(version: 20130926061641) do
     t.datetime "updated_at"
   end
 
+  create_table "personal_assets", force: true do |t|
+    t.integer  "user_info_id"
+    t.string   "house_property"
+    t.string   "housing_loan"
+    t.string   "purchase_date"
+    t.string   "car_property"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "personal_credits", force: true do |t|
+    t.integer  "user_info_id"
+    t.string   "other_credit"
+    t.string   "credit_cards"
+    t.string   "credit_utilization_rate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "personal_finances", force: true do |t|
+    t.integer  "user_info_id"
+    t.decimal  "monthly_income"
+    t.decimal  "dpi"
+    t.decimal  "pcdi"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "personal_reviews", force: true do |t|
+    t.integer  "user_info_id"
+    t.date     "id_card_verify_date"
+    t.date     "credit_report_date"
+    t.date     "work_verify_date"
+    t.date     "income_verify_date"
+    t.integer  "guarantee_institution_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "photos", force: true do |t|
+    t.string   "photo_data_type"
+    t.integer  "photo_data_id"
+    t.integer  "creator_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
+  end
+
   create_table "roles", force: true do |t|
     t.string   "role_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_companies", force: true do |t|
+    t.integer  "user_info_id"
+    t.decimal  "income"
+    t.string   "age_of_business"
+    t.string   "place_of_business"
+    t.string   "business_status"
+    t.string   "shareholding_rate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_infos", force: true do |t|
+    t.integer  "user_id"
+    t.string   "show_id"
+    t.string   "gender"
+    t.integer  "age"
+    t.date     "birthday"
+    t.string   "education"
+    t.string   "education_from"
+    t.string   "marital_status"
+    t.integer  "childs_status"
+    t.string   "domiciliary_reg"
+    t.string   "real_name"
+    t.string   "id_card_number"
+    t.string   "mobile"
+    t.datetime "id_card_verify_date"
+    t.datetime "mobile_verify_date"
+    t.integer  "status",              default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -210,9 +322,11 @@ ActiveRecord::Schema.define(version: 20130926061641) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "username"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["username"], name: "index_users_on_username", unique: true
 
 end

@@ -18,17 +18,17 @@
   %tbody
     - @collection.each do |i|
       %tr
-        %td= i.jkbh
-        %td= i.jybh
-        %td= i.dz
-        %td= i.jkyt
-        %td= i.xydj
-        %td= i.jkje
-        %td= i.nhll
-        %td= i.hkfs
-        %td= i.mqhkje
-        %td= i.ktje
-        %td= i.jssj
+        %td= i.loan_number
+        %td= i.transaction_number
+        %td= i.address
+        %td= i.usage
+        %td= i.credit_level
+        %td= i.amount
+        %td= i.annual_rate
+        %td= i.repayment_period
+        %td= i.each_repayment_amount
+        %td= i.free_invest_amount
+        %td= i.invest_end_date
         %td
           = link_to 'Show', i
           = link_to 'Edit', edit_invest_path(i)

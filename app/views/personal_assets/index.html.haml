@@ -1,0 +1,25 @@
+%h1 Listing personal_assets
+
+%table
+  %tr
+    %th House property
+    %th Housing loan
+    %th Purchase date
+    %th Car property
+    %th
+    %th
+    %th
+
+  - @personal_assets.each do |personal_asset|
+    %tr
+      %td= personal_asset.house_property
+      %td= personal_asset.housing_loan
+      %td= personal_asset.purchase_date
+      %td= personal_asset.car_property
+      %td= link_to 'Show', personal_asset
+      %td= link_to 'Edit', edit_personal_asset_path(personal_asset)
+      %td= link_to 'Destroy', personal_asset, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Personal asset', new_personal_asset_path

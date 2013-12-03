@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  income: 9.99
+  age_of_business: MyString
+  place_of_business: MyString
+  business_status: MyString
+  shareholding_rate: MyString
+
+two:
+  income: 9.99
+  age_of_business: MyString
+  place_of_business: MyString
+  business_status: MyString
+  shareholding_rate: MyString

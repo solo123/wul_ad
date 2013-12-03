@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  deposit_number: MyString
+  total_amount: 9.99
+  annual_rate: 9.99
+  repayment_period: 1
+  guarantee: MyString
+  free_invest_amount: 9.99
+  detail: MyString
+  income_method: MyString
+  join_date: MyString
+  join_condition: MyString
+  expiring_date: 2013-11-15
+  repayment_method: MyString
+  premature_redemption: MyString
+  fee: MyString
+
+two:
+  deposit_number: MyString
+  total_amount: 9.99
+  annual_rate: 9.99
+  repayment_period: 1
+  guarantee: MyString
+  free_invest_amount: 9.99
+  detail: MyString
+  income_method: MyString
+  join_date: MyString
+  join_condition: MyString
+  expiring_date: 2013-11-15
+  repayment_method: MyString
+  premature_redemption: MyString
+  fee: MyString

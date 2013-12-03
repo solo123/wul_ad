@@ -1,0 +1,25 @@
+%h1 Listing personal_finances
+
+%table
+  %tr
+    %th User info
+    %th Monthly income
+    %th Dpi
+    %th Pcdi
+    %th
+    %th
+    %th
+
+  - @personal_finances.each do |personal_finance|
+    %tr
+      %td= personal_finance.user_info_id
+      %td= personal_finance.monthly_income
+      %td= personal_finance.dpi
+      %td= personal_finance.pcdi
+      %td= link_to 'Show', personal_finance
+      %td= link_to 'Edit', edit_personal_finance_path(personal_finance)
+      %td= link_to 'Destroy', personal_finance, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Personal finance', new_personal_finance_path

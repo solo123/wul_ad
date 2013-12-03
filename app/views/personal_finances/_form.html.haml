@@ -1,0 +1,11 @@
+= simple_form_for(@personal_finance) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :user_info_id
+    = f.input :monthly_income
+    = f.input :dpi
+    = f.input :pcdi
+
+  .actions
+    = f.button :submit

@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Income:
+  = @user_company.income
+%p
+  %b Age of business:
+  = @user_company.age_of_business
+%p
+  %b Place of business:
+  = @user_company.place_of_business
+%p
+  %b Business status:
+  = @user_company.business_status
+%p
+  %b Shareholding rate:
+  = @user_company.shareholding_rate
+
+= link_to 'Edit', edit_user_company_path(@user_company)
+\|
+= link_to 'Back', user_companies_path

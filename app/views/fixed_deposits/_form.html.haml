@@ -1,0 +1,21 @@
+= simple_form_for(@object) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :deposit_number
+    = f.input :total_amount
+    = f.input :annual_rate
+    = f.input :repayment_period
+    = f.input :guarantee
+    = f.input :free_invest_amount
+    = f.input :detail
+    = f.input :income_method
+    = f.input :join_date
+    = f.input :join_condition
+    = f.input :expiring_date
+    = f.input :repayment_method
+    = f.input :premature_redemption
+    = f.input :fee
+
+  .actions
+    = f.button :submit

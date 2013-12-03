@@ -1,0 +1,36 @@
+%h1 Listing user_infos
+
+%table
+  %tr
+    %th= t :show_id, scope: 'simple_form.labels.user_info'
+    %th= t :gender, scope: 'simple_form.labels.user_info'
+    %th= t :age, scope: 'simple_form.labels.user_info'
+    %th= t :birthday, scope: 'simple_form.labels.user_info'
+    %th= t :education, scope: 'simple_form.labels.user_info'
+    %th= t :education_from, scope: 'simple_form.labels.user_info'
+    %th= t :marital_status, scope: 'simple_form.labels.user_info'
+    %th= t :childs_status, scope: 'simple_form.labels.user_info'
+    %th= t :domiciliary_reg, scope: 'simple_form.labels.user_info'
+    %th= t :status, scope: 'simple_form.labels.user_info'
+    %th
+
+  - @collection.each do |user_info|
+    %tr
+      %td= user_info.show_id
+      %td= user_info.gender
+      %td= user_info.age
+      %td= user_info.birthday
+      %td= user_info.education
+      %td= user_info.education_from
+      %td= user_info.marital_status
+      %td= user_info.childs_status
+      %td= user_info.domiciliary_reg
+      %td= user_info.status
+      %td
+        = link_to 'Show', user_info
+        = link_to 'Edit', edit_user_info_path(user_info)
+        = link_to 'Destroy', user_info, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New User info', new_user_info_path

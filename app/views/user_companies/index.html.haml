@@ -1,0 +1,27 @@
+%h1 Listing user_companies
+
+%table
+  %tr
+    %th Income
+    %th Age of business
+    %th Place of business
+    %th Business status
+    %th Shareholding rate
+    %th
+    %th
+    %th
+
+  - @user_companies.each do |user_company|
+    %tr
+      %td= user_company.income
+      %td= user_company.age_of_business
+      %td= user_company.place_of_business
+      %td= user_company.business_status
+      %td= user_company.shareholding_rate
+      %td= link_to 'Show', user_company
+      %td= link_to 'Edit', edit_user_company_path(user_company)
+      %td= link_to 'Destroy', user_company, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New User company', new_user_company_path

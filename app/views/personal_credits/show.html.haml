@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Other credit:
+  = @personal_credit.other_credit
+%p
+  %b Credit cards:
+  = @personal_credit.credit_cards
+%p
+  %b Credit utilization rate:
+  = @personal_credit.credit_utilization_rate
+
+= link_to 'Edit', edit_personal_credit_path(@personal_credit)
+\|
+= link_to 'Back', personal_credits_path

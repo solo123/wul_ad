@@ -1,0 +1,23 @@
+%h1 Listing guarantee_companies
+
+%table
+  %tr
+    %th Invest
+    %th Company
+    %th Report
+    %th
+    %th
+    %th
+
+  - @guarantee_companies.each do |guarantee_company|
+    %tr
+      %td= guarantee_company.invest_id
+      %td= guarantee_company.company_id
+      %td= guarantee_company.report
+      %td= link_to 'Show', guarantee_company
+      %td= link_to 'Edit', edit_guarantee_company_path(guarantee_company)
+      %td= link_to 'Destroy', guarantee_company, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Guarantee company', new_guarantee_company_path

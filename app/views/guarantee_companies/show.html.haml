@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Invest:
+  = @guarantee_company.invest_id
+%p
+  %b Company:
+  = @guarantee_company.company_id
+%p
+  %b Report:
+  = @guarantee_company.report
+
+= link_to 'Edit', edit_guarantee_company_path(@guarantee_company)
+\|
+= link_to 'Back', guarantee_companies_path

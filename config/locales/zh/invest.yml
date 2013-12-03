@@ -1,0 +1,26 @@
+zh_CN:
+  simple_form:
+    labels:
+      invest:
+        id: 'ID'
+        loan_number: '借款编号'
+        transaction_number: '交易编号'
+        address: '地址'
+        usage: '借款用途'
+        usage_detail: '借款用途说明'
+        credit_level: '信用等级'
+        annual_rate: '年化利率'
+        amount: '借款金额'
+        repayment_period: '还款期限'
+        repayment_method: '还款方式'
+        each_repayment_amount: '每期还款金额'
+        free_invest_amount: '可投金额'
+        invest_end_date: '结束时间'
+        remark: '备注'
+        status: '状态'
+        created_at: '创建时间'
+        updated_at: '最后更新'
+    hints:
+      invest:
+    placeholders:
+      invest:

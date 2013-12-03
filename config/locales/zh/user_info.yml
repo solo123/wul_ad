@@ -1,0 +1,21 @@
+zh_CN:
+  simple_form:
+    labels:
+      user_info:
+        show_id: '显示编号'
+        gender: '性别'
+        age: '年龄'
+        birthday: '生日'
+        education: '学历'
+        education_from: '毕业院校'
+        marital_status: '婚姻状态'
+        childs_status: '子女状况'
+        domiciliary_reg: '户籍'
+        status: '状态'
+    hints:
+    placeholders:
+
+
+
+
+

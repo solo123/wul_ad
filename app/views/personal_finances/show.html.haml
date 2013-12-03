@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b User info:
+  = @personal_finance.user_info_id
+%p
+  %b Monthly income:
+  = @personal_finance.monthly_income
+%p
+  %b Dpi:
+  = @personal_finance.dpi
+%p
+  %b Pcdi:
+  = @personal_finance.pcdi
+
+= link_to 'Edit', edit_personal_finance_path(@personal_finance)
+\|
+= link_to 'Back', personal_finances_path

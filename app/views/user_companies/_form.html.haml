@@ -1,0 +1,12 @@
+= simple_form_for(@user_company) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :income
+    = f.input :age_of_business
+    = f.input :place_of_business
+    = f.input :business_status
+    = f.input :shareholding_rate
+
+  .actions
+    = f.button :submit

@@ -1,0 +1,10 @@
+= simple_form_for(@guarantee_company) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :invest_id
+    = f.input :company_id
+    = f.input :report
+
+  .actions
+    = f.button :submit

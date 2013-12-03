@@ -1,0 +1,45 @@
+= link_to 'New Fixed deposit', new_fixed_deposit_path
+= will_paginate @collection
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th Deposit number
+      %th Total amount
+      %th Annual rate
+      %th Repayment period
+      %th Guarantee
+      %th Free invest amount
+      %th Detail
+      %th Income method
+      %th Join date
+      %th Join condition
+      %th Expiring date
+      %th Repayment method
+      %th Premature redemption
+      %th Fee
+      %th
+      %th
+      %th
+
+  %tbody
+    - @collection.each do |fixed_deposit|
+      %tr
+        %td= fixed_deposit.deposit_number
+        %td= fixed_deposit.total_amount
+        %td= fixed_deposit.annual_rate
+        %td= fixed_deposit.repayment_period
+        %td= fixed_deposit.guarantee
+        %td= fixed_deposit.free_invest_amount
+        %td= fixed_deposit.detail
+        %td= fixed_deposit.income_method
+        %td= fixed_deposit.join_date
+        %td= fixed_deposit.join_condition
+        %td= fixed_deposit.expiring_date
+        %td= fixed_deposit.repayment_method
+        %td= fixed_deposit.premature_redemption
+        %td= fixed_deposit.fee
+        %td= link_to 'Show', fixed_deposit
+        %td= link_to 'Edit', edit_fixed_deposit_path(fixed_deposit)
+        %td= link_to 'Destroy', fixed_deposit, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+

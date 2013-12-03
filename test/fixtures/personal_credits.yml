@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  other_credit: MyString
+  credit_cards: MyString
+  credit_utilization_rate: MyString
+
+two:
+  other_credit: MyString
+  credit_cards: MyString
+  credit_utilization_rate: MyString

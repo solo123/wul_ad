@@ -1,0 +1,13 @@
+= simple_form_for(@personal_review) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :user_info_id
+    = f.input :id_card_verify_date
+    = f.input :credit_report_date
+    = f.input :work_verify_date
+    = f.input :income_verify_date
+    = f.input :guarantee_institution_id
+
+  .actions
+    = f.button :submit

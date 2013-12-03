@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  photo_data_type: MyString
+  photo_data_id: 1
+  creator_id: 1
+
+two:
+  photo_data_type: MyString
+  photo_data_id: 1
+  creator_id: 1

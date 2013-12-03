@@ -1,0 +1,23 @@
+%h1 Listing personal_credits
+
+%table
+  %tr
+    %th Other credit
+    %th Credit cards
+    %th Credit utilization rate
+    %th
+    %th
+    %th
+
+  - @personal_credits.each do |personal_credit|
+    %tr
+      %td= personal_credit.other_credit
+      %td= personal_credit.credit_cards
+      %td= personal_credit.credit_utilization_rate
+      %td= link_to 'Show', personal_credit
+      %td= link_to 'Edit', edit_personal_credit_path(personal_credit)
+      %td= link_to 'Destroy', personal_credit, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Personal credit', new_personal_credit_path

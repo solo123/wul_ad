@@ -1,0 +1,29 @@
+%h1 Listing personal_reviews
+
+%table
+  %tr
+    %th User info
+    %th Id card verify date
+    %th Credit report date
+    %th Work verify date
+    %th Income verify date
+    %th Guarantee institution
+    %th
+    %th
+    %th
+
+  - @personal_reviews.each do |personal_review|
+    %tr
+      %td= personal_review.user_info_id
+      %td= personal_review.id_card_verify_date
+      %td= personal_review.credit_report_date
+      %td= personal_review.work_verify_date
+      %td= personal_review.income_verify_date
+      %td= personal_review.guarantee_institution_id
+      %td= link_to 'Show', personal_review
+      %td= link_to 'Edit', edit_personal_review_path(personal_review)
+      %td= link_to 'Destroy', personal_review, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Personal review', new_personal_review_path
