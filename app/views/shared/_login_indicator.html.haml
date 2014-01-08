@@ -2,7 +2,7 @@
   - if employee_signed_in?
     Welcome
     %b
-      = link_to current_employee.nickname, 'myaccount_employees_path'
+      = link_to current_employee.show_name, 'myaccount_employees_path'
     |
     = link_to('Logout', destroy_employee_session_path, :method => :delete)
   - else
