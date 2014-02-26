@@ -1,0 +1,37 @@
+
+.simple_form {
+	width: 800px;
+	margin-top: 25px;
+	input, textarea, select {
+  	padding: 5px;
+		width: 471px;
+		font-family: Helvetica, sans-serif;
+		margin: 0px 0px 10px 0px;
+		border: 2px solid #ccc;
+	}
+
+	textarea {
+		height: 90px;
+	}
+
+	textarea:focus, input:focus {
+		border: 2px solid #900;
+	}
+
+	input.submit-button {
+		width: 100px;
+		float: right;
+	}
+	input[type='submit']{
+		width: 100px;
+		float: right;
+	}
+
+	label {
+		float: left;
+		text-align: right;
+		margin-right: 15px;
+		width: 200px;
+		padding-top: 5px;
+	}
+}

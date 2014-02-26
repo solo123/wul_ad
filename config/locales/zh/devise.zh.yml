@@ -1,0 +1,8 @@
+zh_CN:
+  devise:
+    failure:
+      employee:
+        unauthenticated: "您尚未登录。"
+    sessions:
+      employee:
+        signed_in: "您已成功登录。"

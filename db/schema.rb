@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131203024957) do
+ActiveRecord::Schema.define(version: 20140214041637) do
 
   create_table "cms_blocks", force: true do |t|
     t.integer  "page_id",                     null: false
@@ -325,7 +325,6 @@ ActiveRecord::Schema.define(version: 20131203024957) do
     t.string   "username"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["username"], name: "index_users_on_username", unique: true
 

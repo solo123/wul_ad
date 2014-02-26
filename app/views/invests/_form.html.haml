@@ -12,8 +12,7 @@
   = f.input :repayment_method
   = f.input :each_repayment_amount
   = f.input :free_invest_amount
-  = f.input :invest_end_date
+  = f.input :invest_end_date, as: :datepicker
   = f.input :remark
-  = f.submit
-  = button_tag '检查和计算', type: :button,  'data-calculate-rate' => true 
-  = link_to 'recal', '#', 'data-calculate-rate' => true
+  = f.submit '保存', class: 'btn btn-primary'
+= button_tag '检查和计算', type: :button,  'data-calculate-rate' => true, class: 'btn btn-info' 

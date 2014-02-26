@@ -1,4 +1,4 @@
-= link_to 'New Invest', new_invest_path
+= link_to '新增', new_invest_path
 = will_paginate @collection
 %table.table.table-bordered.table-striped.table-hover
   %thead
@@ -30,7 +30,7 @@
         %td= i.free_invest_amount
         %td= i.invest_end_date
         %td
-          = link_to 'Show', i
-          = link_to 'Edit', edit_invest_path(i)
-          = link_to 'Destroy', i, method: :delete, data: { confirm: 'Are you sure?' }
+          = link_to '查看', i
+          = link_to '修改', edit_invest_path(i)
+          = link_to '删除', i, method: :delete, data: { confirm: '你确定要删除吗？' }
 = will_paginate @collection
