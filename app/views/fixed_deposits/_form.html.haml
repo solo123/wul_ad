@@ -12,10 +12,10 @@
     = f.input :income_method
     = f.input :join_date
     = f.input :join_condition
-    = f.input :expiring_date
+    = f.input :expiring_date, as: :datepicker
     = f.input :repayment_method
     = f.input :premature_redemption
     = f.input :fee
 
   .actions
-    = f.button :submit
+    = f.submit '保存', class: 'btn btn-primary'

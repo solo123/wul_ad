@@ -5,13 +5,20 @@
     = f.input :show_id
     = f.input :gender
     = f.input :age
-    = f.input :birthday
+    = f.input :birthday, as: :datepicker 
     = f.input :education
     = f.input :education_from
     = f.input :marital_status
     = f.input :childs_status
     = f.input :domiciliary_reg
     = f.input :status
+
+  .inputs
+    = f.input :real_name
+    = f.input :id_card_number
+    = f.input :id_card_verify_date, as: :datepicker
+    = f.input :mobile
+    = f.input :mobile_verify_date, as: :datepicker
 
   .actions
     = f.button :submit

@@ -1,6 +1,6 @@
 = simple_form_for @object do |f|
   = f.input :loan_number
-  = f.association :user_info
+  = f.association :user_info, label_method: :showname, include_blank: true
   = f.input :transaction_number
   = f.input :address
   = f.input :usage
