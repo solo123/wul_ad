@@ -1,7 +1,20 @@
 WooulAdmin::Application.routes.draw do
   resources :guarantee_companies
 
-  resources :fixed_deposits
+  resources :fixed_deposits do
+    collection do
+      get :settle
+      get :publish
+      get :finish
+      get :refund
+      get :switchdisplay
+    end
+  end
+
+  resources :month_deposits do
+    collection do
+    end
+  end
 
   resources :photos
 
