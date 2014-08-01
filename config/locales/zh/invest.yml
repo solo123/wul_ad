@@ -15,6 +15,7 @@ zh_CN:
         repayment_method: '还款方式'
         each_repayment_amount: '每期还款金额'
         free_invest_amount: '可投金额'
+        order_amount: '预约金额'
         invest_end_date: '结束时间'
         remark: '备注'
         status: '状态'

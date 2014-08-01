@@ -1,0 +1,19 @@
+= simple_form_for @object do |f|
+  = f.input :deposit_number
+  = f.input :transaction_number
+  = f.input :address
+  = f.input :usage
+  = f.input :usage_detail
+  = f.input :credit_level
+  = f.input :guarantee
+  = f.input :annual_rate
+  = f.input :amount
+  = f.input :repayment_period
+  = f.input :repayment_method
+  = f.input :each_repayment_amount
+  = f.input :free_invest_amount
+  = f.input :join_date, as: :datepicker
+  = f.input :invest_end_date, as: :datepicker
+  = f.input :remark
+  = f.submit '保存', class: 'btn btn-primary'
+= button_tag '检查和计算', type: :button,  'data-calculate-rate' => true, class: 'btn btn-info' 
