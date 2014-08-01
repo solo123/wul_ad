@@ -1,0 +1,34 @@
+%h4 月月盈
+= will_paginate @collection
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 编号
+      %th 总额
+      %th 年收益率
+      %th 收益期限(月)
+      %th 加入日
+      %th 已入账金额
+      %th 到期日
+      %th 买家数量
+      %th 状态
+      %th 操作
+      %th 显示
+
+  %tbody
+    - @collection.each do |month_deposit|
+      %tr
+        %td= month_deposit.deposit_number
+        %td= month_deposit.amount
+        %td= month_deposit.annual_rate
+        %td= month_deposit.repayment_period
+        %td= month_deposit.join_date
+        %td= month_deposit.amount - month_deposit.free_invest_amount
+        %td= month_deposit.expiring_date
+        %td= month_deposit.owner_num
+        %td= month_deposit.current_stage
+        %td= link_to month_deposit.current_operation, month_deposit.current_action
+        %td= link_to month_deposit.display_status, month_deposit.display_action
+
+
+
