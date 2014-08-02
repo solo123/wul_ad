@@ -13,6 +13,11 @@ WooulAdmin::Application.routes.draw do
 
   resources :month_deposits do
     collection do
+      get :settle
+      get :publish
+      get :finish
+      get :refund
+      get :switchdisplay
     end
   end
 

@@ -26,7 +26,7 @@
             发放结算
             %span.caret
           %ul.dropdown-menu
-            %li= link_to '月月盈', invests_path
+            %li= link_to '月月盈', settle_month_deposits_path
             %li= link_to '定期宝', settle_fixed_deposits_path
         %li= link_to 'Roles', roles_path
         - if current_employee && current_employee.roles && current_employee.roles.index('admin')
