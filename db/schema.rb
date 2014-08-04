@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140724091422) do
+ActiveRecord::Schema.define(version: 20140731072001) do
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
@@ -216,8 +216,8 @@ ActiveRecord::Schema.define(version: 20140724091422) do
     t.integer  "owner_num",                                     default: 0
     t.decimal  "order_amount",         precision: 10, scale: 0, default: 0
     t.string   "product_type",                                  default: "fixed"
-    t.string   "stage",                                         default: "未发布"
-    t.integer  "status",                                        default: 0
+    t.string   "status",                                        default: "未发布"
+    t.string   "display",                                       default: "hide"
   end
 
   create_table "guarantee_companies", force: true do |t|
@@ -247,6 +247,9 @@ ActiveRecord::Schema.define(version: 20140724091422) do
     t.integer  "status",                                         default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "invest_type",                                    default: "fixed"
+    t.boolean  "onsale",                                         default: false
+    t.decimal  "discount_rate",         precision: 10, scale: 0, default: 0
   end
 
   create_table "month_deposits", force: true do |t|
@@ -267,10 +270,12 @@ ActiveRecord::Schema.define(version: 20140724091422) do
     t.integer  "status",                                         default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "owner_nume",                                     default: 0
     t.integer  "owner_num",                                      default: 0
     t.string   "guarantee"
-    t.decimal  "total_amount",          precision: 10, scale: 0, default: 0
+    t.datetime "join_date"
+    t.datetime "expiring_date"
+    t.string   "stage",                                          default: "未发布"
+    t.string   "display",                                        default: "hide"
   end
 
   create_table "notices", force: true do |t|
@@ -348,6 +353,16 @@ ActiveRecord::Schema.define(version: 20140724091422) do
 
   create_table "roles", force: true do |t|
     t.string   "role_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stocks", force: true do |t|
+    t.string   "deposit_number"
+    t.string   "invest_type"
+    t.decimal  "amount",         precision: 10, scale: 0
+    t.integer  "user_id"
+    t.decimal  "rate",           precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
