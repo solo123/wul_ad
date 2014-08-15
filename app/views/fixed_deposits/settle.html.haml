@@ -12,7 +12,9 @@
       %th 已入账金额
       %th 到期日
       %th 买家数量
+      %th 应付利息
       %th 状态
+      %th 本息返还
       %th 操作
       %th 显示
 
@@ -28,8 +30,12 @@
         %td= fixed_deposit.total_amount - fixed_deposit.free_invest_amount
         %td= fixed_deposit.expiring_date
         %td= fixed_deposit.owner_num
+        %td= number_with_precision fixed_deposit.current_profit, precision: 2
         %td= fixed_deposit.current_stage
-        %td= link_to fixed_deposit.current_operation, fixed_deposit.current_action
+        %td= fixed_deposit.profit_status
+        %td
+          = link_to fixed_deposit.current_operation, fixed_deposit.current_action
+          = link_to "付息", fixed_deposit.profit_action
         %td= link_to fixed_deposit.display_status, fixed_deposit.display_action
 
 

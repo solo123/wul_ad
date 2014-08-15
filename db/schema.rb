@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140731072001) do
+ActiveRecord::Schema.define(version: 20140814040017) do
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
@@ -218,6 +218,9 @@ ActiveRecord::Schema.define(version: 20140731072001) do
     t.string   "product_type",                                  default: "fixed"
     t.string   "status",                                        default: "未发布"
     t.string   "display",                                       default: "hide"
+    t.string   "stage",                                         default: "未发布"
+    t.datetime "profit_date"
+    t.decimal  "fixed_amount",         precision: 10, scale: 0, default: 0
   end
 
   create_table "guarantee_companies", force: true do |t|
@@ -250,6 +253,7 @@ ActiveRecord::Schema.define(version: 20140731072001) do
     t.string   "invest_type",                                    default: "fixed"
     t.boolean  "onsale",                                         default: false
     t.decimal  "discount_rate",         precision: 10, scale: 0, default: 0
+    t.datetime "profit_date"
   end
 
   create_table "month_deposits", force: true do |t|
@@ -376,6 +380,8 @@ ActiveRecord::Schema.define(version: 20140731072001) do
     t.decimal  "frozen_after",     precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_info_id"
+    t.integer  "invest_id"
   end
 
   create_table "user_companies", force: true do |t|

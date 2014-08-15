@@ -8,6 +8,7 @@ WooulAdmin::Application.routes.draw do
       get :finish
       get :refund
       get :switchdisplay
+      get :payprofit
     end
   end
 
