@@ -1,5 +1,37 @@
 class FixedDeposit < ActiveRecord::Base
-  attr_accessor :current_action, :current_operation, :current_stage, :display_action, :display_status
+  attr_accessor :current_action, :current_operation, :current_stage, :display_action, :display_status, :current_profit, :profit_status, :profit_action
+  before_create :add_profit_date
+
+  def add_profit_date
+   self.profit_date = self.join_date
+  end
+
+
+  def current_profit
+    if Time.now >= self.profit_date + 30.days
+      calculate_profit
+    else
+      0
+    end
+  end
+
+
+  def calculate_profit
+      self.total_amount * self.annual_rate / 12 / 100
+  end
+
+  def profit_action
+    "/fixed_deposits/payprofit.#{self.id}"
+  end
+
+  def profit_status
+    if current_profit > 0
+      "等待付息"
+    else
+      "无需利息"
+    end
+  end
+
 
   def current_stage
     if self.expiring_date < Time.now.yesterday && self.stage!="已结束"
@@ -35,7 +67,7 @@ class FixedDeposit < ActiveRecord::Base
       when "已到期"
         "/fixed_deposits/refund.#{self.id}"
       when "已结束"
-        "/fixed_deposits/refund.#{self.id}"
+        "/fixed_deposits/#{self.id}"
     end
   end
 

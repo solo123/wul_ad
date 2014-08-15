@@ -2,21 +2,23 @@ class Invest < ActiveRecord::Base
 	belongs_to :user_info
   attr_accessor :product
   def refund
-    refund_amount = self.amount * self.product.annual_rate * 100 / 12 * product.repayment_period
+    refund_amount = self.amount
     account = self.user_info.account
-    trans = Transaction.new
-    trans.trans_type = "refund"
-    trans.account_before = account.balance
-    trans.account_after =  account.balance + refund_amount
-    trans.frozen_before = account.frozen_balance
-    trans.operation_amount = refund_amount
-    trans.frozen_after = trans.frozen_before
-    account += refund_amount
+    Transaction.createTransaction("refund", refund_amount, account.balance, account.balance + refund_amount, self.user_info.id, self.id)
+    account.balance += refund_amount
     account.save!
-    trans.save!
   end
 
   def product
     FixedDeposit.where(:deposit_number => self.loan_number).first
+  end
+
+  def payprofit
+    profit = (self.amount * self.product.annual_rate / 12 / 100).round(2)
+    balance = self.user_info.account.balance
+    Transaction.createTransaction("profit", profit, balance, balance + profit, self.user_info.id, self.product.deposit_number)
+    self.user_info.account.balance += profit
+    self.user_info.account.save!
+    #puts self.profit_date
   end
 end

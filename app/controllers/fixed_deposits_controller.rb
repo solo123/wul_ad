@@ -33,9 +33,23 @@ class FixedDepositsController < ResourcesController
 
   def refund
     dep = FixedDeposit.find(params[:format])
+    if dep.current_profit >0
+      Invest.where(:loan_number => dep.deposit_number).each { |inv| inv.payprofit }
+    end
     Invest.where(:loan_number => dep.deposit_number).each { |inv| inv.refund }
     dep.stage = "已结束"
+    dep.display ="hide"
     dep.save!
+    redirect_to settle_fixed_deposits_path
+  end
+
+  def payprofit
+    dep = FixedDeposit.find(params[:format])
+    if dep.current_profit > 0
+      Invest.where(:loan_number => dep.deposit_number).each { |inv| inv.payprofit }
+      dep.profit_date = dep.profit_date + 30.days
+      dep.save!
+    end
     redirect_to settle_fixed_deposits_path
   end
 
