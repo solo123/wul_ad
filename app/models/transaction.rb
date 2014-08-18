@@ -6,6 +6,7 @@ class Transaction < ActiveRecord::Base
     trans.operation_amount = amount
     trans.account_before = amount_before
     trans.account_after = amount_after
+    trans.deposit_number = investid
     trans.user_info_id = userid
     trans.save!
   end

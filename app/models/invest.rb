@@ -1,16 +1,20 @@
 class Invest < ActiveRecord::Base
-	belongs_to :user_info
+  belongs_to :user_info
   attr_accessor :product
   def refund
     refund_amount = self.amount
     account = self.user_info.account
-    Transaction.createTransaction("refund", refund_amount, account.balance, account.balance + refund_amount, self.user_info.id, self.id)
+    Transaction.createTransaction("refunded", refund_amount, account.balance, account.balance + refund_amount, self.user_info.id, self.product.deposit_number)
     account.balance += refund_amount
     account.save!
   end
 
   def product
-    FixedDeposit.where(:deposit_number => self.loan_number).first
+    if self.invest_type == "fixed"
+      FixedDeposit.where(:deposit_number => self.loan_number).first
+    elsif self.invest_type=="month"
+      MonthDeposit.where(:deposit_number => self.loan_number).first
+    end
   end
 
   def payprofit
