@@ -38,6 +38,26 @@ class MonthDepositsController < ResourcesController
     redirect_to settle_month_deposits_path
   end
 
+  def payprofit
+    dep = MonthDeposit.find(params[:format])
+    if dep.current_profit > 0
+      Invest.where(:loan_number => dep.deposit_number).each { |inv| inv.payprofit }
+      dep.profit_date = dep.profit_date + 30.days
+      dep.save!
+    end
+    redirect_to settle_month_deposits_path
+  end
+
+  def payprincipal
+    dep = MonthDeposit.find(params[:format])
+    if dep.current_principal > 0
+      Invest.where(:loan_number => dep.deposit_number).each { |inv| inv.pay_principal }
+      dep.principal_date = dep.principal_date + 30.days
+      dep.save!
+    end
+    redirect_to settle_month_deposits_path
+  end
+
 
   private
   def invest_params

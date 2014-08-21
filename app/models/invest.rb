@@ -25,4 +25,14 @@ class Invest < ActiveRecord::Base
     self.user_info.account.save!
     #puts self.profit_date
   end
+
+  def pay_principal
+    principal = (self.amount / self.product.repayment_period).round(2)
+    balance = self.user_info.account.balance
+    Transaction.createTransaction("principal", principal, balance, balance + principal, self.user_info.id, self.product.deposit_number)
+    self.amount -= principal
+    self.user_info.account.balance += principal
+    self.user_info.account.save!
+    self.save!
+  end
 end

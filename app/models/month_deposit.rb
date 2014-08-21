@@ -1,5 +1,41 @@
 class MonthDeposit < ActiveRecord::Base
-  attr_accessor :current_action, :current_operation, :current_stage, :display_action, :display_status
+  attr_accessor :current_action, :current_operation, :current_stage, :display_action, :display_status,  :current_profit, :profit_status, :profit_action
+  before_create :add_profit_date
+
+  def add_profit_date
+    self.profit_date = self.join_date
+    self.principal_date = self.join_date
+  end
+
+
+  def current_profit
+    if Time.now >= self.profit_date + 30.days
+      calculate_profit
+    else
+      0
+    end
+  end
+
+  def current_principal
+    if Time.now >= self.principal_date + 30.days
+      self.amount / self.repayment_period
+    else
+      0
+    end
+  end
+
+
+  def calculate_profit
+    self.amount * self.annual_rate / 12 / 100
+  end
+
+  def profit_status
+    if current_profit > 0
+      "等待付息"
+    else
+      "无需利息"
+    end
+  end
 
   def current_stage
     if self.invest_end_date < Time.now.yesterday && self.stage!="已结束"
@@ -49,5 +85,13 @@ class MonthDeposit < ActiveRecord::Base
 
   def display_action
     "/month_deposits/switchdisplay.#{self.id}"
+  end
+
+  def profit_action
+    "/month_deposits/payprofit.#{self.id}"
+  end
+
+  def principal_action
+    "/month_deposits/payprincipal.#{self.id}"
   end
 end

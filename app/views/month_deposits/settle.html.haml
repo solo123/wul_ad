@@ -11,6 +11,8 @@
       %th 已入账金额
       %th 到期日
       %th 买家数量
+      %th 应付利息
+      %th 应付本金
       %th 状态
       %th 操作
       %th 显示
@@ -26,6 +28,14 @@
         %td= month_deposit.amount - month_deposit.free_invest_amount
         %td= month_deposit.expiring_date
         %td= month_deposit.owner_num
+        %td
+          = number_with_precision month_deposit.current_profit, precision: 2
+          -if month_deposit.current_profit > 0
+            = link_to "支付", month_deposit.profit_action
+        %td
+          = number_with_precision month_deposit.current_principal, precision: 2
+          -if month_deposit.current_principal > 0
+            = link_to "支付", month_deposit.principal_action
         %td= month_deposit.current_stage
         %td= link_to month_deposit.current_operation, month_deposit.current_action
         %td= link_to month_deposit.display_status, month_deposit.display_action
