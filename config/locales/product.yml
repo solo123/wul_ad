@@ -1,0 +1,31 @@
+en:
+  simple_form:
+    labels:
+      invest:
+        jkbh: '借款编号'
+        jybh: '交易编号'
+        dz: '地址'
+        jkyt: '借款用途'
+        jkyssm: '借款用途说明'
+        xydj: ''
+        nhll: '年化利率'
+        jkje: '借款金额'
+        hkqx: '还款期限'
+        hkfs: '还款方式'
+        mqhkje: '每期还款金额'
+        ktje: '可投金额'
+        yyje: '预约金额'
+        jssj: '结束时间'
+        bz: '备注'
+    hints:
+      invest:
+        jkbh: '借款编号'
+        jybh: '交易编号'
+    placeholders:
+      invest:
+        jkbh: '借款编号'
+        jybh: '交易编号'
+
+
+
+

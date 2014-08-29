@@ -1,0 +1,42 @@
+%h4 定存宝
+= will_paginate @collection
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 编号
+      %th 总额
+      %th 年收益率
+      %th 收益期限(月)
+      %th 已预约金额
+      %th 加入日
+      %th 已入账金额
+      %th 到期日
+      %th 买家数量
+      %th 应付利息
+      %th 状态
+      %th 本息返还
+      %th 操作
+      %th 显示
+
+  %tbody
+    - @collection.each do |fixed_deposit|
+      %tr
+        %td= fixed_deposit.deposit_number
+        %td= fixed_deposit.total_amount
+        %td= fixed_deposit.annual_rate
+        %td= fixed_deposit.repayment_period
+        %td= fixed_deposit.order_amount
+        %td= fixed_deposit.join_date
+        %td= fixed_deposit.total_amount - fixed_deposit.free_invest_amount
+        %td= fixed_deposit.expiring_date
+        %td= fixed_deposit.owner_num
+        %td= number_with_precision fixed_deposit.current_profit, precision: 2
+        %td= fixed_deposit.current_stage
+        %td= fixed_deposit.profit_status
+        %td
+          = link_to fixed_deposit.current_operation, fixed_deposit.current_action
+          = link_to "付息", fixed_deposit.profit_action
+        %td= link_to fixed_deposit.display_status, fixed_deposit.display_action
+
+
+

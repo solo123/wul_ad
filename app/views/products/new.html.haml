@@ -1,0 +1,9 @@
+-dict = {"fixed" => "定存宝",
+             "month" => "月月盈"}
+%h4
+  创建
+  = dict[@product.product_type]
+= link_to '返回列表', "/products/" + @product.product_type
+-#send("#{@object.class.name.underscore.split('/').last.pluralize}_path")
+= render 'form'
+

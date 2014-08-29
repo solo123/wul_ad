@@ -1,0 +1,18 @@
+= simple_form_for(@product) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :deposit_number, label:"产品编号"
+    = f.input :total_amount,label:"借款总额"
+    = f.input :annual_rate, label:"年化利率"
+    = f.input :repayment_period, label:"偿还周期"
+    = f.input :guarantee, label:"担保机构"
+    = f.input :free_invest_amount, label:"可售金额"
+    = f.input :join_date, as: :datepicker, label:"开始时间"
+    = f.input :expiring_date, as: :datepicker, label:"结束时间"
+    = f.input :premature_redemption, label:"可否转让"
+    = f.input :fee, label:"转让费率"
+
+  .actions
+    = f.submit '保存', class: 'btn btn-primary'
+

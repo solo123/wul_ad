@@ -1,0 +1,22 @@
+= link_to '返回列表', index_product_path(@product.product_type)
+|
+= link_to '修改', index_product_path(@product.product_type)
+
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 条目
+      %th 内容
+  %tbody
+    %tr
+      %td
+        = "产品编号"
+      %td
+        = @product.deposit_number
+    %tr
+      %td
+        = "借款总额"
+      %td
+        = @product.total_amount
+
+

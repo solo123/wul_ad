@@ -1,0 +1,40 @@
+= link_to '新建定存宝产品', "/products/fixed/new"
+= will_paginate @collection
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 产品编号
+      %th 借款总额
+      %th 年化利率
+      %th 偿还周期
+      %th 担保机构
+      %th 可售金额
+      -#%th 收入手段
+      %th 开始时间
+      -#%th 加入条件
+      %th 结束时间
+      -#%th 偿还手段
+      %th 可否转让
+      %th 转让费率
+
+  %tbody
+    - @collection.each do |fixed_deposit|
+      %tr
+        %td= fixed_deposit.deposit_number
+        %td= fixed_deposit.total_amount
+        %td= fixed_deposit.annual_rate
+        %td= fixed_deposit.repayment_period
+        %td= fixed_deposit.guarantee
+        %td= fixed_deposit.free_invest_amount
+        %td= fixed_deposit.income_method
+        %td= fixed_deposit.join_date
+        -#%td= fixed_deposit.join_condition
+        %td= fixed_deposit.expiring_date
+        -#%td= fixed_deposit.repayment_method
+        %td= fixed_deposit.premature_redemption
+        %td= fixed_deposit.fee
+        %td= link_to '详细', fixed_deposit
+        %td= link_to '编辑', edit_fixed_deposit_path(fixed_deposit)
+        %td= link_to '删除', fixed_deposit, :method => :delete, :data => { :confirm => '确认删除?' }
+
+

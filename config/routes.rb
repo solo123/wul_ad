@@ -24,6 +24,27 @@ WooulAdmin::Application.routes.draw do
     end
   end
 
+
+
+
+
+  get '/products/:product_type', to: 'products#index', as: :index_product
+  get '/products/:product_type/new', to: 'products#new'
+  get '/product/:product_type/:id', to: 'products#show', as: :show_product
+  resources :products do
+    collection do
+      get :settle
+      get :publish
+      get :finish
+      get :refund
+      get :switchdisplay
+      get :payprofit
+      get :payprincipal
+    end
+  end
+
+
+
   resources :photos
 
   resources :personal_reviews
