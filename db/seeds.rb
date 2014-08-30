@@ -12,13 +12,12 @@ u.password = u.password_confirmation ="wqxyy1985"
 u.save!
 
 #
-# 0.upto(20) do |i|
-#   Product.create(deposit_number: "FX20140821" + i.to_s, total_amount: 120000, annual_rate:13, repayment_period: 3,
-#                       guarantee:"ICBC", free_invest_amount: 120000, detail:"no detail", income_method:"tax", join_date:"2014-08-11",
-#                       join_condition:"car", expiring_date:"2014-09-09",repayment_method:"bycash", premature_redemption:"yes",
-#                       fee:12)
-#
-# end
+ 0.upto(20) do |i|
+   Product.create(deposit_number: "FX20140821" + i.to_s, total_amount: 120000, annual_rate:13, repayment_period: 3,
+                       guarantee:"ICBC", free_invest_amount: 120000, detail:"no detail", income_method:"tax", join_date:"2014-08-11",
+                      join_condition:"car", expiring_date:"2014-09-09",repayment_method:"bycash", premature_redemption:"yes",
+                       fee:12, profit_date:"2014-08-11")
+ end
 
 
 0.upto(20) do |i|

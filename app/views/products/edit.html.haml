@@ -1,0 +1,7 @@
+-dict = {"fixed" => "定存宝",
+             "month" => "月月盈"}
+%h4
+  修改
+  = dict[@product.product_type]
+=link_to '返回列表', index_products_path(@product.product_type)
+= render 'editform', product_type: @product.product_type, id: @product.id

@@ -26,14 +26,18 @@ WooulAdmin::Application.routes.draw do
 
 
 
-
-
-  get '/products/:product_type', to: 'products#index', as: :index_product
-  get '/products/:product_type/new', to: 'products#new'
-  get '/product/:product_type/:id', to: 'products#show', as: :show_product
-  resources :products do
+   resources :products do
     collection do
-      get :settle
+      get '/settle/:product_type',  to: 'products#settle', as: :settle
+      get '/:product_type/:id/publish', to: 'products#publish', as: :publish
+      get '/:product_type/:id/edit', to: 'products#edit', as: :edit
+      get '/:product_type', to: 'products#index', as: :index
+      get '/:product_type/new', to: 'products#new', as: :new
+      get '/:product_type/:id', to: 'products#show', as: :show
+      post '/:product_type', to: 'products#create', as: :create
+      post '/:product_type/:id', to: 'products#update', as: :update
+
+
       get :publish
       get :finish
       get :refund

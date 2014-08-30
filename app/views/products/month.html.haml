@@ -1,0 +1,43 @@
+= link_to '新建月月盈产品', new_products_path("month")
+= will_paginate @collection
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 产品编号
+      %th 借款总额
+      %th 年化利率
+      %th 偿还周期
+      %th 担保机构
+      %th 可售金额
+      -#%th 收入手段
+      %th 开始时间
+      -#%th 加入条件
+      %th 结束时间
+      -#%th 偿还手段
+      %th 可否转让
+      %th 转让费率
+      %th
+      %th
+      %th
+
+  %tbody
+    - @collection.each do |deposit|
+      %tr
+        %td= deposit.deposit_number
+        %td= deposit.total_amount
+        %td= deposit.annual_rate
+        %td= deposit.repayment_period
+        %td= deposit.guarantee
+        %td= deposit.free_invest_amount
+        -#%td= fixed_deposit.income_method
+        %td= deposit.join_date
+        -#%td= fixed_deposit.join_condition
+        %td= deposit.expiring_date
+        -#%td= fixed_deposit.repayment_method
+        %td= deposit.premature_redemption
+        %td= deposit.fee
+        %td= link_to '详细', show_products_path("month", deposit)
+        %td= link_to '编辑', edit_products_path("month", deposit)
+        %td= link_to '删除', deposit, :method => :delete, :data => { :confirm => '确认删除?' }
+
+

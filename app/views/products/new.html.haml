@@ -5,5 +5,5 @@
   = dict[@product.product_type]
 = link_to '返回列表', "/products/" + @product.product_type
 -#send("#{@object.class.name.underscore.split('/').last.pluralize}_path")
-= render 'form'
+= render 'newform', product_type: @product.product_type
 

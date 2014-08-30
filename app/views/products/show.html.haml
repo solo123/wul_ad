@@ -1,6 +1,6 @@
-= link_to '返回列表', index_product_path(@product.product_type)
+= link_to '返回列表', index_products_path(@product.product_type)
 |
-= link_to '修改', index_product_path(@product.product_type)
+= link_to '修改', edit_products_path(@product.product_type, @product.id)
 
 %table.table.table-bordered.table-striped.table-hover
   %thead
@@ -18,5 +18,46 @@
         = "借款总额"
       %td
         = @product.total_amount
+    %tr
+      %td
+        = "年化利率"
+      %td
+        = @product.annual_rate
+    %tr
+      %td
+        = "偿还周期"
+      %td
+        = @product.repayment_period
+    %tr
+      %td
+        = "担保机构"
+      %td
+        = @product.guarantee
+    %tr
+      %td
+        = "可售金额"
+      %td
+        = @product.free_invest_amount
+    %tr
+      %td
+        = "开始时间"
+      %td
+        = @product.join_date
+    %tr
+      %td
+        = "结束时间"
+      %td
+        = @product.expiring_date
+    %tr
+      %td
+        = "可否转让"
+      %td
+        = @product.premature_redemption
+    %tr
+      %td
+        = "转让费率"
+      %td
+        = @product.fee
+
 
 

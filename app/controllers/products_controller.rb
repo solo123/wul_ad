@@ -1,8 +1,7 @@
 class ProductsController < ResourcesController
   def index
     pages = 20
-    @collection = Product.where(:product_type => params[:product_type]).paginate(:page => params[:page], :per_page => pages)
-    logger.info(params)
+    @collection = Product.where(:product_type => params[:product_type], :status => 0).paginate(:page => params[:page], :per_page => pages)
     render "products/"+params[:product_type]
   end
 
@@ -23,7 +22,7 @@ class ProductsController < ResourcesController
     params.permit!
     @product = Product.new(params[:product])
     if @product.save
-      redirect_to show_product_path(@product.product_type, @product.id)
+      redirect_to show_products_path(@product.product_type, @product.id)
       #redirect_to "product/fixed" + @product.id
       return
     else
@@ -33,10 +32,45 @@ class ProductsController < ResourcesController
     redirect_to :action => :new
   end
 
+  def edit
+    @product = Product.find(params[:id])
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def update
+    @product = Product.find(params[:id])
+    params.permit!
+    @product.attributes = params[:product]
+    if @product.changed_for_autosave?
+      #@changes = @object.all_changes
+      if @product.save
+      else
+        flash[:error] = product.errors.full_messages.to_sentence
+        @no_log = 1
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to :action => :show }
+      format.js
+    end
+  end
+
+
+  def destroy
+    @product = Product.find(params[:id])
+    if @product.status && @product.status == 0
+      @product.status = 7
+    end
+    @product.save
+    redirect_to index_products_path(@product.product_type)
+  end
+
 
   def settle
     pages = 20
-    @collection = Product.where(:product_type => params[:format]).paginate(:page => params[:page], :per_page => pages)
+    @collection = Product.where(:product_type => params[:product_type],:status => 0).paginate(:page => params[:page], :per_page => pages)
     #load_collection
   end
 
@@ -52,16 +86,15 @@ class ProductsController < ResourcesController
   end
 
   def publish
-    dep = FixedDeposit.find(params[:format])
-    load_object
-    dep.stage = "融资中"
-    dep.display = "show"
-    dep.save!
-    redirect_to settle_fixed_deposits_path
+    @product = Product.find(params[:id])
+    @product.stage = "融资中"
+    @product.display = "show"
+    @product.save!
+    redirect_to settle_products_path(@product.product_type)
   end
 
   def finish
-    dep = FixedDeposit.find(params[:format])
+    dep = Product.find(params[:id])
     dep.stage = "收益中"
     dep.save!
     redirect_to settle_fixed_deposits_path
