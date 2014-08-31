@@ -1,5 +1,6 @@
 class Invest < ActiveRecord::Base
   belongs_to :user_info
+  belongs_to :product
   attr_accessor :product
   def refund
     refund_amount = self.amount

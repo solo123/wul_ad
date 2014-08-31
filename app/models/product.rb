@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
 
   attr_accessor :current_action, :current_operation, :current_stage, :display_action, :display_status,  :current_profit, :profit_status, :profit_action
   before_create :add_profit_date
+  has_many :invests
 
   def add_profit_date
     self.profit_date = self.join_date
@@ -86,11 +87,11 @@ class Product < ActiveRecord::Base
   end
 
   def display_action
-    "/month_deposits/switchdisplay.#{self.id}"
+    "/products/#{self.product_type}/#{self.id}/switchdisplay"
   end
 
   def profit_action
-    "/month_deposits/payprofit.#{self.id}"
+    "/products/#{self.product_type}/#{self.id}/payprofit"
   end
 
   def principal_action

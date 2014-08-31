@@ -19,24 +19,24 @@
       %th 显示
 
   %tbody
-    - @collection.each do |fixed_deposit|
+    - @collection.each do |deposit|
       %tr
-        %td= fixed_deposit.deposit_number
-        %td= fixed_deposit.total_amount
-        %td= fixed_deposit.annual_rate
-        %td= fixed_deposit.repayment_period
-        %td= fixed_deposit.order_amount
-        %td= fixed_deposit.join_date
-        %td= fixed_deposit.total_amount - fixed_deposit.free_invest_amount
-        %td= fixed_deposit.expiring_date
-        %td= fixed_deposit.owner_num
-        %td= number_with_precision fixed_deposit.current_profit, precision: 2
-        %td= fixed_deposit.current_stage
-        %td= fixed_deposit.profit_status
+        %td= deposit.deposit_number
+        %td= deposit.total_amount
+        %td= deposit.annual_rate
+        %td= deposit.repayment_period
+        %td= deposit.order_amount
+        %td= deposit.join_date
+        %td= deposit.total_amount - deposit.free_invest_amount
+        %td= deposit.expiring_date
+        %td= deposit.owner_num
+        %td= number_with_precision deposit.current_profit, precision: 2
+        %td= deposit.current_stage
+        %td= deposit.profit_status
         %td
-          = link_to fixed_deposit.current_operation, fixed_deposit.current_action
-          = link_to "付息", fixed_deposit.profit_action
-        %td= link_to fixed_deposit.display_status, fixed_deposit.display_action
+          = link_to deposit.current_operation, deposit.current_action
+          = link_to "付息", deposit.profit_action
+        %td= link_to deposit.display_status, deposit.display_action
 
 
 

@@ -75,14 +75,14 @@ class ProductsController < ResourcesController
   end
 
   def switchdisplay
-    dep = FixedDeposit.find(params[:format])
+    dep = Product.find(params[:id])
     if dep.display == "show"
       dep.display = "hide"
     else
       dep.display = "show"
     end
     dep.save!
-    redirect_to settle_fixed_deposits_path
+    redirect_to settle_products_path(dep.product_type)
   end
 
   def publish
@@ -113,9 +113,9 @@ class ProductsController < ResourcesController
   end
 
   def payprofit
-    dep = FixedDeposit.find(params[:format])
+    dep = Product.find(params[:id])
     if dep.current_profit > 0
-      Invest.where(:loan_number => dep.deposit_number).each { |inv| inv.payprofit }
+      dep.invests.each { |inv| inv.payprofit }
       dep.profit_date = dep.profit_date + 30.days
       dep.save!
     end
