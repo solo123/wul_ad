@@ -7,6 +7,7 @@
       %th 借款总额
       %th 年化利率
       %th 偿还周期
+      %th 付息间隔
       %th 担保机构
       %th 可售金额
       -#%th 收入手段
@@ -27,6 +28,7 @@
         %td= deposit.total_amount
         %td= deposit.annual_rate
         %td= deposit.repayment_period
+        %td= deposit.each_repayment_period
         %td= deposit.guarantee
         %td= deposit.free_invest_amount
         -#%td= fixed_deposit.income_method

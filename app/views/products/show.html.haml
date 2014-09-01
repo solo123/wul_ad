@@ -1,7 +1,8 @@
 = link_to '返回列表', index_products_path(@product.product_type)
 |
 = link_to '修改', edit_products_path(@product.product_type, @product.id)
-
+- dict = {"profit" => "只付利息",
+           "profit_principal" => "本息均付"}
 %table.table.table-bordered.table-striped.table-hover
   %thead
     %tr
@@ -28,6 +29,11 @@
         = "偿还周期"
       %td
         = @product.repayment_period
+    %tr
+      %td
+        = "偿还方法"
+      %td
+        = dict[@product.repayment_method]
     %tr
       %td
         = "担保机构"

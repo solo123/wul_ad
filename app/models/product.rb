@@ -12,7 +12,7 @@ class Product < ActiveRecord::Base
 
 
   def current_profit
-    if Time.now >= self.profit_date + 30.days
+    if Time.now >= self.profit_date + self.each_repayment_period.days
       calculate_profit
     else
       0
@@ -20,8 +20,8 @@ class Product < ActiveRecord::Base
   end
 
   def current_principal
-    if Time.now >= self.principal_date + 30.days
-      self.total_amount / self.repayment_period
+    if Time.now >= self.principal_date + self.each_repayment_period.days && self.repayment_method == "profit_principal"
+      self.fixed_invest_amount / self.repayment_period
     else
       0
     end
@@ -29,14 +29,22 @@ class Product < ActiveRecord::Base
 
 
   def calculate_profit
-    self.total_amount * self.annual_rate / 12 / 100
+    self.fixed_invest_amount * self.annual_rate / 12 / 100
   end
 
   def profit_status
     if current_profit > 0
-      "等待付息"
+      "待付息"
     else
-      "无需利息"
+      "无利息"
+    end
+  end
+
+  def principle_status
+    if current_principal > 0
+      "待返本"
+    else
+      "无返本"
     end
   end
 
@@ -68,21 +76,21 @@ class Product < ActiveRecord::Base
       when "未发布"
         "/products/#{self.product_type}/#{self.id}/publish"
       when "融资中"
-        "/month_deposits/finish.#{self.id}"
+        "/products/#{self.product_type}/#{self.id}/finish"
       when "收益中"
-        "/month_deposits/#{self.id}"
+        "/products/#{self.product_type}/#{self.id}"
       when "已到期"
-        "/month_deposits/refund.#{self.id}"
+        "/products/#{self.product_type}/#{self.id}/refund"
       when "已结束"
-        "/month_deposits/refund.#{self.id}"
+        "/products/#{self.product_type}/#{self.id}"
     end
   end
 
   def display_status
     if self.display == "hide"
-      "显示产品"
+      "显示"
     else
-      "隐藏产品"
+      "隐藏"
     end
   end
 
@@ -95,6 +103,6 @@ class Product < ActiveRecord::Base
   end
 
   def principal_action
-    "/month_deposits/payprincipal.#{self.id}"
+    "/products/#{self.product_type}/#{self.id}/payprincipal"
   end
 end

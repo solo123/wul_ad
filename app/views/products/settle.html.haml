@@ -1,4 +1,7 @@
-%h4 定存宝
+- dict = {"fixed" => "定存宝",
+  "month" => "月月盈"}
+%h4
+  =dict[@product_type]
 = will_paginate @collection
 %table.table.table-bordered.table-striped.table-hover
   %thead
@@ -7,14 +10,15 @@
       %th 总额
       %th 年收益率
       %th 收益期限(月)
-      %th 已预约金额
+      -#%th 已预约金额
       %th 加入日
       %th 已入账金额
       %th 到期日
       %th 买家数量
       %th 应付利息
+      %th 应付本金
       %th 状态
-      %th 本息返还
+      -#%th 本息返还
       %th 操作
       %th 显示
 
@@ -25,17 +29,21 @@
         %td= deposit.total_amount
         %td= deposit.annual_rate
         %td= deposit.repayment_period
-        %td= deposit.order_amount
+        -#%td= deposit.order_amount
         %td= deposit.join_date
-        %td= deposit.total_amount - deposit.free_invest_amount
+        %td= deposit.fixed_invest_amount
         %td= deposit.expiring_date
         %td= deposit.owner_num
         %td= number_with_precision deposit.current_profit, precision: 2
+        %td= number_with_precision deposit.current_principal, precision: 2
         %td= deposit.current_stage
-        %td= deposit.profit_status
+        -#%td
+        -#  = deposit.profit_status
+        -#  = deposit.principle_status
         %td
           = link_to deposit.current_operation, deposit.current_action
           = link_to "付息", deposit.profit_action
+          = link_to "付本", deposit.principal_action
         %td= link_to deposit.display_status, deposit.display_action
 
 

@@ -33,7 +33,8 @@ WooulAdmin::Application.routes.draw do
       get '/:product_type/:id/switchdisplay', to: 'products#switchdisplay', as: :switchdisplay
       get '/:product_type/:id/finish', to: 'products#finish', as: :finish
       get '/:product_type/:id/payprofit', to: 'products#payprofit', as: :payprofit
-      get '/:product_type/:id/payprincipal', to: 'products#payprofit', as: :payprincipal
+      get '/:product_type/:id/payprincipal', to: 'products#payprincipal', as: :payprincipal
+      get '/:product_type/:id/refund', to: 'products#refund', as: :refund
       get '/:product_type/:id/edit', to: 'products#edit', as: :edit
       get '/:product_type', to: 'products#index', as: :index
       get '/:product_type/new', to: 'products#new', as: :new

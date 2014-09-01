@@ -53,7 +53,6 @@ class ProductsController < ResourcesController
     end
     respond_to do |format|
       format.html { redirect_to :action => :show }
-      format.js
     end
   end
 
@@ -71,7 +70,7 @@ class ProductsController < ResourcesController
   def settle
     pages = 20
     @collection = Product.where(:product_type => params[:product_type],:status => 0).paginate(:page => params[:page], :per_page => pages)
-    #load_collection
+    @product_type = params[:product_type]
   end
 
   def switchdisplay
@@ -97,42 +96,45 @@ class ProductsController < ResourcesController
     dep = Product.find(params[:id])
     dep.stage = "收益中"
     dep.save!
-    redirect_to settle_fixed_deposits_path
+    redirect_to settle_products_path(dep.product_type)
   end
 
   def refund
-    dep = FixedDeposit.find(params[:format])
+    dep = Product.find(params[:id])
+    invests = dep.invests
     if dep.current_profit >0
-      Invest.where(:loan_number => dep.deposit_number).each { |inv| inv.payprofit }
+      invests.each { |inv| inv.payprofit }
     end
-    Invest.where(:loan_number => dep.deposit_number).each { |inv| inv.refund }
+    invests.each { |inv| inv.refund }
     dep.stage = "已结束"
-    dep.display ="hide"
+    #dep.display ="hide"
     dep.save!
-    redirect_to settle_fixed_deposits_path
+    redirect_to settle_products_path(dep.product_type)
   end
 
   def payprofit
     dep = Product.find(params[:id])
     if dep.current_profit > 0
       dep.invests.each { |inv| inv.payprofit }
-      dep.profit_date = dep.profit_date + 30.days
+      dep.profit_date = dep.profit_date + dep.each_repayment_period.days
       dep.save!
     end
-    redirect_to settle_fixed_deposits_path
+    redirect_to settle_products_path(dep.product_type)
+  end
+
+  def payprincipal
+    dep = Product.find(params[:id])
+    if dep.current_principal > 0
+      dep.invests.each { |inv| inv.pay_principal }
+      dep.principal_date = dep.principal_date + dep.each_repayment_period.days
+      dep.save!
+    end
+    redirect_to settle_products_path(dep.product_type)
   end
 
 
-
-  def load_collection
-    @q = object_name.classify.constantize.search(params[:q])
-    pages = 20
-    @collection = @q.result(distinct: true).paginate(:page => params[:page], :per_page => pages)
-  end
-
-
-  private
-  def fixed_deposit_params
-    params.require(:fixed_deposit).permit(:deposit_number, :total_amount, :annual_rate, :repayment_period, :guarantee, :free_invest_amount, :detail, :income_method, :order_amount, :join_date, :join_condition, :expiring_date, :repayment_method, :premature_redemption, :fee, :status)
-  end
+  # private
+  # def fixed_deposit_params
+  #   params.require(:fixed_deposit).permit(:deposit_number, :total_amount, :annual_rate, :repayment_period, :guarantee, :free_invest_amount, :detail, :income_method, :order_amount, :join_date, :join_condition, :expiring_date, :repayment_method, :premature_redemption, :fee, :status)
+  # end
 end
