@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902015545) do
+ActiveRecord::Schema.define(version: 20140902064943) do
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
@@ -164,6 +164,19 @@ ActiveRecord::Schema.define(version: 20140902015545) do
     t.string   "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "delagators", force: true do |t|
+    t.integer  "user_info_id"
+    t.integer  "each_invest_amount"
+    t.integer  "min_invest_amount"
+    t.integer  "max_invest_period"
+    t.integer  "min_remain_balance"
+    t.datetime "last_open_time"
+    t.datetime "last_invest_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "status",             default: 0
   end
 
   create_table "employees", force: true do |t|
