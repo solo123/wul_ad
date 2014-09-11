@@ -1,0 +1,15 @@
+package backend;
+message Operation {
+  required string action = 1;
+  required float actionvalue = 2;
+  required int32 operator = 3;
+  required int32 account = 4;
+}
+
+message Result {
+  required string resultcode = 1;
+  required string errorcode = 2;
+}
+service OperationService {
+  rpc Execute (Operation) returns (Result);
+}
