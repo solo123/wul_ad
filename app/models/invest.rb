@@ -5,7 +5,7 @@ class Invest < ActiveRecord::Base
   def refund
     refund_amount = self.amount
     account = self.user_info.account
-    Transaction.createTransaction("principal", refund_amount, account.balance, account.balance + refund_amount, self.user_info.id, self.product.deposit_number, self.product_type)
+    Transaction.createTransaction("principal", refund_amount, account.balance, account.balance + refund_amount, self.user_info.id, self.product.deposit_number, self.invest_type)
     account.balance += refund_amount
     account.save!
   end
@@ -15,7 +15,7 @@ class Invest < ActiveRecord::Base
   def payprofit
     profit = self.calculate_profit
     balance = self.user_info.account.balance
-    Transaction.createTransaction("profit", profit, balance, balance + profit, self.user_info.id, self.product.deposit_number, self.product_type)
+    Transaction.createTransaction("profit", profit, balance, balance + profit, self.user_info.id, self.product.deposit_number, self.invest_type)
     self.user_info.account.balance += profit
     self.user_info.account.save!
     #puts self.profit_date
@@ -28,7 +28,7 @@ class Invest < ActiveRecord::Base
   def pay_principal
     principal = (self.amount / self.product.repayment_period).round(2)
     balance = self.user_info.account.balance
-    Transaction.createTransaction("principal", principal, balance, balance + principal, self.user_info.id, self.product.deposit_number, self.product_type)
+    Transaction.createTransaction("principal", principal, balance, balance + principal, self.user_info.id, self.product.deposit_number, self.invest_type)
     self.amount -= principal
     self.user_info.account.balance += principal
     self.user_info.account.save!

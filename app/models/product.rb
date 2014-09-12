@@ -20,6 +20,11 @@ class Product < ActiveRecord::Base
   end
 
   def current_principal
+
+    if self.repayment_method == "profit" && self.expiring_date < Time.now.yesterday && self.stage!="已结束"
+      return self.fixed_invest_amount
+    end
+
     if Time.now >= self.principal_date + self.each_repayment_period.days && self.repayment_method == "profit_principal"
       self.fixed_invest_amount / self.repayment_period
     else

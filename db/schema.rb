@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140911080253) do
+ActiveRecord::Schema.define(version: 20140912091328) do
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
@@ -430,7 +430,7 @@ ActiveRecord::Schema.define(version: 20140911080253) do
   create_table "sub_analyzers", force: true do |t|
     t.integer  "analyzer_id"
     t.string   "product_type"
-    t.decimal  "total_pricipal",         precision: 10, scale: 0, default: 0
+    t.decimal  "total_principal",        precision: 10, scale: 0, default: 0
     t.decimal  "total_profit",           precision: 10, scale: 0, default: 0
     t.decimal  "punishment_amount",      precision: 10, scale: 0, default: 0
     t.decimal  "resell_amount",          precision: 10, scale: 0, default: 0
