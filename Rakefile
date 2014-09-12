@@ -4,5 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 
 WooulAdmin::Application.load_tasks
-load 'protobuf/tasks/compile.rake'
 
