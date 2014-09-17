@@ -1,9 +1,17 @@
 class Product < ActiveRecord::Base
-
-
   attr_accessor :current_action, :current_operation, :current_stage, :display_action, :display_status,  :current_profit, :profit_status, :profit_action
   before_create :add_profit_date
+  after_create :create_agreement
   has_many :invests
+  has_one :agreement
+
+  def create_agreement
+    agree = Agreement.new
+    agree.persona = "王潜行"
+    agree.personb = "沃银金融"
+    self.agreement = agree
+    agree.save!
+  end
 
   def add_profit_date
     self.profit_date = self.join_date

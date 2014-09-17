@@ -46,6 +46,13 @@ WooulAdmin::Application.routes.draw do
       get :payprofit
       get :payprincipal
     end
+   end
+
+
+  namespace :accounting do
+    # get '/', to: 'console#index'
+    # get '/console/overview'
+    post '/account/execute_cmd'
   end
 
 

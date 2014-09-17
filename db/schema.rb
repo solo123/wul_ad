@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140912091328) do
+ActiveRecord::Schema.define(version: 20140916070015) do
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(version: 20140912091328) do
     t.decimal  "frozen_balance",  precision: 10, scale: 0, default: 0
     t.decimal  "total_estate",    precision: 10, scale: 0, default: 0
     t.integer  "user_info_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "agreements", force: true do |t|
+    t.string   "persona"
+    t.string   "personb"
+    t.string   "personc"
+    t.string   "persond"
+    t.string   "persone"
+    t.integer  "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -418,6 +429,12 @@ ActiveRecord::Schema.define(version: 20140912091328) do
     t.datetime "updated_at"
   end
 
+  create_table "secures", force: true do |t|
+    t.string   "pay_password"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "simple_captcha_data", force: true do |t|
     t.string   "key",        limit: 40
     t.string   "value",      limit: 6
@@ -523,16 +540,17 @@ ActiveRecord::Schema.define(version: 20140912091328) do
     t.string   "email"
     t.datetime "phonetime"
     t.string   "personalid"
-    t.string   "phonestatus",  default: "confirming"
-    t.string   "emailstatus",  default: "confirming"
-    t.string   "idstatus",     default: "confirming"
-    t.integer  "securyscore",  default: 0
+    t.string   "phonestatus",          default: "confirming"
+    t.string   "emailstatus",          default: "confirming"
+    t.string   "idstatus",             default: "confirming"
+    t.integer  "securyscore",          default: 0
     t.integer  "user_info_id"
     t.string   "verify_code"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email_code"
     t.string   "realname"
+    t.boolean  "phone_confirm_status", default: false
   end
 
 end
