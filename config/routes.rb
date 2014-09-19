@@ -1,4 +1,7 @@
+require 'sidekiq/web'
 WooulAdmin::Application.routes.draw do
+
+  mount Sidekiq::Web, at: "/sidekiq"
   resources :guarantee_companies
 
   resources :fixed_deposits do
@@ -52,7 +55,7 @@ WooulAdmin::Application.routes.draw do
   namespace :accounting do
     # get '/', to: 'console#index'
     # get '/console/overview'
-    post '/account/execute_cmd'
+    post '/account/execute_cmd',{format: :json}
   end
 
 
@@ -79,6 +82,9 @@ WooulAdmin::Application.routes.draw do
 	resources :homes
 	resources :invests
 	resources :notices
+  resources :account_records
+  resources :account_operations
+
 	resources :users
 	resources :employees
 end

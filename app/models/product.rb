@@ -1,9 +1,18 @@
 class Product < ActiveRecord::Base
-  attr_accessor :current_action, :current_operation, :current_stage, :display_action, :display_status,  :current_profit, :profit_status, :profit_action
+  attr_accessor :current_action, :current_operation, :current_stage, :display_action, :display_status, :current_profit, :profit_status, :profit_action
   before_create :add_profit_date
   after_create :create_agreement
   has_many :invests
   has_one :agreement
+
+  def send_account
+    record = self.to_json(:only => [:deposit_number, :total_amount, :annual_rate, :repayment_period, :each_repayment_amount, :free_invest_amount,
+                                    :fixed_invest_amount, :join_date, :expiring_date, :premature_redemption, :fee, :product_type, :stage, :profit_date,
+                                    :principal_date, :status])
+    operation = AccountOperation.new(:op_name => "product", :op_action => "create", :op_obj => record, :op_id_head => "CP", :op_resource_name => self.
+        deposit_number, :op_resource_id => self.id)
+    operation.execute_transaction
+  end
 
   def create_agreement
     agree = Agreement.new
@@ -41,6 +50,21 @@ class Product < ActiveRecord::Base
   end
 
 
+  def update_stage
+    if self.stage == "入库中"
+      op = AccountOperation.where(:op_resource_id => self.id, :op_name => "product", :op_action => "create").first
+      if op
+        logger.info("result is #{op.op_result},#{op.op_resource_name}")
+        if op.op_result
+           logger.info("lllllllllllllllllllllllllbbbbbb")
+           self.stage = "已入库"
+           self.save!
+         end
+      end
+    end
+  end
+
+
   def calculate_profit
     self.fixed_invest_amount * self.annual_rate / 12 / 100
   end
@@ -72,6 +96,10 @@ class Product < ActiveRecord::Base
   def current_operation
     case self.current_stage
       when "未发布"
+        "入库"
+      when "入库中"
+        "状态"
+      when "已入库"
         "发布"
       when "融资中"
         "结束"
@@ -88,6 +116,10 @@ class Product < ActiveRecord::Base
     case self.current_stage
       when "未发布"
         "/products/#{self.product_type}/#{self.id}/publish"
+      when "入库中"
+        "#"
+      when "已入库"
+        "#"
       when "融资中"
         "/products/#{self.product_type}/#{self.id}/finish"
       when "收益中"

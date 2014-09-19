@@ -1,0 +1,24 @@
+.container
+  %h1 操作列表
+  %table.table.table-hover
+    %thead
+      %tr
+        %th 操作序号
+        %th 操作类型
+        %th 操作对象
+        %th 操作结果
+        %th 失败原因
+        %th 操作时间
+        %th 对象标识
+        %th
+    %tbody
+      - @collection.each do |rec|
+        %tr
+          %td= rec.operation_id
+          %td= rec.op_action_cn
+          %td= rec.op_name_cn
+          %td= rec.op_result_cn
+          %td= rec.op_error_cn
+          %td= rec.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+          %td= rec.op_resource_name
+  %br

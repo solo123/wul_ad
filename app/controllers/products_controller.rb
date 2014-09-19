@@ -71,6 +71,9 @@ class ProductsController < ResourcesController
     pages = 20
     @collection = Product.where(:product_type => params[:product_type],:status => 0).paginate(:page => params[:page], :per_page => pages)
     @product_type = params[:product_type]
+    @collection.each do |product|
+      product.update_stage
+    end
   end
 
   def switchdisplay
@@ -86,8 +89,8 @@ class ProductsController < ResourcesController
 
   def publish
     @product = Product.find(params[:id])
-    @product.stage = "融资中"
-    @product.display = "show"
+    @product.send_account
+    @product.stage = "入库中"
     @product.save!
     redirect_to settle_products_path(@product.product_type)
   end

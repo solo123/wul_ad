@@ -11,7 +11,73 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140916070015) do
+ActiveRecord::Schema.define(version: 20140919084427) do
+
+  create_table "account_operations", force: true do |t|
+    t.string   "op_action"
+    t.string   "op_name"
+    t.string   "operator"
+    t.string   "user_id"
+    t.boolean  "op_result",                                 default: false
+    t.integer  "op_result_code",                            default: 0
+    t.integer  "integer",                                   default: 0
+    t.decimal  "op_amount",        precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "operation_id"
+    t.string   "op_resource_name"
+    t.integer  "op_resource_id"
+  end
+
+  create_table "account_products", force: true do |t|
+    t.string   "deposit_number"
+    t.decimal  "total_amount",          precision: 12, scale: 2
+    t.decimal  "annual_rate",           precision: 5,  scale: 2
+    t.integer  "repayment_period"
+    t.decimal  "each_repayment_amount", precision: 12, scale: 2
+    t.decimal  "free_invest_amount",    precision: 10, scale: 2
+    t.decimal  "fixed_invest_amount",   precision: 10, scale: 2, default: 0.0
+    t.date     "join_date"
+    t.date     "expiring_date"
+    t.string   "premature_redemption"
+    t.integer  "fee"
+    t.string   "product_type",                                   default: "fixed"
+    t.string   "stage",                                          default: "open"
+    t.datetime "profit_date"
+    t.datetime "principal_date"
+    t.integer  "status",                                         default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "account_records", force: true do |t|
+    t.string   "op_name"
+    t.string   "op_action"
+    t.string   "op_id"
+    t.string   "operator"
+    t.integer  "account_id"
+    t.decimal  "account_balance_before", precision: 10, scale: 0
+    t.decimal  "account_balance_after",  precision: 10, scale: 0
+    t.decimal  "op_amount",              precision: 12, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "resource_name"
+    t.integer  "resource_id"
+    t.boolean  "op_result"
+    t.integer  "op_result_code"
+  end
+
+  create_table "accounting_account_operations", force: true do |t|
+    t.string   "op_action"
+    t.string   "op_name"
+    t.string   "operator"
+    t.string   "user_id"
+    t.decimal  "op_amount",      precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "op_result",                               default: false
+    t.integer  "op_result_code",                          default: 0
+  end
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"

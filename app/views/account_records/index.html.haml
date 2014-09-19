@@ -1,0 +1,23 @@
+.container
+  %h1 流水列表
+  %table.table.table-hover
+    %thead
+      %tr
+        %th 流水号
+        %th 操作类型
+        %th 操作对象
+        %th 操作结果
+        %th Release time
+        %th Expiration time
+        %th Status
+        %th
+        %th
+        %th
+    %tbody
+      - @collection.each do |rec|
+        %tr
+          %td= rec.op_id
+          %td= rec.op_action_cn
+          %td= rec.op_name_cn
+          %td= rec.op_result_cn
+  %br
