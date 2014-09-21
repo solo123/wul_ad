@@ -11,12 +11,12 @@ module Accounting
     end
 
     def create_account(params)
-      if Account.exists?(:user_id => params[:user_id])
-        return {:op_result => false, :op_result_code => 2}
+      if AccountAccount.exists?(:uinfo_id => params[:uinfo_id])
+        return {:op_result => false, :op_result_code => 1}
       else
-        act = Account.new(:user_id => params[:user_id])
+        act = AccountAccount.new(:uinfo_id => params[:uinfo_id])
         exe_res = act.save!
-        return {:op_result => exe_res, :op_result_code => 1, :op_result_value => act.id}
+        return {:op_result => exe_res, :op_result_code => 0}
       end
     end
 
@@ -65,7 +65,15 @@ module Accounting
     end
 
     def charge_account(params)
+      act = AccountAccount.where(:uinfo_id => params[:uinfo_id]).first
+      if act
+        act.balance += params[:op_amount].to_f
+        act.save!
+      else
+        return {:op_result => false, :op_result_code => 3}
+      end
 
+      return {:op_result => true, :op_result_code => 0}
     end
 
     def withdraw_account(params)

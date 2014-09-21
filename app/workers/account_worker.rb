@@ -11,10 +11,7 @@ class AccountWorker
     op_res = JSON.parse response.body
     record = AccountOperation.find(record_id)
     record.op_result = op_res["op_result"]
-    # record.op_result_code = op_res["op_result_code"]
-    record.op_result_code = 55
-    logger.info("helloword")
-    logger.info(op_res)
+    record.op_result_code = op_res["op_result_code"]
     record.save!
   end
 end

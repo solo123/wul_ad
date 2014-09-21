@@ -8,6 +8,8 @@ class AccountOperation < ActiveRecord::Base
   attr_accessor :op_obj, :op_id_head
   $dict = {"create" => "创建",
            "product" => "产品",
+           "account" => "账户",
+           "charge" => "充值"
   }
   $error_code = ["无", "记录已存在", "保存失败"]
 
@@ -24,23 +26,6 @@ class AccountOperation < ActiveRecord::Base
     AccountWorker.perform_async($trans_url, data, self.id)
   end
 
-  #
-  # def perform(url, data, record_id)
-  #   uri = URI.parse(url)
-  #   http = Net::HTTP.new(uri.host, uri.port)
-  #   # http.use_ssl = true
-  #   request = Net::HTTP::Post.new(uri.path, {'Content-Type' =>'application/json'})
-  #   request.body = data.to_json
-  #   response = http.request(request)
-  #   op_res = JSON.parse response.body
-  #   record = AccountOperation.find(record_id)
-  #   record.op_result = op_res["op_result"]
-  #   # record.op_result_code = op_res["op_result_code"]
-  #   record.op_result_code = 55
-  #   logger.info("helloword")
-  #   logger.info(op_res)
-  #   record.save!
-  # end
 
 
 

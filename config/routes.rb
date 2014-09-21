@@ -33,6 +33,7 @@ WooulAdmin::Application.routes.draw do
     collection do
       get '/settle/:product_type',  to: 'products#settle', as: :settle
       get '/:product_type/:id/publish', to: 'products#publish', as: :publish
+      get '/:product_type/:id/exp_account', to: 'products#exp_account', as: :exp_account
       get '/:product_type/:id/switchdisplay', to: 'products#switchdisplay', as: :switchdisplay
       get '/:product_type/:id/finish', to: 'products#finish', as: :finish
       get '/:product_type/:id/payprofit', to: 'products#payprofit', as: :payprofit

@@ -14,11 +14,16 @@
     %tbody
       - @collection.each do |rec|
         %tr
-          %td= rec.operation_id
+          %td
+            %a{:href => account_operation_path(rec.id)}
+              = rec.operation_id
           %td= rec.op_action_cn
           %td= rec.op_name_cn
           %td= rec.op_result_cn
           %td= rec.op_error_cn
           %td= rec.updated_at.strftime("%Y-%m-%d %H:%M:%S")
           %td= rec.op_resource_name
+  .invest-pager-container
+    .invest_pagination
+      = will_paginate @collection, :container => false
   %br

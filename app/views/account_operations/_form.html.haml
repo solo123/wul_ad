@@ -1,0 +1,7 @@
+= simple_form_for(@object) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :deposit_number
+  .actions
+    = f.submit '保存', class: 'btn btn-primary'

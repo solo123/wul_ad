@@ -56,7 +56,6 @@ class Product < ActiveRecord::Base
       if op
         logger.info("result is #{op.op_result},#{op.op_resource_name}")
         if op.op_result
-           logger.info("lllllllllllllllllllllllllbbbbbb")
            self.stage = "已入库"
            self.save!
          end
@@ -115,11 +114,11 @@ class Product < ActiveRecord::Base
   def current_action
     case self.current_stage
       when "未发布"
-        "/products/#{self.product_type}/#{self.id}/publish"
+        "/products/#{self.product_type}/#{self.id}/exp_account"
       when "入库中"
         "#"
       when "已入库"
-        "#"
+        "/products/#{self.product_type}/#{self.id}/publish"
       when "融资中"
         "/products/#{self.product_type}/#{self.id}/finish"
       when "收益中"

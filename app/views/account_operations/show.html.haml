@@ -1,0 +1,49 @@
+= link_to '返回列表', account_operations_path
+
+- dict = {"profit" => "只付利息",
+           "profit_principal" => "本息均付"}
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 条目
+      %th 内容
+  %tbody
+    %tr
+      %td
+        = "操作类型"
+      %td
+        = @object.op_action_cn
+    %tr
+      %td
+        = "操作对象"
+      %td
+        = @object.op_name_cn
+
+    %tr
+      %td
+        = "操作数值"
+      %td
+        = @object.op_amount
+
+    %tr
+      %td
+        = "操作结果"
+      %td
+        = @object.op_result_cn
+    %tr
+      %td
+        = "失败原因"
+      %td
+        = @object.op_error_cn
+
+    %tr
+      %td
+        = "操作时间"
+      %td
+        = @object.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+
+    %tr
+      %td
+        = "资源标识"
+      %td
+        = @object.op_resource_name

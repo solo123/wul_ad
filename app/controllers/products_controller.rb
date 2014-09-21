@@ -87,10 +87,18 @@ class ProductsController < ResourcesController
     redirect_to settle_products_path(dep.product_type)
   end
 
-  def publish
+  def exp_account
     @product = Product.find(params[:id])
     @product.send_account
     @product.stage = "入库中"
+    @product.save!
+    redirect_to settle_products_path(@product.product_type)
+  end
+
+  def publish
+    @product = Product.find(params[:id])
+    @product.stage = "融资中"
+    @product.display = "show"
     @product.save!
     redirect_to settle_products_path(@product.product_type)
   end
