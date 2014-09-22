@@ -76,6 +76,23 @@ module Accounting
       return {:op_result => true, :op_result_code => 0}
     end
 
+    def join_invest(params)
+      product = AccountProduct.find_by deposit_number: params[:op_resource_name]
+      account = AccountAccount.find_by uinfo_id: params[:uinfo_id]
+      if product && account
+        sub_product = account.account_sub_products.create_with(account_product_id: product.id).find_or_create_by(deposit_number: params[:op_resouces_name])
+        sub_invest = AccountSubInvest.new
+        sub_invest.account_sub_product = sub_product
+        sub_invest.loan_number = "fffff"
+        sub_invest.save!
+        # sub_invest.save_params(params)
+      else
+        return {:op_result => false, :op_result_code => 4}
+      end
+      return {:op_result => true, :op_result_code => 0}
+    end
+
+
     def withdraw_account(params)
 
     end

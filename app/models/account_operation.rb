@@ -9,9 +9,11 @@ class AccountOperation < ActiveRecord::Base
   $dict = {"create" => "创建",
            "product" => "产品",
            "account" => "账户",
-           "charge" => "充值"
+           "charge" => "充值",
+           "join" => "加入",
+           "invest" => "投资"
   }
-  $error_code = ["无", "记录已存在", "保存失败"]
+  $error_code = ["无", "记录已存在", "保存失败", "帐号不存在", "产品不存在"]
 
   def execute_transaction
     d = Time.now.to_i
@@ -39,6 +41,14 @@ class AccountOperation < ActiveRecord::Base
     request.body = data.to_json
     response = http.request(request)
     op_res = JSON.parse response.body
+  end
+
+
+
+  def attach_action
+    if self.op_result
+      product = Product.
+    end
   end
 
 

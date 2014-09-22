@@ -12,6 +12,7 @@ class AccountWorker
     record = AccountOperation.find(record_id)
     record.op_result = op_res["op_result"]
     record.op_result_code = op_res["op_result_code"]
+    record.attach_action
     record.save!
   end
 end
