@@ -71,9 +71,6 @@ class ProductsController < ResourcesController
     pages = 20
     @collection = Product.where(:product_type => params[:product_type],:status => 0).paginate(:page => params[:page], :per_page => pages)
     @product_type = params[:product_type]
-    @collection.each do |product|
-      product.update_stage
-    end
   end
 
   def switchdisplay

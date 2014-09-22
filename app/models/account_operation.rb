@@ -47,8 +47,18 @@ class AccountOperation < ActiveRecord::Base
 
   def attach_action
     if self.op_result
-      product = Product.
+      send(self.op_action + "_" + self.op_name)
     end
+  end
+
+  def create_product
+    product = Product.find(self.op_resource_id)
+    product.stage = "已入库"
+    product.save!
+  end
+
+  def join_invest
+
   end
 
 

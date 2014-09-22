@@ -50,18 +50,18 @@ class Product < ActiveRecord::Base
   end
 
 
-  def update_stage
-    if self.stage == "入库中"
-      op = AccountOperation.where(:op_resource_id => self.id, :op_name => "product", :op_action => "create").first
-      if op
-        logger.info("result is #{op.op_result},#{op.op_resource_name}")
-        if op.op_result
-           self.stage = "已入库"
-           self.save!
-         end
-      end
-    end
-  end
+  # def update_stage
+  #   if self.stage == "入库中"
+  #     op = AccountOperation.where(:op_resource_id => self.id, :op_name => "product", :op_action => "create").first
+  #     if op
+  #       logger.info("result is #{op.op_result},#{op.op_resource_name}")
+  #       if op.op_result
+  #          self.stage = "已入库"
+  #          self.save!
+  #        end
+  #     end
+  #   end
+  # end
 
 
   def calculate_profit

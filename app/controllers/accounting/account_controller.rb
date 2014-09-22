@@ -81,6 +81,7 @@ module Accounting
       account = AccountAccount.find_by uinfo_id: params[:uinfo_id]
       if product && account
         sub_product = account.account_sub_products.create_with(account_product_id: product.id).find_or_create_by(deposit_number: params[:op_resouces_name])
+        sub_product.total_amount += params[:op_amount].to_f
         sub_invest = AccountSubInvest.new
         sub_invest.account_sub_product = sub_product
         sub_invest.loan_number = "fffff"
