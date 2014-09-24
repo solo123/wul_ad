@@ -13,7 +13,7 @@ class AccountOperation < ActiveRecord::Base
            "join" => "加入",
            "invest" => "投资"
   }
-  $error_code = ["无", "记录已存在", "保存失败", "帐号不存在", "产品不存在"]
+  $error_code = ["无", "记录已存在", "保存失败", "帐号不存在", "产品不存在", "账户余额不足", "产品额度不足"]
 
   def execute_transaction
     d = Time.now.to_i

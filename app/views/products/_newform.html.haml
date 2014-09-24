@@ -9,6 +9,8 @@
     = f.input :deposit_number, label:"产品编号"
     = f.input :total_amount,label:"借款总额"
     = f.input :annual_rate, label:"年化利率"
+    = f.input :min_limit, label:"最小额度"
+    = f.input :max_limit, label:"最大额度"
     = f.input :repayment_period, label:"偿还周期"
     = f.input :repayment_method, collection: @repay_method, label: "偿还方式"
     = f.input :each_repayment_period, label:"付息间隔"

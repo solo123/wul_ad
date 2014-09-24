@@ -8,7 +8,7 @@ class Product < ActiveRecord::Base
   def send_account
     record = self.to_json(:only => [:deposit_number, :total_amount, :annual_rate, :repayment_period, :each_repayment_amount, :free_invest_amount,
                                     :fixed_invest_amount, :join_date, :expiring_date, :premature_redemption, :fee, :product_type, :stage, :profit_date,
-                                    :principal_date, :status])
+                                    :principal_date, :status, :min_limit, :max_limit])
     operation = AccountOperation.new(:op_name => "product", :op_action => "create", :op_obj => record, :op_id_head => "CP", :op_resource_name => self.
         deposit_number, :op_resource_id => self.id)
     operation.execute_transaction

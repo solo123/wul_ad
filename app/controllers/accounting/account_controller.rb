@@ -73,24 +73,34 @@ module Accounting
         return {:op_result => false, :op_result_code => 3}
       end
 
-      return {:op_result => true, :op_result_code => 0}
+      return {:op_result => true, :op_result_code => 0, :op_result_value => act.balance }
     end
 
     def join_invest(params)
       product = AccountProduct.find_by deposit_number: params[:op_resource_name]
       account = AccountAccount.find_by uinfo_id: params[:uinfo_id]
       if product && account
-        sub_product = account.account_sub_products.create_with(account_product_id: product.id).find_or_create_by(deposit_number: params[:op_resouces_name])
-        sub_product.total_amount += params[:op_amount].to_f
+        join_value = params[:op_amount].to_f
+
+        if(join_value > account.balance)
+          return {:op_result => false, :op_result_code => 5}
+        end
+
+        sub_product = account.account_sub_products.create_with(account_product_id: product.id).find_or_create_by(deposit_number: product.deposit_number)
+
+        if (join_value + sub_product.total_amount > product.max_limit)
+          return {:op_result => false, :op_result_code => 6}
+        end
+
+        sub_product.add_total_amount_save(join_value)
+        account.reduce_balance(join_value, "join", product.deposit_number)
         sub_invest = AccountSubInvest.new
         sub_invest.account_sub_product = sub_product
-        sub_invest.loan_number = "fffff"
-        sub_invest.save!
-        # sub_invest.save_params(params)
+        sub_invest.save_params(join_value, product)
       else
         return {:op_result => false, :op_result_code => 4}
       end
-      return {:op_result => true, :op_result_code => 0}
+      return {:op_result => true, :op_result_code => 0, :op_result_value => account.balance}
     end
 
 
