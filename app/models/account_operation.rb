@@ -11,7 +11,8 @@ class AccountOperation < ActiveRecord::Base
            "account" => "账户",
            "charge" => "充值",
            "join" => "加入",
-           "invest" => "投资"
+           "invest" => "投资",
+           "sell" => "卖出"
   }
   $error_code = ["无", "记录已存在", "保存失败", "帐号不存在", "产品不存在", "账户余额不足", "产品额度不足"]
 
@@ -83,10 +84,10 @@ class AccountOperation < ActiveRecord::Base
   end
 
   def op_error_cn
-    if self.op_result_code
-      $error_code[self.op_result_code]
+    if self.op_result_code == 512
+      "后台无响应"
     else
-      "无"
+      $error_code[self.op_result_code]
     end
   end
 

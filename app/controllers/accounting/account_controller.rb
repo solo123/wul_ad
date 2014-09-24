@@ -6,7 +6,7 @@ module Accounting
       cmd = params[:op_action] + "_" + params[:op_name]
       res = send(cmd, params)
       # logger.info(res[:op_result])
-      render :json => {:op_result => res[:op_result], :op_result_code => res[:op_result_code], :op_result_value => res[:op_result_value]}
+      render :json => res
       # render :json => {:op_result => false, :op_result_code => 1}
     end
 
@@ -76,16 +76,20 @@ module Accounting
       return {:op_result => true, :op_result_code => 0, :op_result_value => act.balance }
     end
 
+    def sell_invest(params)
+      return {:op_result => true, :op_result_code => 0}
+    end
+
     def join_invest(params)
       product = AccountProduct.find_by deposit_number: params[:op_resource_name]
       account = AccountAccount.find_by uinfo_id: params[:uinfo_id]
+      sub_invest = AccountSubInvest.new
       if product && account
         join_value = params[:op_amount].to_f
 
         if(join_value > account.balance)
           return {:op_result => false, :op_result_code => 5}
         end
-
         sub_product = account.account_sub_products.create_with(account_product_id: product.id).find_or_create_by(deposit_number: product.deposit_number)
 
         if (join_value + sub_product.total_amount > product.max_limit)
@@ -94,13 +98,13 @@ module Accounting
 
         sub_product.add_total_amount_save(join_value)
         account.reduce_balance(join_value, "join", product.deposit_number)
-        sub_invest = AccountSubInvest.new
+
         sub_invest.account_sub_product = sub_product
         sub_invest.save_params(join_value, product)
       else
         return {:op_result => false, :op_result_code => 4}
       end
-      return {:op_result => true, :op_result_code => 0, :op_result_value => account.balance}
+      return {:op_result => true, :op_result_code => 0, :op_result_value => account.balance, :op_asset_id => sub_invest.id}
     end
 
 
