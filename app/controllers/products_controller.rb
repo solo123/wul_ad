@@ -86,8 +86,9 @@ class ProductsController < ResourcesController
 
   def exp_account
     @product = Product.find(params[:id])
-    @product.send_account
-    @product.stage = "入库中"
+    # @product.send_account
+    # @product.stage = "入库中"
+    @product.stage = "已入库"
     @product.save!
     redirect_to settle_products_path(@product.product_type)
   end
