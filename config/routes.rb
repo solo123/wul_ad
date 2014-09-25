@@ -1,7 +1,7 @@
-require 'sidekiq/web'
+# require 'sidekiq/web'
 WooulAdmin::Application.routes.draw do
 
-  mount Sidekiq::Web, at: "/sidekiq"
+  # mount Sidekiq::Web, at: "/sidekiq"
   resources :guarantee_companies
 
   resources :fixed_deposits do
