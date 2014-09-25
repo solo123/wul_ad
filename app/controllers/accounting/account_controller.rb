@@ -6,7 +6,11 @@ module Accounting
       cmd = params[:op_action] + "_" + params[:op_name]
       res = send(cmd, params)
       # logger.info(res[:op_result])
-      render :json => {:op_result => res[:op_result], :op_result_code => res[:op_result_code], :op_result_value => res[:op_result_value]}
+      if res
+        render :json => res and return
+      else
+        render :json =>  {:op_result => false, :op_result_code => 8}
+      end
       # render :json => {:op_result => false, :op_result_code => 1}
     end
 
@@ -37,8 +41,8 @@ module Accounting
 
     end
 
-    def transfer_invest(params)
-
+    def onsale_invest(params)
+      return {:op_result => true, :op_result_code => 0}
     end
 
     def profit_invest(params)
@@ -73,7 +77,7 @@ module Accounting
         return {:op_result => false, :op_result_code => 3}
       end
 
-      return {:op_result => true, :op_result_code => 0, :op_result_value => act.balance }
+      return {:op_result => true, :op_result_code => 0, :op_result_value => act.balance}
     end
 
     def join_invest(params)
@@ -82,17 +86,23 @@ module Accounting
       if product && account
         join_value = params[:op_amount].to_f
 
-        if(join_value > account.balance)
+        if join_value > account.balance
           return {:op_result => false, :op_result_code => 5}
         end
 
-        sub_product = account.account_sub_products.create_with(account_product_id: product.id).find_or_create_by(deposit_number: product.deposit_number)
+        sub_product = account.account_sub_products.create_with(account_product_id: product.id, total_amount: 0).find_or_create_by(deposit_number: product.deposit_number)
 
-        if (join_value + sub_product.total_amount > product.max_limit)
+        if join_value + sub_product.total_amount > product.max_limit
+          logger.info("join_vaule is :#{join_value},total_amount is : #{sub_product.total_amount}, maxlimit is:#{product.max_limit}")
           return {:op_result => false, :op_result_code => 6}
         end
 
+        if join_value + product.fixed_invest_amount > product.total_amount
+          return {:op_result => false, :op_result_code => 7}
+        end
+
         sub_product.add_total_amount_save(join_value)
+        product.add_fixed_amount_save(join_value)
         account.reduce_balance(join_value, "join", product.deposit_number)
         sub_invest = AccountSubInvest.new
         sub_invest.account_sub_product = sub_product
@@ -100,7 +110,7 @@ module Accounting
       else
         return {:op_result => false, :op_result_code => 4}
       end
-      return {:op_result => true, :op_result_code => 0, :op_result_value => account.balance}
+      return {:op_result => true, :op_result_code => 0, :op_result_value => account.balance, :op_asset_id => sub_invest.id}
     end
 
 

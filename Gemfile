@@ -61,7 +61,7 @@ gem "haml-rails"
 gem 'jquery-turbolinks'
 # gem 'protobuf'
 # gem 'rack-rpc'
-# gem 'sidekiq'
-# gem 'sinatra', require: false
-# gem 'slim'
-# gem 'airbrake'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
+gem 'airbrake'

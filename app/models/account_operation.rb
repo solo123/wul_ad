@@ -11,7 +11,8 @@ class AccountOperation < ActiveRecord::Base
            "account" => "账户",
            "charge" => "充值",
            "join" => "加入",
-           "invest" => "投资"
+           "invest" => "投资",
+           "onsale" => "出让"
   }
   $error_code = ["无", "记录已存在", "保存失败", "帐号不存在", "产品不存在", "账户余额不足", "产品额度不足"]
 
@@ -29,8 +30,6 @@ class AccountOperation < ActiveRecord::Base
   end
 
 
-
-
   def execute_query
     uri = URI.parse($query_url)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -42,7 +41,6 @@ class AccountOperation < ActiveRecord::Base
     response = http.request(request)
     op_res = JSON.parse response.body
   end
-
 
 
   def attach_action
@@ -58,6 +56,10 @@ class AccountOperation < ActiveRecord::Base
   end
 
   def join_invest
+
+  end
+
+  def onsale_invest
 
   end
 
