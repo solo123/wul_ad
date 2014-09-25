@@ -108,14 +108,14 @@ ActiveRecord::Schema.define(version: 20140924142836) do
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
-    t.decimal  "useable_balance", precision: 10, scale: 0, default: 0
-    t.decimal  "balance",         precision: 10, scale: 0, default: 0
-    t.decimal  "frozen_balance",  precision: 10, scale: 0, default: 0
-    t.decimal  "total_estate",    precision: 10, scale: 0, default: 0
+    t.decimal  "useable_balance", default: 0.0
+    t.decimal  "balance",         default: 0.0
+    t.decimal  "frozen_balance",  default: 0.0
+    t.decimal  "total_estate",    default: 0.0
     t.integer  "user_info_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "pending_status",                           default: false
+    t.boolean  "pending_status",  default: false
   end
 
   create_table "agreements", force: true do |t|
@@ -132,14 +132,14 @@ ActiveRecord::Schema.define(version: 20140924142836) do
   create_table "analyzers", force: true do |t|
     t.string   "product"
     t.integer  "owner_num"
-    t.decimal  "invest_num",            precision: 10, scale: 0
+    t.decimal  "invest_num"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "total_charge_amount",                            default: 0.0
-    t.decimal  "total_withdraw_amount",                          default: 0.0
-    t.decimal  "cash_freeze_amount",                             default: 0.0
-    t.decimal  "fee",                                            default: 0.0
-    t.decimal  "coupon_profit",                                  default: 0.0
+    t.decimal  "total_charge_amount",   default: 0.0
+    t.decimal  "total_withdraw_amount", default: 0.0
+    t.decimal  "cash_freeze_amount",    default: 0.0
+    t.decimal  "fee",                   default: 0.0
+    t.decimal  "coupon_profit",         default: 0.0
     t.integer  "user_info_id"
   end
 
@@ -270,7 +270,7 @@ ActiveRecord::Schema.define(version: 20140924142836) do
 
   create_table "coupons", force: true do |t|
     t.integer  "user_id"
-    t.decimal  "amount",     precision: 10, scale: 0
+    t.decimal  "amount"
     t.string   "title"
     t.string   "desc"
     t.datetime "created_at"
@@ -336,11 +336,11 @@ ActiveRecord::Schema.define(version: 20140924142836) do
     t.string   "premature_redemption"
     t.string   "fee"
     t.integer  "owner_num",                                     default: 0
-    t.decimal  "order_amount",         precision: 10, scale: 0, default: 0
+    t.decimal  "order_amount",                                  default: 0.0
     t.string   "product_type",                                  default: "fixed"
     t.string   "stage",                                         default: "未发布"
     t.string   "display",                                       default: "hide"
-    t.decimal  "fixed_amount",         precision: 10, scale: 0, default: 0
+    t.decimal  "fixed_amount",                                  default: 0.0
     t.datetime "profit_date"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -373,7 +373,7 @@ ActiveRecord::Schema.define(version: 20140924142836) do
     t.integer  "status",                                         default: 0
     t.string   "invest_type",                                    default: "fixed"
     t.boolean  "onsale",                                         default: false
-    t.decimal  "discount_rate",         precision: 10, scale: 0, default: 0
+    t.decimal  "discount_rate",                                  default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_id"
@@ -426,7 +426,7 @@ ActiveRecord::Schema.define(version: 20140924142836) do
   create_table "orders", force: true do |t|
     t.string   "product_type"
     t.string   "product_name"
-    t.decimal  "product_value", precision: 10, scale: 0
+    t.decimal  "product_value"
     t.integer  "product_id"
     t.integer  "user_info_id"
     t.datetime "created_at"
@@ -565,11 +565,11 @@ ActiveRecord::Schema.define(version: 20140924142836) do
 
   create_table "transactions", force: true do |t|
     t.string   "trans_type"
-    t.decimal  "operation_amount", precision: 10, scale: 0
-    t.decimal  "account_before",   precision: 10, scale: 0
-    t.decimal  "account_after",    precision: 10, scale: 0
-    t.decimal  "frozen_before",    precision: 10, scale: 0
-    t.decimal  "frozen_after",     precision: 10, scale: 0
+    t.decimal  "operation_amount"
+    t.decimal  "account_before"
+    t.decimal  "account_after"
+    t.decimal  "frozen_before"
+    t.decimal  "frozen_after"
     t.integer  "user_info_id"
     t.string   "deposit_number"
     t.datetime "created_at"
