@@ -5,7 +5,7 @@ gem 'rails', '4.0.3'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
-gem 'mysql2'
+# gem 'mysql2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -26,7 +26,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+# gem 'jbuilder', '~> 1.2'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -50,12 +50,12 @@ group :development, :test do
 end
 
 gem 'devise'
-gem 'therubyracer'
+# gem 'therubyracer'
 gem 'ransack'
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 gem 'will_paginate', '~> 3.0'
 gem 'paperclip', '~> 3.0'
-gem 'best_in_place', :git => 'git://github.com/bernat/best_in_place.git', :branch => 'rails-4'
+gem 'best_in_place', :git => 'git://github.com/bernat/best_in_place.git'
 gem 'rails3-jquery-autocomplete', git: 'https://github.com/francisd/rails3-jquery-autocomplete'
 gem "haml-rails"
 gem 'jquery-turbolinks'
