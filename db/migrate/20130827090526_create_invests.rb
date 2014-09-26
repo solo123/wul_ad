@@ -21,6 +21,11 @@ class CreateInvests < ActiveRecord::Migration
       t.boolean :onsale, default: false
       t.decimal :discount_rate, default: 0
       t.decimal :discount_rate, default: 0
+      t.integer :asset_id
+      t.decimal :resell_price
+      t.datetime :profit_date
+      t.datetime :principle_date
+      t.integer :product_id
 
       t.timestamps
     end

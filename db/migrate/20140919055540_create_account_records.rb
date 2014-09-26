@@ -9,6 +9,9 @@ class CreateAccountRecords < ActiveRecord::Migration
       t.decimal :account_balance_before
       t.decimal :account_balance_after
       t.decimal :op_amount, precision: 12, scale: 2
+      t.boolean :op_result
+      t.integer :op_result_code
+      t.string :resource_name
 
       t.timestamps
     end

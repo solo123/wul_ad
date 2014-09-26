@@ -4,6 +4,8 @@ class CreateAccSubProduct < ActiveRecord::Migration
       t.integer :account_product_id
       t.integer :account_account_id
       t.decimal :total_amount, default: 0.0
+      t.string :deposit_number
+
       t.timestamps
     end
   end

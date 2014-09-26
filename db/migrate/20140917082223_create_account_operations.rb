@@ -8,6 +8,16 @@ class CreateAccountOperations < ActiveRecord::Migration
       t.boolean :op_result, :default => false
       t.integer :op_result_code, :integer, :default => 0
       t.decimal :op_amount
+      t.integer :op_asset_id
+      t.decimal :op_result_value
+      t.integer :user_info_id
+      t.integer :uinfo_id
+      t.integer :op_account_id
+      t.string :op_resource_name
+      t.integer :op_resource_id
+      t.string :operation_id
+
+
       t.timestamps
     end
   end

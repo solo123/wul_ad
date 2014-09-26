@@ -6,6 +6,7 @@ class CreateAccountAccount < ActiveRecord::Migration
       t.decimal :balance, default: 0.0
       t.decimal :frozen_balance, default: 0.0
       t.decimal :total_estate, default: 0.0
+      t.integer :uinfo_id
       t.timestamps
     end
   end

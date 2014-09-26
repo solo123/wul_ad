@@ -7,6 +7,7 @@ class CreateAccSubInvest < ActiveRecord::Migration
       t.integer :status, default: 0
       t.boolean :onsale, default: false
       t.decimal :discount_rate, default: 0
+      t.integer :account_product_id
       t.timestamps
     end
   end

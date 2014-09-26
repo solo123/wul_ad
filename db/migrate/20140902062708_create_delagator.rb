@@ -6,6 +6,8 @@ class CreateDelagator < ActiveRecord::Migration
       t.integer :min_invest_amount
       t.integer :max_invest_period
       t.integer :min_remain_balance
+      t.integer :status, :default => 0
+
       t.datetime :last_open_time
       t.datetime :last_invest_time
       t.timestamps

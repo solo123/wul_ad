@@ -3,7 +3,7 @@ class CreateSubAnalyzers < ActiveRecord::Migration
     create_table :sub_analyzers do |t|
       t.integer :analyzer_id
       t.string :product_type
-      t.decimal :total_pricipal, default: 0.0
+      t.decimal :total_principal, default: 0.0
       t.decimal :total_profit, default: 0.0
       t.decimal :punishment_amount, default: 0.0
       t.decimal :resell_amount, default: 0.0

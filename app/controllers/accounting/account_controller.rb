@@ -41,9 +41,83 @@ module Accounting
 
     end
 
+
+    # self.onsale = true
+    # self.resell_price = self.amount * (100 - rate) /100
+    # self.discount_rate = rate
+    # self.save!
+
+
     def onsale_invest(params)
-      return {:op_result => true, :op_result_code => 0}
+      invest = AccountSubInvest.find(params[:op_asset_id]) rescue nil
+      rate = params[:op_amount].to_f
+      logger.info("asset id is #{params[:op_asset_id]}")
+      if invest
+         if invest.onsale
+           return {:op_result => false, :op_result_code => 9}
+         else
+           invest.onsale = true
+           invest.resell_price = invest.amount * (100 - rate) /100 - invest.account_product.fee
+           invest.discount_rate = rate
+           invest.save!
+           return {:op_result => true, :op_result_code => 0, :op_result_value => invest.resell_price}
+         end
+      end
+      return {:op_result => false, :op_result_code => 10}
     end
+
+
+    def buy_invest(params)
+      invest = AccountSubInvest.find(params[:op_asset_id]) rescue nil
+      buyer_account = AccountAccount.find_by uinfo_id: params[:uinfo_id] rescue nil
+
+
+      if invest
+        amount = invest.resell_price
+        seller_account = invest.account_sub_product.account_account
+        if buyer_account.balance < amount
+          return {:op_result => false, :op_result_code => 5}
+        end
+
+        if buyer_account.unable_to_buy?(invest)
+          return {:op_result => false, :op_result_code => 7}
+        end
+
+        if invest.onsale
+          seller_account.transfer_invest(buyer_account, invest, amount)
+          return {:op_result => true, :op_result_code => 0, :op_result_value => buyer_account.balance, :op_result_value2 => seller_account.balance,
+          :uinfo_id2 => seller_account.uinfo_id}
+        else
+          return {:op_result => false, :op_result_code => 11}
+        end
+      end
+      return {:op_result => false, :op_result_code => 10}
+    end
+
+
+    # invest = Invest.find(params[:invest_id])
+    # buyer_balance = current_user.user_info.account.balance
+    # if buyer_balance >= invest.resell_price
+    #   current_user.user_info.account.balance -= invest.resell_price
+    #   current_user.save!
+    #   Transaction.createTransaction("buy", invest.resell_price, buyer_balance + invest.resell_price, buyer_balance, current_user.user_info.id, invest.product.deposit_number, invest.invest_type)
+    #   invest.user_info.account.balance += invest.resell_price
+    #   invest.user_info.save!
+    #   Transaction.createTransaction("sell", invest.resell_price, seller_balance, seller_balance + invest.resell_price, invest.user_info.id, invest.product.deposit_number,invest.invest_type)
+    #   # invest.resell_price = 0
+    #   # invest.discount_rate = 0
+    #   invest.onsale = false
+    #   current_user.user_info.invests << invest
+    #   invest.save!
+    # else
+    #   flash[:notice] = "账户余额不足"
+    # end
+
+
+
+
+
+
 
     def profit_invest(params)
 

@@ -5,12 +5,15 @@ class CreateVerifications < ActiveRecord::Migration
       t.string :email
       t.datetime :phonetime
       t.string :personalid
-      t.string :phonestatus
-      t.string :emailstatus
-      t.string :idstatus
-      t.integer :securyscore
+      t.string :phonestatus, :default => "confirming"
+      t.string :emailstatus, :default => "confirming"
+      t.string :idstatus, :default => "confirming"
+      t.integer :securyscore, :default => 0
       t.integer :user_info_id
       t.string :verify_code
+      t.boolean :phone_confirm_status, :default => false
+      t.string :realname
+      t.string :email_code
 
       t.timestamps
     end

@@ -17,6 +17,8 @@ class CreateUserInfos < ActiveRecord::Migration
 			t.datetime :id_card_verify_date
 			t.datetime :mobile_verify_date
       t.integer :status, default: 0
+      t.integer :secury_score, :default => 0
+      t.string :payment_password
 
       t.timestamps
     end

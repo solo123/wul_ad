@@ -17,6 +17,10 @@ class CreateAccountProducts < ActiveRecord::Migration
       t.datetime :profit_date
       t.datetime :principal_date
       t.integer  :status, default: 0
+      t.integer  :min_limit, default: 1000
+      t.integer  :max_limit, default: 100000
+
+
       t.timestamps
     end
   end
