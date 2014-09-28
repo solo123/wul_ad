@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926093421) do
+ActiveRecord::Schema.define(version: 20140928083633) do
 
   create_table "account_accounts", force: true do |t|
     t.integer  "user_id"
@@ -385,6 +385,17 @@ ActiveRecord::Schema.define(version: 20140926093421) do
     t.string   "stage",                                          default: "normal"
   end
 
+  create_table "messages", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.string   "creator"
+    t.integer  "approval_id"
+    t.integer  "user_info_id"
+    t.datetime "release_time"
+    t.datetime "expiration_time"
+    t.integer  "status"
+  end
+
   create_table "month_deposits", force: true do |t|
     t.string   "deposit_number"
     t.string   "transaction_number"
@@ -609,6 +620,8 @@ ActiveRecord::Schema.define(version: 20140926093421) do
     t.string   "payment_password"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "message_num",         default: 0
+    t.integer  "notify_num",          default: 0
   end
 
   create_table "users", force: true do |t|
