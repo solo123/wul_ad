@@ -84,9 +84,9 @@ module Accounting
         end
 
         if invest.onsale
-          seller_account.transfer_invest(buyer_account, invest, amount)
+          buyer_account.transfer_invest(seller_account, invest, amount)
           return {:op_result => true, :op_result_code => 0, :op_result_value => buyer_account.balance, :op_result_value2 => seller_account.balance,
-          :uinfo_id2 => seller_account.uinfo_id}
+          :uinfo_id2 => seller_account.uinfo_id, :op_amount => amount}
         else
           return {:op_result => false, :op_result_code => 11}
         end
@@ -144,6 +144,7 @@ module Accounting
 
     def charge_account(params)
       act = AccountAccount.where(:uinfo_id => params[:uinfo_id]).first
+      amount = params[:op_amount].to_f
       if act
         act.balance += params[:op_amount].to_f
         act.save!
@@ -151,7 +152,7 @@ module Accounting
         return {:op_result => false, :op_result_code => 3}
       end
 
-      return {:op_result => true, :op_result_code => 0, :op_result_value => act.balance}
+      return {:op_result => true, :op_result_code => 0, :op_result_value => act.balance, :op_amount =>amount }
     end
 
     def join_invest(params)
