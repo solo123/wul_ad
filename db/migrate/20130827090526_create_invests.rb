@@ -26,6 +26,7 @@ class CreateInvests < ActiveRecord::Migration
       t.datetime :profit_date
       t.datetime :principle_date
       t.integer :product_id
+      t.string :stage, :default => "normal"
 
       t.timestamps
     end

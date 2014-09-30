@@ -182,10 +182,10 @@ module Accounting
         sub_invest = AccountSubInvest.new
         sub_invest.account_sub_product = sub_product
         sub_invest.save_params(join_value, product)
+        return {:op_result => true, :op_result_code => 0, :op_result_value => account.balance, :op_asset_id => sub_invest.id, :op_amount => join_value}
       else
         return {:op_result => false, :op_result_code => 4}
       end
-      return {:op_result => true, :op_result_code => 0, :op_result_value => account.balance, :op_asset_id => sub_invest.id}
     end
 
 

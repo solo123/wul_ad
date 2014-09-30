@@ -17,6 +17,8 @@ class CreateAccountOperations < ActiveRecord::Migration
       t.integer :op_resource_id
       t.string :operation_id
 
+      t.decimal :op_result_value2
+      t.decimal :uinfo_id2
 
       t.timestamps
     end

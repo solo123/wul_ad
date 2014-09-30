@@ -19,6 +19,8 @@ class CreateUserInfos < ActiveRecord::Migration
       t.integer :status, default: 0
       t.integer :secury_score, :default => 0
       t.string :payment_password
+      t.integer :message_num, :default => 0
+      t.integer :notify_num, :default => 0
 
       t.timestamps
     end

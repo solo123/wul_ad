@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140929071505) do
+ActiveRecord::Schema.define(version: 20140928075728) do
 
   create_table "account_accounts", force: true do |t|
     t.integer  "user_id"
@@ -41,10 +41,10 @@ ActiveRecord::Schema.define(version: 20140929071505) do
     t.string   "op_resource_name"
     t.integer  "op_resource_id"
     t.string   "operation_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.decimal  "op_result_value2", precision: 10, scale: 0
     t.decimal  "uinfo_id2",        precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "account_products", force: true do |t|
@@ -94,9 +94,9 @@ ActiveRecord::Schema.define(version: 20140929071505) do
     t.boolean  "onsale",                                          default: false
     t.decimal  "discount_rate",          precision: 10, scale: 0, default: 0
     t.integer  "account_product_id"
+    t.decimal  "resell_price",           precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "resell_price",           precision: 10, scale: 0
   end
 
   create_table "account_sub_products", force: true do |t|
@@ -321,32 +321,6 @@ ActiveRecord::Schema.define(version: 20140929071505) do
     t.integer "role_id"
   end
 
-  create_table "fixed_deposits", force: true do |t|
-    t.string   "deposit_number"
-    t.decimal  "total_amount",         precision: 12, scale: 2
-    t.decimal  "annual_rate",          precision: 5,  scale: 2
-    t.integer  "repayment_period"
-    t.string   "guarantee"
-    t.decimal  "free_invest_amount",   precision: 12, scale: 2
-    t.string   "detail"
-    t.string   "income_method"
-    t.string   "join_date"
-    t.string   "join_condition"
-    t.date     "expiring_date"
-    t.string   "repayment_method"
-    t.string   "premature_redemption"
-    t.string   "fee"
-    t.integer  "owner_num",                                     default: 0
-    t.decimal  "order_amount",         precision: 10, scale: 0, default: 0
-    t.string   "product_type",                                  default: "fixed"
-    t.string   "stage",                                         default: "未发布"
-    t.string   "display",                                       default: "hide"
-    t.decimal  "fixed_amount",         precision: 10, scale: 0, default: 0
-    t.datetime "profit_date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "guarantee_companies", force: true do |t|
     t.integer  "invest_id"
     t.integer  "company_id"
@@ -380,9 +354,9 @@ ActiveRecord::Schema.define(version: 20140929071505) do
     t.datetime "profit_date"
     t.datetime "principle_date"
     t.integer  "product_id"
+    t.string   "stage",                                          default: "normal"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "stage",                                          default: "normal"
   end
 
   create_table "messages", force: true do |t|
@@ -394,30 +368,6 @@ ActiveRecord::Schema.define(version: 20140929071505) do
     t.datetime "release_time"
     t.datetime "expiration_time"
     t.integer  "status",          default: 0
-  end
-
-  create_table "month_deposits", force: true do |t|
-    t.string   "deposit_number"
-    t.string   "transaction_number"
-    t.string   "address"
-    t.string   "usage"
-    t.text     "usage_detail"
-    t.string   "credit_level"
-    t.decimal  "annual_rate",           precision: 5,  scale: 2
-    t.decimal  "amount",                precision: 12, scale: 2
-    t.integer  "repayment_period"
-    t.string   "repayment_method"
-    t.decimal  "each_repayment_amount", precision: 12, scale: 2
-    t.decimal  "free_invest_amount",    precision: 12, scale: 2
-    t.datetime "invest_end_date"
-    t.string   "remark"
-    t.integer  "status",                                         default: 0
-    t.integer  "owner_num",                                      default: 0
-    t.string   "guarantee"
-    t.datetime "join_date"
-    t.datetime "expiring_date"
-    t.string   "stage",                                          default: "未发布"
-    t.string   "display",                                        default: "hide"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -618,10 +568,10 @@ ActiveRecord::Schema.define(version: 20140929071505) do
     t.integer  "status",              default: 0
     t.integer  "secury_score",        default: 0
     t.string   "payment_password"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "message_num",         default: 0
     t.integer  "notify_num",          default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

@@ -8,7 +8,8 @@ class CreateMessagesTable < ActiveRecord::Migration
       t.integer :user_info_id
       t.datetime :release_time
       t.datetime :expiration_time
-      t.integer :status
+      t.integer :status, :default => 0
+      t.timestamps
     end
   end
 end

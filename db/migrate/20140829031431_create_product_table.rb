@@ -17,7 +17,7 @@ class CreateProductTable < ActiveRecord::Migration
       t.date     :expiring_date
 
       t.string   :premature_redemption
-      t.integer  :fee
+      t.integer  :fee, :default => 1
       t.integer  :owner_num, default: 0
       t.decimal  :order_amount, precision: 10, scale: 0, default: 0
       t.string   :product_type, default: "fixed"
@@ -33,6 +33,7 @@ class CreateProductTable < ActiveRecord::Migration
       t.integer :min_limit, :default => 1000
       t.integer :max_limit, :default => 100000
       t.integer :each_repayment_period, :default => 30
+
       t.timestamps
     end
   end

@@ -11,7 +11,7 @@ class CreateAccountProducts < ActiveRecord::Migration
       t.date :join_date
       t.date     :expiring_date
       t.string   :premature_redemption
-      t.integer  :fee
+      t.integer  :fee, :default => 1
       t.string   :product_type, default: "fixed"
       t.string   :stage, default: "open"
       t.datetime :profit_date
@@ -19,7 +19,6 @@ class CreateAccountProducts < ActiveRecord::Migration
       t.integer  :status, default: 0
       t.integer  :min_limit, default: 1000
       t.integer  :max_limit, default: 100000
-
 
       t.timestamps
     end
