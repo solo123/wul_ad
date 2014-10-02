@@ -65,3 +65,6 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
 gem 'airbrake'
+gem 'unicorn', :require => false
+gem 'mina', :require => false
+gem 'mina-unicorn', :require => false
