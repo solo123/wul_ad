@@ -45,15 +45,15 @@ task :setup => :environment do
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]
   
   
-  queue! %[mkdir -p "#{deploy_to}/current/tmp"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/current/tmp"]
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp"]
 
     
-  queue! %[mkdir -p "#{deploy_to}/current/tmp/sockets"]
-  queue! %[mkdir -p "#{deploy_to}/current/tmp/pids"]
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp/sockets"]
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp/pids"]
    
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/current/tmp/sockets"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/current/tmp/pids"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/sockets"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/pids"]
 
 
  queue! %[mkdir -p "#{deploy_to}/shared/config"]
