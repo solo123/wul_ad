@@ -3,20 +3,20 @@ worker_processes 2
 # Since Unicorn is never exposed to outside clients, it does not need to
 
 # "current" directory that Capistrano sets up.
-APP_PATH = "/home/www/wul_ad"
+APP_PATH = "/home/wooul/admin.wooul.com"
 DEPLOY_PATH = "/home/wooul/wooul.com"
-working_directory APP_PATH# available in 0.94.0+
+working_directory APP_PATH + "/current" # available in 0.94.0+
 
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
-listen APP_PATH+"/tmp/sockets/unicorn.sock", :backlog => 64
+listen APP_PATH+"/shared/tmp/sockets/unicorn.sock", :backlog => 64
 
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
 timeout 30
 
 # feel free to point this anywhere accessible on the filesystem
-pid APP_PATH+"/tmp/pids/unicorn.pid"
+pid APP_PATH+"/shared/tmp/pids/unicorn.pid"
 
 # By default, the Unicorn logger will write to stderr.
 # Additionally, ome applications/frameworks log to stderr or stdout,
