@@ -17,7 +17,8 @@ God.watch do |w|
 
   w.start_grace = 10.seconds
   w.restart_grace = 10.seconds
-
+  w.keepalive(:memory_max => 130.megabytes,
+              :cpu_max => 50.percent)
   w.uid = UID
   #w.gid = GID
 
