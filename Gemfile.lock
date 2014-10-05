@@ -103,6 +103,8 @@ GEM
     mina (0.3.0)
       open4
       rake
+    mina-sidekiq (0.3.0)
+      mina
     mina-unicorn (0.0.1)
     minitest (4.7.5)
     multi_json (1.10.1)
@@ -236,6 +238,7 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   mina
+  mina-sidekiq
   mina-unicorn
   mysql2
   paperclip (~> 3.0)

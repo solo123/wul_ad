@@ -68,3 +68,5 @@ gem 'airbrake'
 gem 'unicorn', :require => false
 gem 'mina', :require => false
 gem 'mina-unicorn', :require => false
+gem 'mina-sidekiq', :require => false
+#gem 'god', :require => false

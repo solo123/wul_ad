@@ -2,10 +2,12 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/unicorn'
+require 'mina_sidekiq/tasks'
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/rvm'    # for rvm support. (http://rvm.io)
 set :rvm_path, '/usr/local/rvm/bin/rvm'
-invoke :'rvm:use[ruby-2.1.1@default]'
+
+#invoke :'rvm:use[ruby-2.1.1@default]'
 # Basic settings:
 #   domain       - The hostname to SSH to.
 #   deploy_to    - Path to deploy into.
@@ -17,7 +19,9 @@ set :domain, 'www.weexing.com'
 set :deploy_to, '/home/wooul/wooul.com'
 set :repository, 'git://github.com/solo123/wul_ad.git'
 set :branch, 'background'
-
+set :unicorn_pid, "#{deploy_to}/shared/tmp/pids/unicorn.pid"
+set :sidekiq_pid, "#{deploy_to}/shared/tmp/pids/sidekiq.pid"
+set :sidekiq_log, "#{deploy_to}/shared/log/sidekiq.log"
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
 set :shared_paths, ['log']
@@ -32,7 +36,8 @@ task :environment do
   # If you're using rbenv, use this to load the rbenv environment.
   # Be sure to commit your .rbenv-version to your repository.
   # invoke :'rbenv:load'
-
+  
+invoke :'rvm:use[ruby-2.1.1@default]'
   # For those using RVM, use this to load an RVM version@gemset.
   # invoke :'rvm:use[ruby-1.9.3-p125@default]'
 end
@@ -43,7 +48,7 @@ end
 task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/shared/log"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]
-  
+    
   
   queue! %[mkdir -p "#{deploy_to}/shared/tmp"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp"]
@@ -68,14 +73,16 @@ task :deploy => :environment do
   deploy do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
+    
+    invoke :'sidekiq:quiet'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
-
     to :launch do
       queue "touch #{deploy_to}/tmp/restart.txt"
+      invoke :'sidekiq:restart'
     end
   end
 end
