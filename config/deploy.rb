@@ -16,7 +16,7 @@ set :rvm_path, '/usr/local/rvm/bin/rvm'
 
 set :user, "wooul"
 set :domain, 'www.weexing.com'
-set :deploy_to, '/home/wooul/wooul.com'
+set :deploy_to, '/home/wooul/admin.wooul.com'
 set :repository, 'git://github.com/solo123/wul_ad.git'
 set :branch, 'background'
 set :unicorn_pid, "#{deploy_to}/shared/tmp/pids/unicorn.pid"
@@ -81,8 +81,7 @@ task :deploy => :environment do
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
     to :launch do
-      queue "touch #{deploy_to}/tmp/restart.txt"
-      invoke :'sidekiq:restart'
+      queue! %[god restart admin]
     end
   end
 end

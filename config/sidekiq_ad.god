@@ -19,7 +19,7 @@ God.watch do |w|
   w.restart_grace = 10.seconds
 
   w.uid = UID
-  w.gid = GID
+  #w.gid = GID
 
   w.pid_file = "#{ADMIN_PID_DIR}/sidekiq.pid"
   w.behavior(:clean_pid_file)
