@@ -5,7 +5,7 @@ gem 'rails', '4.0.3'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
-gem 'mysql2'
+#gem 'mysql2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -64,9 +64,9 @@ gem 'jquery-turbolinks'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
-gem 'airbrake'
-gem 'unicorn', :require => false
-gem 'mina', :require => false
-gem 'mina-unicorn', :require => false
-gem 'mina-sidekiq', :require => false
+#gem 'airbrake'
+#gem 'unicorn', :require => false
+#gem 'mina', :require => false
+#gem 'mina-unicorn', :require => false
+#gem 'mina-sidekiq', :require => false
 #gem 'god', :require => false
