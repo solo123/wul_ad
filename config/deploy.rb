@@ -103,7 +103,7 @@ task :firstdeploy => :environment do
     invoke :'rails:db_seed'
     invoke :'rails:assets_precompile'
     to :launch do
-      #queue! %[god -c /home/www/god/startgod.god -l /home/www/god/god.log -P /home/www/god/god.pid]
+      queue! %[god -c /home/www/god/startgod.god -l /home/www/god/god.log -P /home/www/god/god.pid]
     end
   end
 end
