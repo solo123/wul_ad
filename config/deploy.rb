@@ -6,6 +6,8 @@ require 'mina_sidekiq/tasks'
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/rvm'    # for rvm support. (http://rvm.io)
 set :rvm_path, '/usr/local/rvm/bin/rvm'
+#set :rvm_path, '~/.rvm/bin/rvm'
+#set :rvm_path, '/usr/local/rvm/scripts/rvm'
 
 #invoke :'rvm:use[ruby-2.1.1@default]'
 # Basic settings:
@@ -16,6 +18,7 @@ set :rvm_path, '/usr/local/rvm/bin/rvm'
 
 set :user, "wooul"
 set :domain, 'www.weexing.com'
+#set :port, 17632
 set :deploy_to, '/home/wooul/admin.wooul.com'
 set :repository, 'git://github.com/solo123/wul_ad.git'
 set :branch, 'background'
@@ -82,6 +85,25 @@ task :deploy => :environment do
     invoke :'rails:assets_precompile'
     to :launch do
       queue! %[god restart admin]
+    end
+  end
+end
+
+desc "First deploy"
+task :firstdeploy => :environment do
+  deploy do
+    # Put things that will set up an empty directory into a fully set-up
+    # instance of your project.
+
+    # invoke :'sidekiq:quiet'
+    invoke :'git:clone'
+    invoke :'deploy:link_shared_paths'
+    invoke :'bundle:install'
+    invoke :'rails:db_migrate'
+    invoke :'rails:db_seed'
+    invoke :'rails:assets_precompile'
+    to :launch do
+      #queue! %[god -c /home/www/god/startgod.god -l /home/www/god/god.log -P /home/www/god/god.pid]
     end
   end
 end
