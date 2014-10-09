@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009041508) do
+ActiveRecord::Schema.define(version: 20141009081919) do
 
   create_table "account_accounts", force: true do |t|
     t.integer  "user_id"
@@ -337,8 +337,8 @@ ActiveRecord::Schema.define(version: 20141009041508) do
     t.string   "usage"
     t.text     "usage_detail"
     t.string   "credit_level"
-    t.decimal  "annual_rate",           precision: 5,  scale: 2
-    t.decimal  "amount",                precision: 12, scale: 2
+    t.decimal  "annual_rate",           precision: 12, scale: 2, default: 0.0
+    t.decimal  "amount",                precision: 12, scale: 2, default: 0.0
     t.integer  "repayment_period"
     t.string   "repayment_method"
     t.decimal  "each_repayment_amount", precision: 12, scale: 2
@@ -357,6 +357,7 @@ ActiveRecord::Schema.define(version: 20141009041508) do
     t.string   "stage",                                          default: "normal"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "current_principal",     precision: 10, scale: 0, default: 0
   end
 
   create_table "messages", force: true do |t|
