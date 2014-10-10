@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141010015211) do
+ActiveRecord::Schema.define(version: 20141010081505) do
 
   create_table "account_accounts", force: true do |t|
     t.integer  "user_id"
@@ -47,6 +47,14 @@ ActiveRecord::Schema.define(version: 20141010015211) do
     t.datetime "updated_at"
   end
 
+  create_table "account_product_profits", force: true do |t|
+    t.integer  "account_product_id"
+    t.datetime "refund_time"
+    t.decimal  "refund_amount",      precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "account_products", force: true do |t|
     t.string   "deposit_number"
     t.decimal  "total_amount",          precision: 12, scale: 2
@@ -66,6 +74,16 @@ ActiveRecord::Schema.define(version: 20141010015211) do
     t.integer  "status",                                         default: 0
     t.integer  "min_limit",                                      default: 1000
     t.integer  "max_limit",                                      default: 100000
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "each_repayment_period",                          default: 30
+    t.date     "publish_date"
+  end
+
+  create_table "account_profits", force: true do |t|
+    t.integer  "account_sub_invest_id"
+    t.datetime "refund_time"
+    t.decimal  "refund_amount",         precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -480,6 +498,7 @@ ActiveRecord::Schema.define(version: 20141010015211) do
     t.integer  "each_repayment_period",                          default: 30
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "locked",                                         default: false
   end
 
   create_table "roles", force: true do |t|

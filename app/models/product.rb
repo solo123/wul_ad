@@ -8,7 +8,7 @@ class Product < ActiveRecord::Base
   def send_account
     record = self.to_json(:only => [:deposit_number, :total_amount, :annual_rate, :repayment_period, :each_repayment_amount, :free_invest_amount,
                                     :fixed_invest_amount, :join_date, :expiring_date, :premature_redemption, :fee, :product_type, :stage, :profit_date,
-                                    :principal_date, :status, :min_limit, :max_limit])
+                                    :principal_date, :status, :min_limit, :max_limit, :each_repayment_period, :join_date])
     operation = AccountOperation.new(:op_name => "product", :op_action => "create", :op_obj => record, :op_id_head => "CP", :op_resource_name => self.
         deposit_number, :op_resource_id => self.id)
     operation.execute_transaction
@@ -69,6 +69,9 @@ class Product < ActiveRecord::Base
   end
 
   def profit_status
+    if self.locked
+      return "锁定中"
+    end
     if current_profit > 0
       "待付息"
     else
@@ -85,6 +88,11 @@ class Product < ActiveRecord::Base
   end
 
   def current_stage
+
+    if self.locked
+      return "锁定中"
+    end
+
     if self.expiring_date < Time.now.yesterday && self.stage!="已结束"
       "已到期"
     else
@@ -108,6 +116,8 @@ class Product < ActiveRecord::Base
         "结款"
       when "已结束"
         "查看"
+      when "锁定中"
+        "查看"
     end
   end
 
@@ -127,6 +137,8 @@ class Product < ActiveRecord::Base
         "/products/#{self.product_type}/#{self.id}/refund"
       when "已结束"
         "/products/#{self.product_type}/#{self.id}"
+      when "锁定中"
+        "/products/#{self.product_type}/#{self.id}"
     end
   end
 
@@ -144,6 +156,23 @@ class Product < ActiveRecord::Base
 
   def profit_action
     "/products/#{self.product_type}/#{self.id}/payprofit"
+  end
+
+  def principal_operation
+    if self.locked
+      "暂无"
+    else
+      "付本"
+    end
+  end
+
+  def profit_operation
+    if self.locked
+      "暂无"
+    else
+      "付息"
+    end
+
   end
 
   def principal_action

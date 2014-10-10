@@ -10,6 +10,7 @@ class AccountWorker
     response = http.request(request)
     op_res = JSON.parse response.body
     record = AccountOperation.find(record_id)
+    logger.info(op_res)
     record.op_result = op_res["op_result"]
     record.op_result_code = op_res["op_result_code"]
     record.attach_action

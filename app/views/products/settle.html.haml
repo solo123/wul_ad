@@ -42,8 +42,8 @@
         -#  = deposit.principle_status
         %td
           = link_to deposit.current_operation, deposit.current_action
-          = link_to "付息", deposit.profit_action
-          = link_to "付本", deposit.principal_action
+          = link_to deposit.profit_operation, deposit.profit_action
+          = link_to deposit.principal_operation, deposit.principal_action
         %td= link_to deposit.display_status, deposit.display_action
 
 

@@ -15,14 +15,14 @@ class AccountOperation < ActiveRecord::Base
            "onsale" => "出让"
   }
   $error_code = ["无", "记录已存在", "保存失败", "帐号不存在", "产品不存在", "账户余额不足", "个人额度不足", "产品余额不足", "系统内部错误", "资产已经在售",
-  "资产不存在", "产品非转让状态"]
+  "资产不存在", "产品非转让状态", "无利息需支付"]
 
   def execute_transaction
     d = Time.now.to_i
     self.operation_id = self.op_id_head + d.to_s
     data = {:op_name => self.op_name, :op_amount => self.op_amount, :op_action => self.op_action, :operator => self.operator,
-            :user_id => self.user_id, :operation_id => self.operation_id, :op_obj => self.op_obj, :op_resource_name => self.op_resource_name,
-            :op_obj => self.op_obj, :op_resource_name => self.op_resource_id, :api_key => "secret"
+            :user_id => self.user_id, :operation_id => self.operation_id, :op_obj => self.op_obj, :op_resource_id => self.op_resource_id,
+            :op_obj => self.op_obj, :op_resource_name => self.op_resource_name, :api_key => "secret"
     }
     # data = self.as_json
     self.save!
@@ -54,6 +54,10 @@ class AccountOperation < ActiveRecord::Base
     product = Product.find(self.op_resource_id)
     product.stage = "已入库"
     product.save!
+  end
+
+  def profit_invest
+
   end
 
   def join_invest

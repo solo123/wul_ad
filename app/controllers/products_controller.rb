@@ -122,10 +122,17 @@ class ProductsController < ResourcesController
 
   def payprofit
     dep = Product.find(params[:id])
-    if dep.current_profit > 0
-      dep.invests.each { |inv| inv.payprofit }
-      dep.profit_date = dep.profit_date + dep.each_repayment_period.days
-      dep.save!
+    # if dep.current_profit > 0 && !dep.locked
+    if !dep.locked
+      op = AccountOperation.new(:op_name => "invest", :op_action => "profit", :operator => "system",
+                                :op_resource_name => dep.deposit_number)
+      op.op_id_head = "FX"
+      op.execute_transaction
+      # dep.locked = true
+      # dep.save!
+      # dep.invests.each { |inv| inv.payprofit }
+      # dep.profit_date = dep.profit_date + dep.each_repayment_period.days
+      # dep.save!
     end
     redirect_to settle_products_path(dep.product_type)
   end

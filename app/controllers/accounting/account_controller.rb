@@ -120,12 +120,24 @@ module Accounting
 
 
     def profit_invest(params)
-
+      product = AccountProduct.find_by deposit_number: params[:op_resource_name]
+      if product
+         if product.has_profit?
+            product.pay_profits
+            return {:op_result => true, :op_result_code => 0}
+         else
+           return {:op_result => false, :op_result_code => 12}
+         end
+      else
+        return {:op_result => false, :op_result_code => 4}
+      end
     end
 
     def principal_invest(params)
 
     end
+
+
 
     def create_product(params)
       product = JSON.parse params[:op_obj]
