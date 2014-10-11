@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141010081505) do
+ActiveRecord::Schema.define(version: 20141011095623) do
 
   create_table "account_accounts", force: true do |t|
     t.integer  "user_id"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20141010081505) do
     t.datetime "updated_at"
   end
 
+  create_table "account_invest_profits", force: true do |t|
+    t.integer  "account_sub_invest_id"
+    t.datetime "refund_time"
+    t.decimal  "refund_amount",         precision: 15, scale: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "account_operations", force: true do |t|
     t.string   "op_action"
     t.string   "op_name"
@@ -32,7 +40,7 @@ ActiveRecord::Schema.define(version: 20141010081505) do
     t.boolean  "op_result",                                 default: false
     t.integer  "op_result_code",                            default: 0
     t.integer  "integer",                                   default: 0
-    t.decimal  "op_amount",        precision: 10, scale: 0
+    t.decimal  "op_amount",        precision: 15, scale: 4
     t.integer  "op_asset_id"
     t.decimal  "op_result_value",  precision: 10, scale: 0
     t.integer  "user_info_id"
@@ -42,7 +50,7 @@ ActiveRecord::Schema.define(version: 20141010081505) do
     t.integer  "op_resource_id"
     t.string   "operation_id"
     t.decimal  "op_result_value2", precision: 10, scale: 0
-    t.decimal  "uinfo_id2",        precision: 10, scale: 0
+    t.integer  "uinfo_id2"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -50,7 +58,7 @@ ActiveRecord::Schema.define(version: 20141010081505) do
   create_table "account_product_profits", force: true do |t|
     t.integer  "account_product_id"
     t.datetime "refund_time"
-    t.decimal  "refund_amount",      precision: 10, scale: 0
+    t.decimal  "refund_amount",      precision: 15, scale: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -129,7 +137,7 @@ ActiveRecord::Schema.define(version: 20141010081505) do
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
     t.decimal  "useable_balance", precision: 10, scale: 0, default: 0
-    t.decimal  "balance",         precision: 10, scale: 0, default: 0
+    t.decimal  "balance",         precision: 12, scale: 2, default: 0.0
     t.decimal  "frozen_balance",  precision: 10, scale: 0, default: 0
     t.decimal  "total_estate",    precision: 10, scale: 0, default: 0
     t.integer  "user_info_id"
@@ -151,13 +159,13 @@ ActiveRecord::Schema.define(version: 20141010081505) do
   create_table "analyzers", force: true do |t|
     t.string   "product"
     t.integer  "owner_num"
-    t.decimal  "invest_num",            precision: 10, scale: 0
+    t.decimal  "invest_num",            precision: 12, scale: 2, default: 0.0
     t.integer  "user_info_id"
-    t.decimal  "total_charge_amount",   precision: 10, scale: 0, default: 0
-    t.decimal  "total_withdraw_amount", precision: 10, scale: 0, default: 0
-    t.decimal  "cash_freeze_amount",    precision: 10, scale: 0, default: 0
-    t.decimal  "fee",                   precision: 10, scale: 0, default: 0
-    t.decimal  "coupon_profit",         precision: 10, scale: 0, default: 0
+    t.decimal  "total_charge_amount",   precision: 12, scale: 2, default: 0.0
+    t.decimal  "total_withdraw_amount", precision: 12, scale: 2, default: 0.0
+    t.decimal  "cash_freeze_amount",    precision: 12, scale: 2, default: 0.0
+    t.decimal  "fee",                   precision: 12, scale: 2, default: 0.0
+    t.decimal  "coupon_profit",         precision: 12, scale: 2, default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -347,6 +355,14 @@ ActiveRecord::Schema.define(version: 20141010081505) do
     t.datetime "updated_at"
   end
 
+  create_table "invest_profits", force: true do |t|
+    t.integer  "invest_id"
+    t.datetime "refund_time"
+    t.decimal  "refund_amount", precision: 12, scale: 2, default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invests", force: true do |t|
     t.integer  "user_info_id"
     t.string   "loan_number"
@@ -377,6 +393,8 @@ ActiveRecord::Schema.define(version: 20141010081505) do
     t.datetime "updated_at"
     t.decimal  "current_principal",     precision: 10, scale: 0, default: 0
   end
+
+  add_index "invests", ["asset_id"], name: "index_invests_on_asset_id", using: :btree
 
   create_table "messages", force: true do |t|
     t.string   "title"
@@ -464,6 +482,14 @@ ActiveRecord::Schema.define(version: 20141010081505) do
     t.datetime "pic_updated_at"
   end
 
+  create_table "product_profits", force: true do |t|
+    t.integer  "product_id"
+    t.datetime "refund_time"
+    t.decimal  "refund_amount", precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "products", force: true do |t|
     t.string   "deposit_number"
     t.decimal  "total_amount",          precision: 12, scale: 2
@@ -525,32 +551,32 @@ ActiveRecord::Schema.define(version: 20141010081505) do
   create_table "sub_analyzers", force: true do |t|
     t.integer  "analyzer_id"
     t.string   "product_type"
-    t.decimal  "total_principal",        precision: 10, scale: 0, default: 0
-    t.decimal  "total_profit",           precision: 10, scale: 0, default: 0
-    t.decimal  "punishment_amount",      precision: 10, scale: 0, default: 0
-    t.decimal  "resell_amount",          precision: 10, scale: 0, default: 0
-    t.decimal  "buyin_amount",           precision: 10, scale: 0, default: 0
-    t.decimal  "total_invest_amount",    precision: 10, scale: 0, default: 0
-    t.decimal  "invest_freeze_amount",   precision: 10, scale: 0, default: 0
-    t.decimal  "order_freeze_amount",    precision: 10, scale: 0, default: 0
-    t.decimal  "resell_profit",          precision: 10, scale: 0, default: 0
-    t.decimal  "buyin_profit",           precision: 10, scale: 0, default: 0
-    t.decimal  "resell_discount_amount", precision: 10, scale: 0, default: 0
-    t.decimal  "buyin_discount_amount",  precision: 10, scale: 0, default: 0
-    t.decimal  "resell_fee",             precision: 10, scale: 0, default: 0
-    t.decimal  "remain_pricipal",        precision: 10, scale: 0, default: 0
-    t.decimal  "remain_profit",          precision: 10, scale: 0, default: 0
+    t.decimal  "total_principal",        precision: 12, scale: 2, default: 0.0
+    t.decimal  "total_profit",           precision: 12, scale: 2, default: 0.0
+    t.decimal  "punishment_amount",      precision: 12, scale: 2, default: 0.0
+    t.decimal  "resell_amount",          precision: 12, scale: 2, default: 0.0
+    t.decimal  "buyin_amount",           precision: 12, scale: 2, default: 0.0
+    t.decimal  "total_invest_amount",    precision: 12, scale: 2, default: 0.0
+    t.decimal  "invest_freeze_amount",   precision: 12, scale: 2, default: 0.0
+    t.decimal  "order_freeze_amount",    precision: 12, scale: 2, default: 0.0
+    t.decimal  "resell_profit",          precision: 12, scale: 2, default: 0.0
+    t.decimal  "buyin_profit",           precision: 12, scale: 2, default: 0.0
+    t.decimal  "resell_discount_amount", precision: 12, scale: 2, default: 0.0
+    t.decimal  "buyin_discount_amount",  precision: 12, scale: 2, default: 0.0
+    t.decimal  "resell_fee",             precision: 12, scale: 2, default: 0.0
+    t.decimal  "remain_pricipal",        precision: 12, scale: 2, default: 0.0
+    t.decimal  "remain_profit",          precision: 12, scale: 2, default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "transactions", force: true do |t|
     t.string   "trans_type"
-    t.decimal  "operation_amount", precision: 10, scale: 0
-    t.decimal  "account_before",   precision: 10, scale: 0
-    t.decimal  "account_after",    precision: 10, scale: 0
-    t.decimal  "frozen_before",    precision: 10, scale: 0
-    t.decimal  "frozen_after",     precision: 10, scale: 0
+    t.decimal  "operation_amount", precision: 12, scale: 2, default: 0.0
+    t.decimal  "account_before",   precision: 12, scale: 2, default: 0.0
+    t.decimal  "account_after",    precision: 12, scale: 2, default: 0.0
+    t.decimal  "frozen_before",    precision: 12, scale: 2, default: 0.0
+    t.decimal  "frozen_after",     precision: 12, scale: 2, default: 0.0
     t.integer  "user_info_id"
     t.string   "deposit_number"
     t.string   "product_type"

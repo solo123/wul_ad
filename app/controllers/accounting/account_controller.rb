@@ -123,8 +123,8 @@ module Accounting
       product = AccountProduct.find_by deposit_number: params[:op_resource_name]
       if product
          if product.has_profit?
-            product.pay_profits
-            return {:op_result => true, :op_result_code => 0}
+            profits = product.pay_profits
+            return {:op_result => true, :op_result_code => 0, :op_obj => profits}
          else
            return {:op_result => false, :op_result_code => 12}
          end

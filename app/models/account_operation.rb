@@ -56,8 +56,29 @@ class AccountOperation < ActiveRecord::Base
     product.save!
   end
 
-  def profit_invest
 
+  def fill_params(params)
+    self.op_result = params["op_result"]
+    self.op_amount = params["op_amount"]
+    self.op_asset_id = params["op_asset_id"]
+    self.op_result_code = params["op_result_code"]
+    self.op_result_value = params["op_result_value"]
+    self.uinfo_id2 = params["uinfo_id2"]
+    self.op_result_value2 = params["op_result_value2"]
+  end
+
+
+  def execute_update(objs)
+    if self.op_result
+      send(self.op_action + "_" + self.op_name, objs)
+    end
+  end
+
+
+  def profit_invest(objs)
+    # puts objs.to_s
+    profits = JSON.parse objs
+    Invest.update_profits(profits)
   end
 
   def join_invest

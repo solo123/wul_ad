@@ -12,6 +12,7 @@ class Transaction < ActiveRecord::Base
     trans.user_info_id = userid
     trans.product_type = product_type
     trans.save!
+    trans.create_notify
   end
 
   def modify_analyzer
@@ -22,6 +23,22 @@ class Transaction < ActiveRecord::Base
         add_analyzer_data("total_principal")
       else
     end
+  end
+
+
+  def create_notify
+    message = Message.new()
+    case self.trans_type
+      when "profit"
+        message.title = "利息到帐"
+        message.content = "产品#{self.deposit_number}在#{Time.now},产生#{self.operation_amount}元的利息, 已经到您的账户中."
+      when "principal"
+        message.title = "投资成功"
+        message.content = "您于#{Time.now}，在沃银网投资产品#{self.deposit_number},投资金额为#{self.operation_amount}元的操作成功."
+      else
+    end
+    message.user_info_id = self.user_info_id
+    message.save!
   end
 
   def add_analyzer_data(field)

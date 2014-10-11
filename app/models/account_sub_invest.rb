@@ -7,4 +7,15 @@ class AccountSubInvest < ActiveRecord::Base
     self.amount = join_value
     self.save!
   end
+
+  def process_profit(profits, rate)
+    profit = AccountInvestProfit.new
+    profit_amount = (rate * self.amount).round(2)
+    profit.refund_amount = profit_amount
+    profit.refund_time = Time.now
+    profit.account_sub_invest_id = self.id
+    #profit.save!
+    profits << profit
+    logger.info("the profit of #{self.loan_number} + with id#{self.id} is #{profit.refund_amount}")
+  end
 end
