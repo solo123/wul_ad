@@ -124,7 +124,7 @@ module Accounting
       if product
          if product.has_profit?
             profits = product.pay_profits
-            return {:op_result => true, :op_result_code => 0, :op_obj => profits}
+            return {:op_result => true, :op_result_code => 0, :op_obj => profits, :op_result_value => product.current_profit.round(2), :op_resource_name => product.deposit_number }
          else
            return {:op_result => false, :op_result_code => 12}
          end

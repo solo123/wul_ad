@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
   before_create :add_profit_date
   after_create :create_agreement
   has_many :invests
+  has_many :product_profits
   has_one :agreement
 
   def send_account
@@ -22,6 +23,12 @@ class Product < ActiveRecord::Base
     agree.save!
   end
 
+  def add_profit_record(profit_amount)
+    product_profit = ProductProfit.new(:refund_amount => profit_amount, :refund_time => Time.now, :product_id => self.id)
+    product_profit.save!
+  end
+
+
   def add_profit_date
     self.profit_date = self.join_date
     self.principal_date = self.join_date
@@ -29,7 +36,7 @@ class Product < ActiveRecord::Base
 
 
   def current_profit
-    if Time.now >= self.profit_date + self.each_repayment_period.days
+    if  self.has_profit?
       calculate_profit
     else
       0
@@ -65,7 +72,7 @@ class Product < ActiveRecord::Base
 
 
   def calculate_profit
-    self.fixed_invest_amount * self.annual_rate / 12 / 100
+    self.fixed_invest_amount * self.annual_rate * self.each_repayment_period / 365 / 12 / 100
   end
 
   def profit_status
@@ -88,11 +95,9 @@ class Product < ActiveRecord::Base
   end
 
   def current_stage
-
     if self.locked
       return "锁定中"
     end
-
     if self.expiring_date < Time.now.yesterday && self.stage!="已结束"
       "已到期"
     else
@@ -155,7 +160,12 @@ class Product < ActiveRecord::Base
   end
 
   def profit_action
-    "/products/#{self.product_type}/#{self.id}/payprofit"
+    if self.profit_operation == "付息"
+      "/products/#{self.product_type}/#{self.id}/payprofit"
+    else
+      "/products/#{self.product_type}/#{self.id}/payprofit"
+      # "#"
+    end
   end
 
   def principal_operation
@@ -167,15 +177,29 @@ class Product < ActiveRecord::Base
   end
 
   def profit_operation
-    if self.locked
+    if self.locked || !self.has_profit?
       "暂无"
     else
       "付息"
     end
-
   end
 
   def principal_action
     "/products/#{self.product_type}/#{self.id}/payprincipal"
   end
+
+  def has_profit?
+    self.last_profit_date + self.each_repayment_period.days < Time.now
+  end
+
+  def last_profit_date
+    profits = self.product_profits
+    if profits.size > 0
+      return profits.last.refund_time
+    else
+      return self.join_date
+    end
+  end
+
+
 end

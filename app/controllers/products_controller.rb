@@ -128,8 +128,8 @@ class ProductsController < ResourcesController
                                 :op_resource_name => dep.deposit_number)
       op.op_id_head = "FX"
       op.execute_transaction
-      # dep.locked = true
-      # dep.save!
+      dep.locked = true
+      dep.save!
       # dep.invests.each { |inv| inv.payprofit }
       # dep.profit_date = dep.profit_date + dep.each_repayment_period.days
       # dep.save!

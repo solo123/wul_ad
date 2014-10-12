@@ -21,22 +21,26 @@ class AccountProduct < ActiveRecord::Base
 
   end
 
+  def current_profit
+     self.fixed_invest_amount * self.each_repayment_period * self.annual_rate / 365 /100
+  end
+
   def pay_profits
     invests = self.account_sub_invests
     invest_profits = []
-    amount = self.fixed_invest_amount
+    # amount = self.fixed_invest_amount
     period_rate = self.each_repayment_period * self.annual_rate / 365 /100
-    period_number = (Date.today - self.last_profit_date).to_i / self.each_repayment_period
-    total_profit = amount * period_rate
-    product_profit = AccountProductProfit.new(:refund_amount => total_profit, :account_product_id => self.id, :refund_time => Time.now )
+    # period_number = (Date.today - self.last_profit_date).to_i / self.each_repayment_period
+    # total_profit = amount * period_rate
+    product_profit = AccountProductProfit.new(:refund_amount => self.current_profit, :account_product_id => self.id, :refund_time => Time.now )
     invests.each do |inv|
       inv.process_profit(invest_profits, period_rate)
     end
     jso = invest_profits.to_json(:only => [:refund_amount, :refund_time, :account_sub_invest_id])
 
-    #product_profit.save!
+    product_profit.save!
     logger.info("last profit date is  #{self.last_profit_date}")
-    logger.info("the profit list is #{invest_profits[0].refund_amount}")
+   # logger.info("the profit list is #{invest_profits[0].refund_amount}")
     logger.info("the total profit is #{jso.to_s}")
     return jso
   end

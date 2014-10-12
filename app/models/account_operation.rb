@@ -12,7 +12,8 @@ class AccountOperation < ActiveRecord::Base
            "charge" => "充值",
            "join" => "加入",
            "invest" => "投资",
-           "onsale" => "出让"
+           "onsale" => "出让",
+           "profit" => "付息"
   }
   $error_code = ["无", "记录已存在", "保存失败", "帐号不存在", "产品不存在", "账户余额不足", "个人额度不足", "产品余额不足", "系统内部错误", "资产已经在售",
   "资产不存在", "产品非转让状态", "无利息需支付"]
@@ -65,6 +66,7 @@ class AccountOperation < ActiveRecord::Base
     self.op_result_value = params["op_result_value"]
     self.uinfo_id2 = params["uinfo_id2"]
     self.op_result_value2 = params["op_result_value2"]
+    self.op_resource_name = params["op_resource_name"]
   end
 
 
@@ -78,7 +80,12 @@ class AccountOperation < ActiveRecord::Base
   def profit_invest(objs)
     # puts objs.to_s
     profits = JSON.parse objs
+    product = Product.find_by deposit_number: self.op_resource_name
+    product.add_profit_record(self.op_result_value)
+    # inv = Invest.find_by asset_id: p["account_sub_invest_id"]
     Invest.update_profits(profits)
+    product.locked = false
+    product.save!
   end
 
   def join_invest
