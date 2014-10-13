@@ -9,7 +9,7 @@ class Product < ActiveRecord::Base
   def send_account
     record = self.to_json(:only => [:deposit_number, :total_amount, :annual_rate, :repayment_period, :each_repayment_amount, :free_invest_amount,
                                     :fixed_invest_amount, :join_date, :expiring_date, :premature_redemption, :fee, :product_type, :stage, :profit_date,
-                                    :principal_date, :status, :min_limit, :max_limit, :each_repayment_period, :join_date])
+                                    :principal_date, :status, :min_limit, :max_limit, :each_repayment_period, :join_date, :repayment_method])
     operation = AccountOperation.new(:op_name => "product", :op_action => "create", :op_obj => record, :op_id_head => "CP", :op_resource_name => self.
         deposit_number, :op_resource_id => self.id)
     operation.execute_transaction
@@ -36,8 +36,12 @@ class Product < ActiveRecord::Base
 
 
   def current_profit
-    if  self.has_profit?
-      calculate_profit
+    if ["收益中", "待清算"].include?(self.stage)
+      if self.has_profit?
+        calculate_profit
+      else
+        0
+      end
     else
       0
     end
@@ -75,31 +79,37 @@ class Product < ActiveRecord::Base
     self.fixed_invest_amount * self.annual_rate * self.each_repayment_period / 365 / 12 / 100
   end
 
-  def profit_status
-    if self.locked
-      return "锁定中"
-    end
-    if current_profit > 0
-      "待付息"
-    else
-      "无利息"
-    end
-  end
+  # def profit_status
+  #   if self.locked
+  #     return "锁定中"
+  #   end
+  #   if current_profit > 0
+  #     "待付息"
+  #   else
+  #     "无利息"
+  #   end
+  # end
 
-  def principle_status
-    if current_principal > 0
-      "待返本"
-    else
-      "无返本"
-    end
-  end
+  # def principle_status
+  #   if current_principal > 0
+  #     "待返本"
+  #   else
+  #     "无返本"
+  #   end
+  # end
 
   def current_stage
+
+    if ["未发布", "入库中", "已入库", "融资中"].include?(self.stage)
+      return self.stage
+    end
+
     if self.locked
       return "锁定中"
     end
-    if self.expiring_date < Time.now.yesterday && self.stage!="已结束"
-      "已到期"
+
+    if self.last_period?
+      "待清算"
     else
       self.stage
     end
@@ -117,8 +127,8 @@ class Product < ActiveRecord::Base
         "结束"
       when "收益中"
         "查看"
-      when "已到期"
-        "结款"
+      when "待清算"
+        "查看"
       when "已结束"
         "查看"
       when "锁定中"
@@ -138,8 +148,8 @@ class Product < ActiveRecord::Base
         "/products/#{self.product_type}/#{self.id}/finish"
       when "收益中"
         "/products/#{self.product_type}/#{self.id}"
-      when "已到期"
-        "/products/#{self.product_type}/#{self.id}/refund"
+      when "待清算"
+        "/products/#{self.product_type}/#{self.id}"
       when "已结束"
         "/products/#{self.product_type}/#{self.id}"
       when "锁定中"
@@ -163,21 +173,23 @@ class Product < ActiveRecord::Base
     if self.profit_operation == "付息"
       "/products/#{self.product_type}/#{self.id}/payprofit"
     else
-      "/products/#{self.product_type}/#{self.id}/payprofit"
-      # "#"
+      # "/products/#{self.product_type}/#{self.id}/payprofit"
+      "#"
     end
   end
 
   def principal_operation
-    if self.locked
-      "暂无"
-    else
-      "付本"
+    if self.locked || !["收益中", "待清算"].include?(self.current_stage)
+      return "暂无"
     end
+    if self.repayment_method == "profit" && !self.last_period?
+      return "暂无"
+    end
+    return "付本"
   end
 
   def profit_operation
-    if self.locked || !self.has_profit?
+    if self.locked || !self.has_profit? || self.current_stage != "收益中"
       "暂无"
     else
       "付息"
@@ -185,11 +197,21 @@ class Product < ActiveRecord::Base
   end
 
   def principal_action
-    "/products/#{self.product_type}/#{self.id}/payprincipal"
+
+    if self.principal_operation == "付本"
+      "/products/#{self.product_type}/#{self.id}/payprincipal"
+    else
+      "#"
+    end
+
   end
 
   def has_profit?
     self.last_profit_date + self.each_repayment_period.days < Time.now
+  end
+
+  def last_period?
+    self.join_date + (self.each_repayment_period * self.repayment_period).days < Date.today
   end
 
   def last_profit_date

@@ -88,6 +88,18 @@ class AccountOperation < ActiveRecord::Base
     product.save!
   end
 
+  def principal_invest(objs)
+    # puts objs.to_s
+    profits = JSON.parse objs
+    product = Product.find_by deposit_number: self.op_resource_name
+    product.add_profit_record(self.op_result_value)
+    # inv = Invest.find_by asset_id: p["account_sub_invest_id"]
+    Invest.update_profits(profits)
+    product.locked = false
+    product.save!
+  end
+
+
   def join_invest
 
   end

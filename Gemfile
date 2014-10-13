@@ -5,7 +5,7 @@ gem 'rails', '4.0.3'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
-# gem 'mysql2'
+gem 'mysql2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -44,7 +44,7 @@ group :development, :test do
 end
 
 gem 'devise'
-# gem 'therubyracer'
+gem 'therubyracer'
 gem 'ransack'
 gem 'simple_form', :git => 'git://github.com/plataformatec/simple_form.git'
 gem 'will_paginate', '~> 3.0'

@@ -95,29 +95,6 @@ module Accounting
     end
 
 
-    # invest = Invest.find(params[:invest_id])
-    # buyer_balance = current_user.user_info.account.balance
-    # if buyer_balance >= invest.resell_price
-    #   current_user.user_info.account.balance -= invest.resell_price
-    #   current_user.save!
-    #   Transaction.createTransaction("buy", invest.resell_price, buyer_balance + invest.resell_price, buyer_balance, current_user.user_info.id, invest.product.deposit_number, invest.invest_type)
-    #   invest.user_info.account.balance += invest.resell_price
-    #   invest.user_info.save!
-    #   Transaction.createTransaction("sell", invest.resell_price, seller_balance, seller_balance + invest.resell_price, invest.user_info.id, invest.product.deposit_number,invest.invest_type)
-    #   # invest.resell_price = 0
-    #   # invest.discount_rate = 0
-    #   invest.onsale = false
-    #   current_user.user_info.invests << invest
-    #   invest.save!
-    # else
-    #   flash[:notice] = "账户余额不足"
-    # end
-
-
-
-
-
-
 
     def profit_invest(params)
       product = AccountProduct.find_by deposit_number: params[:op_resource_name]
@@ -134,6 +111,17 @@ module Accounting
     end
 
     def principal_invest(params)
+      product = AccountProduct.find_by deposit_number: params[:op_resource_name]
+      if product
+        if product.has_principal?
+          principals = product.pay_principals
+          return {:op_result => true, :op_result_code => 0, :op_obj => principals, :op_result_value => product.current_principal.round(2), :op_resource_name => product.deposit_number }
+        else
+          return {:op_result => false, :op_result_code => 12}
+        end
+      else
+        return {:op_result => false, :op_result_code => 4}
+      end
 
     end
 

@@ -139,11 +139,24 @@ class ProductsController < ResourcesController
 
   def payprincipal
     dep = Product.find(params[:id])
-    if dep.current_principal > 0
-      dep.invests.each { |inv| inv.pay_principal }
-      dep.principal_date = dep.principal_date + dep.each_repayment_period.days
-      dep.save!
-    end
+
+    if !dep.locked
+      op = AccountOperation.new(:op_name => "invest", :op_action => "principal", :operator => "system",
+                                :op_resource_name => dep.deposit_number)
+      op.op_id_head = "FB"
+      op.execute_transaction
+      dep.locked = true
+      # dep.save!
+
+
+
+
+
+    # if dep.current_principal > 0
+    #   dep.invests.each { |inv| inv.pay_principal }
+    #   dep.principal_date = dep.principal_date + dep.each_repayment_period.days
+    #   dep.save!
+     end
     redirect_to settle_products_path(dep.product_type)
   end
 
