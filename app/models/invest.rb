@@ -43,11 +43,27 @@ class Invest < ActiveRecord::Base
      end
    end
 
+
+  def Invest.update_principals(principals)
+    principals.each do |p|
+      #puts p["account_sub_invest_id"]
+      inv = Invest.find_by asset_id: p["account_sub_invest_id"]
+      inv.update_principal(p)
+    end
+  end
+
    def update_profit(profit)
        amount = profit["refund_amount"].to_f
        new_profit = InvestProfit.new(:refund_amount => amount, :refund_time => Time.now, :invest_id => self.id)
        self.user_info.account.add_balance(amount, "profit", self.loan_number, self.invest_type)
        new_profit.save!
    end
+
+  def update_principal(profit)
+    amount = profit["refund_amount"].to_f
+    new_principal = InvestPrincipal.new(:refund_amount => amount, :refund_time => Time.now, :invest_id => self.id)
+    self.user_info.account.add_balance(amount, "principal", self.loan_number, self.invest_type)
+    new_principal.save!
+  end
 
 end

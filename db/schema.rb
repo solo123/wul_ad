@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141013065053) do
+ActiveRecord::Schema.define(version: 20141013084843) do
 
   create_table "account_accounts", force: true do |t|
     t.integer  "user_id"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(version: 20141013065053) do
     t.decimal  "frozen_balance",  precision: 10, scale: 0, default: 0
     t.decimal  "total_estate",    precision: 10, scale: 0, default: 0
     t.integer  "uinfo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "account_invest_principals", force: true do |t|
+    t.integer  "account_sub_invest_id"
+    t.datetime "refund_time"
+    t.decimal  "refund_amount",         precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -364,6 +372,14 @@ ActiveRecord::Schema.define(version: 20141013065053) do
     t.datetime "updated_at"
   end
 
+  create_table "invest_principals", force: true do |t|
+    t.integer  "invest_id"
+    t.datetime "refund_time"
+    t.decimal  "refund_amount", precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invest_profits", force: true do |t|
     t.integer  "invest_id"
     t.datetime "refund_time"
@@ -489,6 +505,14 @@ ActiveRecord::Schema.define(version: 20141013065053) do
     t.string   "pic_content_type"
     t.integer  "pic_file_size"
     t.datetime "pic_updated_at"
+  end
+
+  create_table "product_principals", force: true do |t|
+    t.integer  "product_id"
+    t.datetime "refund_time"
+    t.decimal  "refund_amount", precision: 10, scale: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "product_profits", force: true do |t|

@@ -7,6 +7,7 @@ class AccountAccount < ActiveRecord::Base
   end
 
   def add_balance(amount, operation, obj)
+     logger.info("the principal of #{amount} is added to account, and now is #{self.balance}")
     self.balance += amount
     self.save!
   end

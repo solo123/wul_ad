@@ -33,8 +33,8 @@ class Transaction < ActiveRecord::Base
         message.title = "利息到帐"
         message.content = "产品#{self.deposit_number}在#{Time.now},产生#{self.operation_amount}元的利息, 已经到您的账户中."
       when "principal"
-        message.title = "投资成功"
-        message.content = "您于#{Time.now}，在沃银网投资产品#{self.deposit_number},投资金额为#{self.operation_amount}元的操作成功."
+        message.title = "本金回款"
+        message.content = "产品#{self.deposit_number}在#{Time.now},本金#{self.operation_amount}元回款, 已经到您的账户中."
       else
     end
     message.user_info_id = self.user_info_id

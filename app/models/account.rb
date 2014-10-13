@@ -1,7 +1,7 @@
 class Account < ActiveRecord::Base
   belongs_to :user_info
   def add_balance(amount, operation, obj, inv_type)
-    puts "amount of #{amount} add to account#{self.user_info.mobile}, current_balance is #{self.balance}"
+    puts "amount of #{amount} add to account#{self.user_info.mobile}, current_balance is #{self.balance}, operation is #{operation}"
 
     Transaction.createTransaction(operation, amount, self.balance, balance + amount, self.user_info.id, obj, inv_type)
     self.balance += amount

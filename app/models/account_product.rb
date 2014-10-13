@@ -83,6 +83,15 @@ class AccountProduct < ActiveRecord::Base
 
 
   def pay_principals
+    invests = self.account_sub_invests
+    principals = []
+    product_principal = AccountProductPrincipal.new(:refund_amount => self.current_principal, :account_product_id => self.id, :refund_time => Time.now)
+    invests.each do |inv|
+      inv.process_principal(principals, self.repayment_period)
+    end
+    jso = principals.to_json(:only => [:refund_amount, :refund_time, :account_sub_invest_id])
+    logger.info("the total principal is #{jso.to_s}")
+    return jso
   end
 
 end

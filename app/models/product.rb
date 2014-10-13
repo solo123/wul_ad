@@ -4,6 +4,7 @@ class Product < ActiveRecord::Base
   after_create :create_agreement
   has_many :invests
   has_many :product_profits
+  has_many :product_principals
   has_one :agreement
 
   def send_account
@@ -26,6 +27,11 @@ class Product < ActiveRecord::Base
   def add_profit_record(profit_amount)
     product_profit = ProductProfit.new(:refund_amount => profit_amount, :refund_time => Time.now, :product_id => self.id)
     product_profit.save!
+  end
+
+  def add_principal_record(prin_amount)
+    product_principal = ProductPrincipal.new(:refund_amount => prin_amount, :refund_time => Time.now, :product_id => self.id)
+    product_principal.save!
   end
 
 
