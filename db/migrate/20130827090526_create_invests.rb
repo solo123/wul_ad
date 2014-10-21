@@ -8,8 +8,8 @@ class CreateInvests < ActiveRecord::Migration
 			t.string :usage
 			t.text :usage_detail
 			t.string :credit_level
-			t.decimal :annual_rate, precision: 5, scale: 2
-			t.decimal :amount, precision: 12, scale: 2
+			t.decimal :annual_rate, precision: 5, scale: 2, default:0
+			t.decimal :amount, precision: 12, scale: 2, default: 0
 			t.integer :repayment_period
 			t.string :repayment_method
 			t.decimal :each_repayment_amount, precision: 12, scale: 2
@@ -27,8 +27,11 @@ class CreateInvests < ActiveRecord::Migration
       t.datetime :principle_date
       t.integer :product_id
       t.string :stage, :default => "normal"
+      t.decimal :current_principal, precision: 12, scale: 2, default: 0
+      t.string :owner_name, default: ""
 
       t.timestamps
     end
+    add_index :invests, :asset_id, :unique => true
   end
 end

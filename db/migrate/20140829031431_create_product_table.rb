@@ -33,6 +33,7 @@ class CreateProductTable < ActiveRecord::Migration
       t.integer :min_limit, :default => 1000
       t.integer :max_limit, :default => 100000
       t.integer :each_repayment_period, :default => 30
+      t.boolean :locked, :default => false
 
       t.timestamps
     end

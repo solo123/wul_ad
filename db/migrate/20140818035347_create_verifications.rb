@@ -14,6 +14,7 @@ class CreateVerifications < ActiveRecord::Migration
       t.boolean :phone_confirm_status, :default => false
       t.string :realname
       t.string :email_code
+      t.string :passwd
 
       t.timestamps
     end
