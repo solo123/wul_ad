@@ -81,9 +81,8 @@ class AccountOperation < ActiveRecord::Base
     # puts objs.to_s
     profits = JSON.parse objs
     product = Product.find_by deposit_number: self.op_resource_name
-    product.add_profit_record(self.op_result_value)
-    # inv = Invest.find_by asset_id: p["account_sub_invest_id"]
-    Invest.update_profits(profits)
+    # product.add_profit_record(self.op_result_value)
+    # Invest.update_profits(profits)
     product.locked = false
     product.save!
   end
@@ -92,21 +91,12 @@ class AccountOperation < ActiveRecord::Base
     # puts objs.to_s
     principals = JSON.parse objs
     product = Product.find_by deposit_number: self.op_resource_name
-    product.add_principal_record(self.op_result_value)
-    # inv = Invest.find_by asset_id: p["account_sub_invest_id"]
-    Invest.update_principals(principals)
+    # product.add_principal_record(self.op_result_value)
+    # Invest.update_principals(principals)
     product.locked = false
     product.save!
   end
 
-
-  def join_invest
-
-  end
-
-  def onsale_invest
-
-  end
 
 
   def op_name_cn

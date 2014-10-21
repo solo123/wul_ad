@@ -5,6 +5,7 @@ class AccountSubInvest < ActiveRecord::Base
     self.loan_number = product.deposit_number
     self.account_product_id = product.id
     self.amount = join_value
+    # self.remain_principal = self.amount
     self.save!
   end
 
