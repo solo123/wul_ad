@@ -3,7 +3,7 @@ worker_processes 2
 # Since Unicorn is never exposed to outside clients, it does not need to
 
 # "current" directory that Capistrano sets up.
-APP_PATH = "/home/wooul/admin.wooul.com"
+APP_PATH = "/home/mycloud/wul_admin"
 DEPLOY_PATH = "/home/wooul/wooul.com"
 working_directory APP_PATH + "/current" # available in 0.94.0+
 
