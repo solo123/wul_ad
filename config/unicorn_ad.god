@@ -1,8 +1,8 @@
-#RAILS_ENV  = ENV['RAILS_ENV']  = 'production'
-#RAILS_ROOT = ENV['RAILS_ROOT'] = '/home/www/wul_ad'
-#PID_DIR    = '/home/www/wul_ad/tmp/pids'
-#BIN_PATH   = "/usr/local/rvm/rubies/ruby-2.1.1/bin"
-#UID = 'root'
+RAILS_ENV  = ENV['RAILS_ENV']  = 'production'
+ADMIN_ROOT = ENV['RAILS_ROOT'] = '/home/mycloud/wul_admin/current'
+ADMIN_PID_DIR    = '/home/mycloud/wul_admin/shared/tmp/pids'
+BIN_PATH   = "/home/mycloud/.rvm/rubies/ruby-2.1.1/bin"
+UID = 'mycloud'
 #GID = 'root'
 
 God.watch do |w|
@@ -10,7 +10,7 @@ God.watch do |w|
   w.name     = "unicorn_admin"
   w.interval = 30.seconds
   w.group = "admin"
-  w.start   = "cd #{ADMIN_ROOT} && unicorn_rails -c #{ADMIN_ROOT}/config/unicorn.rb -E #{RAILS_ENV} -D"
+  w.start   = "cd #{ADMIN_ROOT} && unicorn -c #{ADMIN_ROOT}/config/unicorn.rb -E #{RAILS_ENV} -D"
   w.stop    = "kill -QUIT `cat #{ADMIN_PID_DIR}/unicorn.pid`"
   w.restart = "kill -USR2 `cat #{ADMIN_PID_DIR}/unicorn.pid`"
 
