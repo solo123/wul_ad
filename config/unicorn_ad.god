@@ -1,8 +1,8 @@
-RAILS_ENV  = ENV['RAILS_ENV']  = 'production'
-ADMIN_ROOT = ENV['RAILS_ROOT'] = '/home/mycloud/wul_admin/current'
-ADMIN_PID_DIR    = '/home/mycloud/wul_admin/shared/tmp/pids'
-BIN_PATH   = "/home/mycloud/.rvm/rubies/ruby-2.1.1/bin"
-UID = 'mycloud'
+#RAILS_ENV  = ENV['RAILS_ENV']  = 'production'
+#ADMIN_ROOT = ENV['RAILS_ROOT'] = '/home/mycloud/wul_admin/current'
+#ADMIN_PID_DIR    = '/home/mycloud/wul_admin/shared/tmp/pids'
+#BIN_PATH   = "/home/mycloud/.rvm/rubies/ruby-2.1.1/bin"
+#UID = 'mycloud'
 #GID = 'root'
 
 God.watch do |w|

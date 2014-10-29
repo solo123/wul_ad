@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141013084843) do
+ActiveRecord::Schema.define(version: 20141029034800) do
 
   create_table "account_invest_principals", force: true do |t|
     t.integer  "account_sub_invest_id"
@@ -358,6 +358,7 @@ ActiveRecord::Schema.define(version: 20141013084843) do
     t.integer  "status",          default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "importance",      default: 0
   end
 
   create_table "notices", force: true do |t|
