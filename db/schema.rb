@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141029034800) do
+ActiveRecord::Schema.define(version: 20141030024128) do
 
   create_table "account_invest_principals", force: true do |t|
     t.integer  "account_sub_invest_id"
@@ -343,6 +343,7 @@ ActiveRecord::Schema.define(version: 20141029034800) do
     t.string   "owner_name",                                     default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "invest_number"
   end
 
   add_index "invests", ["asset_id"], name: "index_invests_on_asset_id", unique: true, using: :btree
