@@ -81,8 +81,8 @@ class AccountOperation < ActiveRecord::Base
     # puts objs.to_s
     profits = JSON.parse objs
     product = Product.find_by deposit_number: self.op_resource_name
-    # product.add_profit_record(self.op_result_value)
-    # Invest.update_profits(profits)
+    product.add_profit_record(self.op_result_value)
+    Invest.update_profits(profits)
     product.locked = false
     product.save!
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141030024128) do
+ActiveRecord::Schema.define(version: 20141105082907) do
 
   create_table "account_invest_principals", force: true do |t|
     t.integer  "account_sub_invest_id"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20141030024128) do
     t.boolean  "op_result",                                 default: false
     t.integer  "op_result_code",                            default: 0
     t.integer  "integer",                                   default: 0
-    t.decimal  "op_amount",        precision: 10, scale: 0
+    t.decimal  "op_amount",        precision: 12, scale: 2, default: 0.0
     t.integer  "op_asset_id"
     t.decimal  "op_result_value",  precision: 10, scale: 0
     t.integer  "user_info_id"
@@ -332,7 +332,7 @@ ActiveRecord::Schema.define(version: 20141030024128) do
     t.integer  "status",                                         default: 0
     t.string   "invest_type",                                    default: "fixed"
     t.boolean  "onsale",                                         default: false
-    t.decimal  "discount_rate",         precision: 10, scale: 0, default: 0
+    t.decimal  "discount_rate",         precision: 12, scale: 1, default: 0.0
     t.integer  "asset_id"
     t.decimal  "resell_price",          precision: 10, scale: 0
     t.datetime "profit_date"
