@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113081932) do
+ActiveRecord::Schema.define(version: 20141114084145) do
 
   create_table "account_invest_principals", force: true do |t|
     t.integer  "account_sub_invest_id"
@@ -619,6 +619,12 @@ ActiveRecord::Schema.define(version: 20141113081932) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "passwordstatus",       default: "confirming"
+    t.integer  "safe_question_id",     default: 0
+    t.string   "safe_question_answer", default: ""
+    t.string   "verify_secret",        default: ""
+    t.boolean  "email_change",         default: false
+    t.boolean  "mobile_change",        default: false
+    t.boolean  "question_change",      default: false
   end
 
 end
