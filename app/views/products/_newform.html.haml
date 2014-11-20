@@ -19,7 +19,8 @@
     = f.input :join_date, as: :datepicker, label:"开始时间"
     = f.input :expiring_date, as: :datepicker, label:"结束时间"
     = f.input :premature_redemption, collection: @resell_method, label: "可否转让"
-    = f.input :fee, label:"转让费率"
+    = f.input :description, label: "首页说明"
+    = f.input :fee, label: "转让费率"
 
   .actions
     = f.submit '保存', class: 'btn btn-primary'
