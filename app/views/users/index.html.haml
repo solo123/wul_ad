@@ -8,6 +8,7 @@
       %th 手机
       %th 真实姓名
       %th 账户余额
+      %th 注册时间
       %th
       %th
       %th
@@ -22,6 +23,8 @@
           王潜行
         %td
           = user.user_info.account.balance
+        %td
+          = user.created_at
         %td= link_to '详细', user_path(user)
         %td= link_to '编辑', edit_user_path(user)
         %td= link_to '删除', user, :method => :delete, :data => { :confirm => '确认删除?' }
