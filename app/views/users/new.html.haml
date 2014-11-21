@@ -1,0 +1,14 @@
+%h4
+  创建新用户
+%hr
+= link_to '返回列表', users_path
+= simple_form_for(:user, :url => users_path) do |f|
+  = f.error_notification
+  .inputs
+    = f.input :username, label:"用户名"
+    = f.input :email,label:"注册邮箱"
+    = f.input :mobile, label:"注册手机"
+    = f.input :password, label:"用户密码"
+
+  .actions
+    = f.submit '保存', class: 'btn btn-primary'

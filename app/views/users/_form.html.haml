@@ -1,0 +1,9 @@
+= simple_form_for(@object) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :username, label:"用户名"
+    = f.input :email, label:"邮箱"
+    = f.input :mobile, label:"手机"
+  .actions
+    = f.button :submit

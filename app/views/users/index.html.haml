@@ -1,0 +1,31 @@
+= link_to '手工创建用户', new_user_path
+= will_paginate @collection
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 用户名
+      %th 邮箱
+      %th 手机
+      %th 真实姓名
+      %th 账户余额
+      %th
+      %th
+      %th
+
+  %tbody
+    - @collection.each do |user|
+      %tr
+        %td= user.username
+        %td= user.email
+        %td= user.mobile
+        %td
+          王潜行
+        %td
+          = user.user_info.account.balance
+        %td= link_to '详细', user_path(user)
+        %td= link_to '编辑', edit_user_path(user)
+        %td= link_to '删除', user, :method => :delete, :data => { :confirm => '确认删除?' }
+
+
+
+
