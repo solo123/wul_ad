@@ -84,6 +84,9 @@ class AccountOperation < ActiveRecord::Base
     product.add_profit_record(self.op_result_value)
     Invest.update_profits(profits)
     product.locked = false
+    if product.last_period? && product.current_profit == 0
+      product.profit_cleared = true
+    end
     product.save!
   end
 
@@ -91,9 +94,12 @@ class AccountOperation < ActiveRecord::Base
     # puts objs.to_s
     principals = JSON.parse objs
     product = Product.find_by deposit_number: self.op_resource_name
-    # product.add_principal_record(self.op_result_value)
-    # Invest.update_principals(principals)
+    product.add_principal_record(self.op_result_value)
+    Invest.update_principals(principals)
     product.locked = false
+    if product.repayment_method == "profit" && product.last_period?
+      product.principal_cleared = true
+    end
     product.save!
   end
 

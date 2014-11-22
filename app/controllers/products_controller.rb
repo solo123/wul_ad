@@ -107,6 +107,14 @@ class ProductsController < ResourcesController
     redirect_to settle_products_path(dep.product_type)
   end
 
+  def clear
+    dep = Product.find(params[:id])
+    dep.stage = "已结束"
+    dep.save!
+    redirect_to settle_products_path(dep.product_type)
+  end
+
+
   def refund
     dep = Product.find(params[:id])
     invests = dep.invests
@@ -146,7 +154,7 @@ class ProductsController < ResourcesController
       op.op_id_head = "FB"
       op.execute_transaction
       dep.locked = true
-      # dep.save!
+      dep.save!
 
 
 

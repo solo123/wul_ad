@@ -31,10 +31,11 @@ class Transaction < ActiveRecord::Base
     case self.trans_type
       when "profit"
         message.title = "利息到帐"
-        message.content = "产品#{self.deposit_number}在#{Time.now},产生#{self.operation_amount}元的利息, 已经到您的账户中."
+        message.content = "您在产品#{self.deposit_number}的投资于#{Time.now.strftime("%Y-%m-%d %H:%M:%S")},产生#{self.operation_amount}元的利息, 已经到您的账户中."
+
       when "principal"
         message.title = "本金回款"
-        message.content = "产品#{self.deposit_number}在#{Time.now},本金#{self.operation_amount}元回款, 已经到您的账户中."
+        message.content = "您投资在产品#{self.deposit_number}的本金, 于#{Time.now.strftime("%Y-%m-%d %H:%M:%S")},回款#{self.operation_amount}元, 已经到您的账户中."
       else
     end
     message.user_info_id = self.user_info_id

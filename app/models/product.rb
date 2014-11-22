@@ -54,16 +54,14 @@ class Product < ActiveRecord::Base
   end
 
   def current_principal
-
-    if self.repayment_method == "profit" && self.expiring_date < Time.now.yesterday && self.stage!="已结束"
-      return self.fixed_invest_amount
+    if ["收益中", "待清算"].include?(self.stage)
+      if self.has_principal?
+        calculate_principal
+      else
+        0
+      end
     end
-
-    if Time.now >= self.principal_date + self.each_repayment_period.days && self.repayment_method == "profit_principal"
-      self.fixed_invest_amount / self.repayment_period
-    else
-      0
-    end
+    return 0
   end
 
 
@@ -79,6 +77,15 @@ class Product < ActiveRecord::Base
   #     end
   #   end
   # end
+
+
+  def calculate_principal
+    if self.repayment_method == "profit" && self.last_period?
+       self.fixed_invest_amount
+    else
+      0
+    end
+  end
 
 
   def calculate_profit
@@ -106,7 +113,7 @@ class Product < ActiveRecord::Base
 
   def current_stage
 
-    if ["未发布", "入库中", "已入库", "融资中"].include?(self.stage)
+    if ["未发布", "入库中", "已入库", "融资中","已结束"].include?(self.stage)
       return self.stage
     end
 
@@ -134,7 +141,11 @@ class Product < ActiveRecord::Base
       when "收益中"
         "查看"
       when "待清算"
+        if self.profit_cleared && self.principal_cleared
+        "结束"
+        else
         "查看"
+        end
       when "已结束"
         "查看"
       when "锁定中"
@@ -155,7 +166,11 @@ class Product < ActiveRecord::Base
       when "收益中"
         "/products/#{self.product_type}/#{self.id}"
       when "待清算"
-        "/products/#{self.product_type}/#{self.id}"
+        if self.profit_cleared && self.principal_cleared
+          "/products/#{self.product_type}/#{self.id}/clear"
+        else
+          "/products/#{self.product_type}/#{self.id}"
+        end
       when "已结束"
         "/products/#{self.product_type}/#{self.id}"
       when "锁定中"
@@ -185,9 +200,14 @@ class Product < ActiveRecord::Base
   end
 
   def principal_operation
+
+    if self.principal_cleared
+      return "结毕"
+    end
     if self.locked || !["收益中", "待清算"].include?(self.current_stage)
       return "暂无"
     end
+
     if self.repayment_method == "profit" && !self.last_period?
       return "暂无"
     end
@@ -195,11 +215,19 @@ class Product < ActiveRecord::Base
   end
 
   def profit_operation
-    if self.locked || !self.has_profit? || self.current_stage != "收益中"
-      "暂无"
-    else
-      "付息"
+    if self.principal_cleared
+      return "结毕"
     end
+
+    if self.locked || !self.has_profit? || !["收益中", "待清算"].include?(self.current_stage)
+      "暂无"
+    end
+
+    if self.profit_cleared
+      return "结毕"
+    end
+
+    return "付息"
   end
 
   def principal_action
@@ -215,6 +243,23 @@ class Product < ActiveRecord::Base
   def has_profit?
     self.last_profit_date + self.each_repayment_period.days < Time.now
   end
+
+  def has_principal?
+    if self.principal_cleared
+      return false
+    end
+
+    if self.stage == "结毕"
+      return false
+    end
+
+    if self.repayment_method == "profit" && self.last_period?
+      return true
+    end
+
+    return false
+  end
+
 
   def last_period?
     self.join_date + (self.each_repayment_period * self.repayment_period).days < Date.today
