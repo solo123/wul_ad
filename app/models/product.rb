@@ -56,12 +56,13 @@ class Product < ActiveRecord::Base
   def current_principal
     if ["收益中", "待清算"].include?(self.stage)
       if self.has_principal?
-        calculate_principal
+       return calculate_principal
       else
-        0
+       return 0
       end
+    else
+      return 0
     end
-    return 0
   end
 
 
@@ -81,7 +82,7 @@ class Product < ActiveRecord::Base
 
   def calculate_principal
     if self.repayment_method == "profit" && self.last_period?
-       self.fixed_invest_amount
+      self.fixed_invest_amount
     else
       0
     end
@@ -113,7 +114,7 @@ class Product < ActiveRecord::Base
 
   def current_stage
 
-    if ["未发布", "入库中", "已入库", "融资中","已结束"].include?(self.stage)
+    if ["未发布", "入库中", "已入库", "融资中", "已结束"].include?(self.stage)
       return self.stage
     end
 
@@ -142,9 +143,9 @@ class Product < ActiveRecord::Base
         "查看"
       when "待清算"
         if self.profit_cleared && self.principal_cleared
-        "结束"
+          "结束"
         else
-        "查看"
+          "查看"
         end
       when "已结束"
         "查看"
@@ -220,7 +221,7 @@ class Product < ActiveRecord::Base
     end
 
     if self.locked || !self.has_profit? || !["收益中", "待清算"].include?(self.current_stage)
-      "暂无"
+     return "暂无"
     end
 
     if self.profit_cleared
