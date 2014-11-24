@@ -16,6 +16,17 @@ class Product < ActiveRecord::Base
     operation.execute_transaction
   end
 
+
+  def cal_pp_amount
+   if self.repayment_method == "profit_principal"
+     period_rate = self.annual_rate / 365 /100 * self.each_repayment_period
+     self.fixed_pp_amount =  (self.fixed_invest_amount * period_rate * (1 + period_rate) ** self.repayment_period) / (((1 + period_rate) ** self.repayment_period) - 1)
+     self.remain_principal = self.fixed_invest_amount
+     self.period_rate = period_rate
+   end
+  end
+
+
   def create_agreement
     agree = Agreement.new
     agree.persona = "王潜行"
@@ -65,52 +76,28 @@ class Product < ActiveRecord::Base
     end
   end
 
-
-  # def update_stage
-  #   if self.stage == "入库中"
-  #     op = AccountOperation.where(:op_resource_id => self.id, :op_name => "product", :op_action => "create").first
-  #     if op
-  #       logger.info("result is #{op.op_result},#{op.op_resource_name}")
-  #       if op.op_result
-  #          self.stage = "已入库"
-  #          self.save!
-  #        end
-  #     end
-  #   end
-  # end
-
-
   def calculate_principal
     if self.repayment_method == "profit" && self.last_period?
       self.fixed_invest_amount
+    elsif repayment_method == "profit_principal"
+      # period_rate = self.product.each_repayment_period * self.annual_rate / 365 /100
+      self.fixed_pp_amount - self.calculate_profit
+      # self.fixed_pp_amount
     else
       0
     end
   end
 
-
   def calculate_profit
-    self.fixed_invest_amount * self.annual_rate * self.each_repayment_period / 365 / 12 / 100
+    if self.repayment_method == "profit"
+      self.fixed_invest_amount * self.annual_rate * self.each_repayment_period / 365 / 12 / 100
+    elsif self.repayment_method == "profit_principal"
+      self.remain_principal * self.period_rate
+    else
+      0
+    end
   end
 
-  # def profit_status
-  #   if self.locked
-  #     return "锁定中"
-  #   end
-  #   if current_profit > 0
-  #     "待付息"
-  #   else
-  #     "无利息"
-  #   end
-  # end
-
-  # def principle_status
-  #   if current_principal > 0
-  #     "待返本"
-  #   else
-  #     "无返本"
-  #   end
-  # end
 
   def current_stage
 
@@ -258,6 +245,10 @@ class Product < ActiveRecord::Base
       return true
     end
 
+    if self.repayment_method == "profit_principal" && self.has_profit?
+      return true
+    end
+
     return false
   end
 
@@ -275,5 +266,9 @@ class Product < ActiveRecord::Base
     end
   end
 
+
+  def update_current_principal(principal)
+    self.remain_principal -= principal
+  end
 
 end

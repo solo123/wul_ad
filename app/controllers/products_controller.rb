@@ -103,6 +103,7 @@ class ProductsController < ResourcesController
   def finish
     dep = Product.find(params[:id])
     dep.stage = "收益中"
+    dep.cal_pp_amount
     dep.save!
     redirect_to settle_products_path(dep.product_type)
   end

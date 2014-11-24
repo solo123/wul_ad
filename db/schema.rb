@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141122051906) do
+ActiveRecord::Schema.define(version: 20141124091427) do
 
   create_table "account_invest_principals", force: true do |t|
     t.integer  "account_sub_invest_id"
@@ -489,6 +489,9 @@ ActiveRecord::Schema.define(version: 20141122051906) do
     t.string   "description",                                    default: ""
     t.boolean  "principal_cleared",                              default: false
     t.boolean  "profit_cleared",                                 default: false
+    t.decimal  "fixed_pp_amount",       precision: 14, scale: 2, default: 0.0
+    t.decimal  "period_rate",           precision: 14, scale: 2, default: 0.0
+    t.decimal  "remain_principal",      precision: 14, scale: 2, default: 0.0
   end
 
   create_table "roles", force: true do |t|

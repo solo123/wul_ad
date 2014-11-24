@@ -95,9 +95,10 @@ class AccountOperation < ActiveRecord::Base
     principals = JSON.parse objs
     product = Product.find_by deposit_number: self.op_resource_name
     product.add_principal_record(self.op_result_value)
+    product.update_current_principal(self.op_result_value)
     Invest.update_principals(principals)
     product.locked = false
-    if product.repayment_method == "profit" && product.last_period?
+    if product.last_period?
       product.principal_cleared = true
     end
     product.save!
