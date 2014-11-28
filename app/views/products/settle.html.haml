@@ -8,18 +8,20 @@
     %tr
       %th 编号
       %th 总额
-      %th 年收益率
-      %th 收益期限(月)
+      %th 年化率
+      %th 收益期(月)
       -#%th 已预约金额
       %th 加入日
-      %th 已入账金额
+      %th 投资金额
       %th 到期日
-      %th 买家数量
-      %th 应付利息
-      %th 应付本金
+      %th 买家数
+      %th 利期数
+      %th 本期数
+      %th 应付息
+      %th 应付本
       %th 状态
       -#%th 本息返还
-      %th 操作 利息 本金
+      %th 操作 支付本息
       %th 显示
 
   %tbody
@@ -32,8 +34,11 @@
         -#%td= deposit.order_amount
         %td= deposit.join_date
         %td= deposit.fixed_invest_amount
+        -#%td= deposit.remain_principal
         %td= deposit.expiring_date
         %td= deposit.owner_num
+        %td= deposit.current_profit_period
+        %td= deposit.current_principal_period
         %td= number_with_precision deposit.current_profit, precision: 2
         %td= number_with_precision deposit.current_principal, precision: 2
         %td= deposit.current_stage
@@ -42,8 +47,8 @@
         -#  = deposit.principle_status
         %td
           = link_to deposit.current_operation, deposit.current_action
-          = link_to deposit.profit_operation, deposit.profit_action
-          = link_to deposit.principal_operation, deposit.principal_action
+          = link_to deposit.pay_operation, deposit.pay_action
+          -#= link_to deposit.principal_operation, deposit.principal_action
         %td= link_to deposit.display_status, deposit.display_action
 
 

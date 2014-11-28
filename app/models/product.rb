@@ -35,13 +35,15 @@ class Product < ActiveRecord::Base
     agree.save!
   end
 
-  def add_profit_record(profit_amount)
+  def add_profit_record(profit_amount, profit_number)
     product_profit = ProductProfit.new(:refund_amount => profit_amount, :refund_time => Time.now, :product_id => self.id)
+    product_profit.profit_number = profit_number
     product_profit.save!
   end
 
-  def add_principal_record(prin_amount)
+  def add_principal_record(prin_amount, prin_number)
     product_principal = ProductPrincipal.new(:refund_amount => prin_amount, :refund_time => Time.now, :product_id => self.id)
+    product_principal.principal_number = prin_number
     product_principal.save!
   end
 
@@ -74,10 +76,11 @@ class Product < ActiveRecord::Base
     else
       return 0
     end
+    return 0
   end
 
   def calculate_principal
-    if self.repayment_method == "profit" && self.last_period?
+    if self.repayment_method == "profit" && self.last_profit_period?
       self.fixed_invest_amount
     elsif repayment_method == "profit_principal"
       # period_rate = self.product.each_repayment_period * self.annual_rate / 365 /100
@@ -90,7 +93,7 @@ class Product < ActiveRecord::Base
 
   def calculate_profit
     if self.repayment_method == "profit"
-      self.fixed_invest_amount * self.annual_rate * self.each_repayment_period / 365 / 12 / 100
+      self.fixed_invest_amount * self.annual_rate * self.each_repayment_period / 365 / 100
     elsif self.repayment_method == "profit_principal"
       self.remain_principal * self.period_rate
     else
@@ -109,11 +112,18 @@ class Product < ActiveRecord::Base
       return "锁定中"
     end
 
-    if self.last_period?
+    if self.over_time?
       "待清算"
     else
       self.stage
     end
+  end
+
+
+
+  def over_time?
+    end_date = self.join_date + (self.each_repayment_period * self.repayment_period).days
+    end_date < Date.today
   end
 
   def current_operation
@@ -187,49 +197,47 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def principal_operation
 
-    if self.principal_cleared
+  def pay_operation
+    if self.principal_cleared && self.profit_cleared
       return "结毕"
     end
+
     if self.locked || !["收益中", "待清算"].include?(self.current_stage)
       return "暂无"
     end
 
-    if self.repayment_method == "profit" && !self.last_period?
-      return "暂无"
+    if self.has_profit? || self.has_principal?
+      return "支付"
     end
-    return "付本"
+    return "暂无"
   end
 
-  def profit_operation
-    if self.principal_cleared
-      return "结毕"
+  def pay_action
+    if self.pay_operation == "支付"
+      "/products/#{self.product_type}/#{self.id}/payprincipal"
+    else
+      "#"
     end
-
-    if self.locked || !self.has_profit? || !["收益中", "待清算"].include?(self.current_stage)
-     return "暂无"
-    end
-
-    if self.profit_cleared
-      return "结毕"
-    end
-
-    return "付息"
   end
+
 
   def principal_action
-
     if self.principal_operation == "付本"
       "/products/#{self.product_type}/#{self.id}/payprincipal"
     else
       "#"
     end
-
   end
 
   def has_profit?
-    self.last_profit_date + self.each_repayment_period.days < Time.now
+    end_date =self.join_date + (self.each_repayment_period * self.repayment_period).days
+   (end_date < Date.today) && ( self.last_profit_date + self.each_repayment_period.days <= end_date)
+  end
+
+  def principal_left?
+    end_date =self.join_date + (self.each_repayment_period * self.repayment_period).days
+    (end_date < Date.today) && ( self.last_principal_date + self.each_repayment_period.days <= end_date)
   end
 
   def has_principal?
@@ -241,11 +249,11 @@ class Product < ActiveRecord::Base
       return false
     end
 
-    if self.repayment_method == "profit" && self.last_period?
-      return true
+    if self.repayment_method == "profit"
+      return self.current_profit_period == self.repayment_period
     end
 
-    if self.repayment_method == "profit_principal" && self.has_profit?
+    if self.repayment_method == "profit_principal" && self.principal_left?
       return true
     end
 
@@ -253,17 +261,34 @@ class Product < ActiveRecord::Base
   end
 
 
-  def last_period?
-    self.join_date + (self.each_repayment_period * self.repayment_period).days < Date.today
+  def last_principal_period?
+    end_date = self.join_date + (self.each_repayment_period * self.repayment_period).days
+    self.last_principal_date + self.each_repayment_period.days >= end_date
   end
 
+  def last_profit_period?
+    end_date = self.join_date + (self.each_repayment_period * self.repayment_period).days
+    self.last_profit_date + self.each_repayment_period.days >= end_date
+  end
+  #
+  # def last_profit_date
+  #   profits = self.product_profits
+  #   if profits.size > 0
+  #     return profits.last.refund_time
+  #   else
+  #     return self.join_date
+  #   end
+  # end
+
   def last_profit_date
-    profits = self.product_profits
-    if profits.size > 0
-      return profits.last.refund_time
-    else
-      return self.join_date
-    end
+    t = self.current_profit_period * self.each_repayment_period
+    time = self.join_date + t.days
+  end
+
+
+  def last_principal_date
+    t = self.current_principal_period * self.each_repayment_period
+    time = self.join_date + t.days
   end
 
 

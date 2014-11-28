@@ -1,6 +1,7 @@
 class Invest < ActiveRecord::Base
   belongs_to :user_info
   belongs_to :product
+  has_many :invest_profits
 
   def refund
     refund_amount = self.amount
@@ -35,33 +36,33 @@ class Invest < ActiveRecord::Base
     self.save!
   end
 
-   def Invest.update_profits(profits)
+   def Invest.update_profits(profits, profit_number)
      profits.each do |p|
-       #puts p["account_sub_invest_id"]
        inv = Invest.find_by asset_id: p["account_sub_invest_id"]
-       inv.update_profit(p)
+       inv.update_profit(p, profit_number)
      end
    end
 
 
-  def Invest.update_principals(principals)
+  def Invest.update_principals(principals, prin_number)
     principals.each do |p|
-      #puts p["account_sub_invest_id"]
       inv = Invest.find_by asset_id: p["account_sub_invest_id"]
-      inv.update_principal(p)
+      inv.update_principal(p, prin_number)
     end
   end
 
-   def update_profit(profit)
+   def update_profit(profit, profit_number)
        amount = profit["refund_amount"].to_f
        new_profit = InvestProfit.new(:refund_amount => amount, :refund_time => Time.now, :invest_id => self.id)
+       new_profit.profit_number = profit_number
        self.user_info.account.add_balance(amount, "profit", self.loan_number, self.invest_type)
        new_profit.save!
    end
 
-  def update_principal(profit)
+  def update_principal(profit, prin_number)
     amount = profit["refund_amount"].to_f
     new_principal = InvestPrincipal.new(:refund_amount => amount, :refund_time => Time.now, :invest_id => self.id)
+    new_principal.principal_number = prin_number
     self.user_info.account.add_balance(amount, "principal", self.loan_number, self.invest_type)
     new_principal.save!
   end

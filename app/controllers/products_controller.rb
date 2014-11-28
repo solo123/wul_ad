@@ -69,7 +69,7 @@ class ProductsController < ResourcesController
 
   def settle
     pages = 20
-    @collection = Product.where(:product_type => params[:product_type],:status => 0).paginate(:page => params[:page], :per_page => pages)
+    @collection = Product.where(:product_type => params[:product_type], :status => 0).order('created_at DESC').paginate(:page => params[:page], :per_page => pages)
     @product_type = params[:product_type]
   end
 
@@ -150,22 +150,24 @@ class ProductsController < ResourcesController
     dep = Product.find(params[:id])
 
     if !dep.locked
-      op = AccountOperation.new(:op_name => "invest", :op_action => "principal", :operator => "system",
-                                :op_resource_name => dep.deposit_number)
-      op.op_id_head = "FB"
-      op.execute_transaction
-      dep.locked = true
-      dep.save!
+      if dep.has_profit?
+        op = AccountOperation.new(:op_name => "invest", :op_action => "profit", :operator => "system",
+                                  :op_resource_name => dep.deposit_number)
+        op.op_id_head = "FX"
+        op.execute_transaction
+        dep.locked = true
+        dep.save!
+      end
 
-
-
-
-
-    # if dep.current_principal > 0
-    #   dep.invests.each { |inv| inv.pay_principal }
-    #   dep.principal_date = dep.principal_date + dep.each_repayment_period.days
-    #   dep.save!
-     end
+      if dep.has_principal?
+        op = AccountOperation.new(:op_name => "invest", :op_action => "principal", :operator => "system",
+                                  :op_resource_name => dep.deposit_number)
+        op.op_id_head = "FB"
+        op.execute_transaction
+        dep.locked = true
+        dep.save!
+      end
+    end
     redirect_to settle_products_path(dep.product_type)
   end
 

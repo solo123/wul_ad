@@ -16,7 +16,7 @@ class AccountOperation < ActiveRecord::Base
            "profit" => "付息"
   }
   $error_code = ["无", "记录已存在", "保存失败", "帐号不存在", "产品不存在", "账户余额不足", "个人额度不足", "产品余额不足", "系统内部错误", "资产已经在售",
-  "资产不存在", "产品非转让状态", "无利息需支付"]
+                 "资产不存在", "产品非转让状态", "无利息需支付"]
 
   def execute_transaction
     d = Time.now.to_i
@@ -67,6 +67,8 @@ class AccountOperation < ActiveRecord::Base
     self.uinfo_id2 = params["uinfo_id2"]
     self.op_result_value2 = params["op_result_value2"]
     self.op_resource_name = params["op_resource_name"]
+    self.op_profit_period = params["op_profit_period"]
+    self.op_principal_period = params["op_principal_period"]
   end
 
 
@@ -81,12 +83,15 @@ class AccountOperation < ActiveRecord::Base
     # puts objs.to_s
     profits = JSON.parse objs
     product = Product.find_by deposit_number: self.op_resource_name
-    product.add_profit_record(self.op_result_value)
-    Invest.update_profits(profits)
+    product.add_profit_record(self.op_result_value, self.op_profit_period)
+    Invest.update_profits(profits, self.op_profit_period)
     product.locked = false
-    if product.last_period? && product.current_profit == 0
+    product.current_profit_period = self.op_profit_period
+    if product.last_profit_period?
       product.profit_cleared = true
     end
+
+    # product.remain_principal  -= self.op_profit_period
     product.save!
   end
 
@@ -94,16 +99,18 @@ class AccountOperation < ActiveRecord::Base
     # puts objs.to_s
     principals = JSON.parse objs
     product = Product.find_by deposit_number: self.op_resource_name
-    product.add_principal_record(self.op_result_value)
+    product.add_principal_record(self.op_result_value, self.op_principal_period)
     product.update_current_principal(self.op_result_value)
-    Invest.update_principals(principals)
+    Invest.update_principals(principals, self.op_principal_period)
     product.locked = false
-    if product.last_period?
+    product.current_principal_period = self.op_principal_period
+    logger.info("the last principai_period is #{product.last_principal_period?}")
+    if product.last_principal_period?
       product.principal_cleared = true
     end
+
     product.save!
   end
-
 
 
   def op_name_cn
