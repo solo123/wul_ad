@@ -1,0 +1,31 @@
+= simple_form_for(@object) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :name, label: '姓名'
+    = f.input :age, label: '年龄'
+    = f.input :id_card_no, label: '身份证号'
+    = f.input :gender, label: '性别'
+    = f.input :marrige, label: '婚姻状况'
+    = f.input :city, label: '居住城市'
+    = f.input :work_city, label: '工作城市'
+    = f.input :work_start_date, as: :datepicker, label: '开始工作时间'
+    = f.input :industry, label: '从事行业'
+    = f.input :company_type, label: '单位性质'
+    = f.input :position, label: '职位'
+    = f.input :income, label: '月收入'
+    = f.input :real_estate, label: '有无房产'
+    = f.input :car, label: '有无车辆'
+    = f.input :total_history_amount, label: '总偿还金额'
+    = f.input :due_amount, label: '需偿还金额'
+    = f.input :over_time_amount, label: '逾期偿还金额'
+    = f.input :danger_amount, label: '严重逾期金额'
+    = f.input :total_history_times, label: '总偿还期数'
+    = f.input :due_times, label: '需偿还期数'
+    = f.input :over_time_times, label: '逾期偿还期数'
+    = f.input :danger_times, label: '严重逾期期数'
+  .actions
+    = f.button :submit, "提交"
+
+
+

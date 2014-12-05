@@ -1,0 +1,133 @@
+%p#notice= notice
+= link_to '返回列表', withdraw_requests_path
+
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 条目
+      %th 内容
+  %tbody
+    %tr
+      %td
+        = "他"
+      %td
+        = @object.name
+    %tr
+      %td
+        = "年龄"
+      %td
+        = @object.age
+    %tr
+      %td
+        = "身份证号"
+      %td
+        = @object.id_card_no
+    %tr
+      %td
+        = "性别"
+      %td
+        = @object.gender
+    %tr
+      %td
+        = "婚姻状况"
+      %td
+        = @object.marrige
+    %tr
+      %td
+        = "居住城市"
+      %td
+        = @object.city
+    %tr
+      %td
+        = "工作城市"
+      %td
+        = @object.work_city
+    %tr
+      %td
+        = "开始工作时间"
+      %td
+        = @object.work_start_date
+    %tr
+      %td
+        = "从事行业"
+      %td
+        = @object.industry
+    %tr
+      %td
+        = "单位性质"
+      %td
+        = @object.company_type
+
+    %tr
+      %td
+        = "职位"
+      %td
+        = @object.position
+    %tr
+      %td
+        = "月收入"
+      %td
+        = @object.income
+    %tr
+      %td
+        = "有无房产"
+      %td
+        = @object.real_estate
+    %tr
+      %td
+        = "有无车辆"
+      %td
+        = @object.car
+    %tr
+      %td
+        = "总偿还金额"
+      %td
+        = @object.total_history_amount
+    %tr
+      %td
+        = "需偿还金额"
+      %td
+        = @object.due_amount
+    %tr
+      %td
+        = "逾期偿还金额"
+      %td
+        = @object.over_time_amount
+    %tr
+      %td
+        = "严重逾期金额"
+      %td
+        = @object.danger_amount
+
+    %tr
+      %td
+        = "总偿还期数"
+      %td
+        = @object.total_history_times
+
+    %tr
+      %td
+        = "需偿还期数"
+      %td
+        = @object.due_times
+
+    %tr
+      %td
+        = "逾期偿还次数"
+      %td
+        = @object.over_time_times
+
+    %tr
+      %td
+        = "严重逾期次数"
+      %td
+        = @object.danger_times
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,36 @@
+
+%h4
+  = @product.product_name
+  = @product.deposit_number
+  投资列表
+=link_to '返回产品列表', settle_products_path(@product.product_type)
+= will_paginate @invests
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 编号
+      -#%th 已预约金额
+      %th 加入日
+      %th 投资金额
+      %th 利期数
+      %th 本期数
+      %th 投资帐号
+      -#%th 本息返还
+
+  %tbody
+    - @invests.each do |inv|
+      %tr
+        %td
+          = inv.invest_number
+        %td
+          = inv.created_at.strftime("%Y.%m.%d %H:%M")
+        %td
+          = inv.amount
+        %td
+          = 2
+        %td
+          = 2
+        %td
+          = inv.user_info.user.username
+
+

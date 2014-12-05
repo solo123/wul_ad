@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141127040727) do
+ActiveRecord::Schema.define(version: 20141204101129) do
 
   create_table "account_invest_principals", force: true do |t|
     t.integer  "account_sub_invest_id"
@@ -120,6 +120,8 @@ ActiveRecord::Schema.define(version: 20141127040727) do
     t.string   "cardid"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_info_id"
+    t.string   "real_name",    default: ""
   end
 
   create_table "cms_blocks", force: true do |t|
@@ -390,6 +392,66 @@ ActiveRecord::Schema.define(version: 20141127040727) do
     t.datetime "updated_at"
   end
 
+  create_table "person_infos", force: true do |t|
+    t.integer  "product_id"
+    t.string   "gender",               default: "男"
+    t.integer  "age",                  default: 35
+    t.string   "education",            default: "12"
+    t.string   "name",                 default: ""
+    t.string   "id_card_no",           default: ""
+    t.string   "marrige",              default: "已婚"
+    t.string   "children",             default: "有"
+    t.string   "city",                 default: "广东省深圳市"
+    t.string   "income",               default: "5000-8000"
+    t.string   "real_estate",          default: "无"
+    t.string   "car",                  default: "无"
+    t.string   "other_debit",          default: "无"
+    t.string   "work_city",            default: "广东省深圳市"
+    t.datetime "work_start_date"
+    t.string   "industry",             default: "房地产业"
+    t.string   "company_type",         default: "民营"
+    t.string   "position",             default: "客户经理"
+    t.integer  "total_history_amount", default: 0
+    t.integer  "due_amount",           default: 0
+    t.integer  "over_time_amount",     default: 0
+    t.integer  "danger_amount",        default: 0
+    t.integer  "total_history_times",  default: 0
+    t.integer  "due_times",            default: 0
+    t.integer  "over_time_times",      default: 0
+    t.integer  "danger_times",         default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "person_infos_tables", force: true do |t|
+    t.integer  "product_id"
+    t.string   "gender",               default: "男"
+    t.integer  "age",                  default: 35
+    t.string   "education",            default: "12"
+    t.string   "marrige",              default: "已婚"
+    t.string   "children",             default: "有"
+    t.string   "city",                 default: "广东省深圳市"
+    t.string   "income",               default: "5000-8000"
+    t.string   "real_estate",          default: "无"
+    t.string   "car",                  default: "无"
+    t.string   "other_debit",          default: "无"
+    t.string   "work_city",            default: "广东省深圳市"
+    t.datetime "work_start_date"
+    t.string   "industry",             default: "房地产业"
+    t.string   "company_type",         default: "民营"
+    t.string   "position",             default: "客户经理"
+    t.integer  "total_history_amount", default: 0
+    t.integer  "due_amount",           default: 0
+    t.integer  "over_time_amount",     default: 0
+    t.integer  "danger_amount",        default: 0
+    t.integer  "total_history_times",  default: 0
+    t.integer  "due_times",            default: 0
+    t.integer  "over_time_times",      default: 0
+    t.integer  "danger_times",         default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "personal_assets", force: true do |t|
     t.integer  "user_info_id"
     t.string   "house_property"
@@ -502,6 +564,7 @@ ActiveRecord::Schema.define(version: 20141127040727) do
     t.decimal  "remain_principal",         precision: 14, scale: 2, default: 0.0
     t.integer  "current_profit_period",                             default: 0
     t.integer  "current_principal_period",                          default: 0
+    t.integer  "person_info_id",                                    default: 0
   end
 
   create_table "roles", force: true do |t|
@@ -642,6 +705,29 @@ ActiveRecord::Schema.define(version: 20141127040727) do
     t.boolean  "email_change",         default: false
     t.boolean  "mobile_change",        default: false
     t.boolean  "question_change",      default: false
+  end
+
+  create_table "withdraw_requests", force: true do |t|
+    t.integer  "user_info_id"
+    t.string   "bank_name"
+    t.string   "bank_card_no"
+    t.integer  "bankcard_id"
+    t.string   "real_name"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "due_date"
+  end
+
+  create_table "withdraw_requests_tables", force: true do |t|
+    t.integer  "user_info_id"
+    t.string   "bank_name"
+    t.string   "bank_card_no"
+    t.integer  "bankcard_id"
+    t.string   "real_name"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

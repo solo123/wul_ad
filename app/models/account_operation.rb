@@ -13,21 +13,23 @@ class AccountOperation < ActiveRecord::Base
            "join" => "加入",
            "invest" => "投资",
            "onsale" => "出让",
-           "profit" => "付息"
+           "profit" => "付息",
+           "principal" => "付本"
   }
   $error_code = ["无", "记录已存在", "保存失败", "帐号不存在", "产品不存在", "账户余额不足", "个人额度不足", "产品余额不足", "系统内部错误", "资产已经在售",
                  "资产不存在", "产品非转让状态", "无利息需支付"]
 
   def execute_transaction
+    if !self.op_id_head
+      self.op_id_head = "WY"
+    end
     d = Time.now.to_i
     self.operation_id = self.op_id_head + d.to_s
     data = {:op_name => self.op_name, :op_amount => self.op_amount, :op_action => self.op_action, :operator => self.operator,
             :user_id => self.user_id, :operation_id => self.operation_id, :op_obj => self.op_obj, :op_resource_id => self.op_resource_id,
-            :op_obj => self.op_obj, :op_resource_name => self.op_resource_name, :api_key => "secret"
+             :op_resource_name => self.op_resource_name, :api_key => "secret", :uinfo_id => self.uinfo_id, :op_asset_id => self.op_asset_id
     }
-    # data = self.as_json
     self.save!
-    # self.perform($trans_url, data, self.id)
     AccountWorker.perform_async($trans_url, data, self.id)
   end
 
@@ -69,6 +71,15 @@ class AccountOperation < ActiveRecord::Base
     self.op_resource_name = params["op_resource_name"]
     self.op_profit_period = params["op_profit_period"]
     self.op_principal_period = params["op_principal_period"]
+  end
+
+
+  def onsale_invest
+    invest = Invest.find(self.op_resource_id)
+    invest.resell_price = self.op_result_value.to_f
+    # invest.discount_rate = self.op_amount
+    invest.onsale = true
+    invest.save!
   end
 
 

@@ -27,7 +27,8 @@
   %tbody
     - @collection.each do |deposit|
       %tr
-        %td= deposit.deposit_number
+        %td
+          = link_to deposit.deposit_number, list_invests_path(:product_id => deposit.id)
         %td= deposit.total_amount
         %td= deposit.annual_rate
         %td= deposit.repayment_period

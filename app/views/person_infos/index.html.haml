@@ -1,0 +1,33 @@
+%h4 借款人列表
+
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 代码
+      %th 性别
+      %th 年龄
+      %th 姓名
+      %th 职位
+      %th 所在城市
+      %th 房产抵押
+      %th 车辆抵押
+      %th 操作
+
+  - @persons.each do |person|
+    %tr
+      %td= person.id
+      %td= person.gender
+      %td= person.age
+      %td= person.name
+      %td= person.position
+      %td= person.city
+      %td= person.car
+      %td= person.real_estate
+      %td
+        = link_to '详细', person
+        = link_to '编辑', edit_person_info_path(person)
+        = link_to '删除', person, :method => :delete, :data => { :confirm => '确定删除?' }
+
+%br
+
+= link_to '添加借款人', new_person_info_path

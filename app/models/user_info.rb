@@ -1,4 +1,5 @@
 class UserInfo < ActiveRecord::Base
+  has_many :withdraw_requests
   has_many :invests
   has_many :transactions
   has_one :analyzer

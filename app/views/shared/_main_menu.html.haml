@@ -17,6 +17,7 @@
           %ul.dropdown-menu
             %li= link_to '月月盈', index_products_path("month")
             %li= link_to '定期宝', index_products_path("fixed")
+            %li= link_to '贷款人', person_infos_path
             %li= link_to '操作记录', account_operations_path
             %li= link_to '对账记录', account_records_path
         %li= link_to '用户管理', users_path
@@ -31,6 +32,8 @@
           %ul.dropdown-menu
             %li= link_to '月月盈', settle_products_path("month")
             %li= link_to '定期宝', settle_products_path("fixed")
+            %li= link_to '提现申请', withdraw_requests_path
+            %li= link_to '赎回申请', resale_invests_path
         %li= link_to 'Roles', roles_path
         - if current_employee && current_employee.roles && current_employee.roles.index('admin')
           %li= link_to 'Employees', employees_path

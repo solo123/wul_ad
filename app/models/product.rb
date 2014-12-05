@@ -6,6 +6,7 @@ class Product < ActiveRecord::Base
   has_many :product_profits
   has_many :product_principals
   has_one :agreement
+  belongs_to :person_info
 
   def send_account
     record = self.to_json(:only => [:deposit_number, :total_amount, :annual_rate, :repayment_period, :each_repayment_amount, :free_invest_amount,
@@ -233,6 +234,12 @@ class Product < ActiveRecord::Base
   def has_profit?
     end_date =self.join_date + (self.each_repayment_period * self.repayment_period).days
    (end_date < Date.today) && ( self.last_profit_date + self.each_repayment_period.days <= end_date)
+  end
+
+  def product_name
+    dict = {"fixed" => "定存宝",
+            "month" => "月月盈"}
+    dict[self.product_type]
   end
 
   def principal_left?

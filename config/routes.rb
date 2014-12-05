@@ -28,10 +28,9 @@ WooulAdmin::Application.routes.draw do
   end
 
 
-
-   resources :products do
+  resources :products do
     collection do
-      get '/settle/:product_type',  to: 'products#settle', as: :settle
+      get '/settle/:product_type', to: 'products#settle', as: :settle
       get '/:product_type/:id/publish', to: 'products#publish', as: :publish
       get '/:product_type/:id/exp_account', to: 'products#exp_account', as: :exp_account
       get '/:product_type/:id/switchdisplay', to: 'products#switchdisplay', as: :switchdisplay
@@ -51,15 +50,14 @@ WooulAdmin::Application.routes.draw do
       get :payprofit
       get :payprincipal
     end
-   end
+  end
 
 
   namespace :accounting do
     # get '/', to: 'console#index'
     # get '/console/overview'
-    post '/account/execute_cmd',{format: :json}
+    post '/account/execute_cmd', {format: :json}
   end
-
 
 
   resources :photos
@@ -70,6 +68,12 @@ WooulAdmin::Application.routes.draw do
 
   resources :user_companies
 
+  resources :withdraw_requests do
+    collection do
+      get '/confirm/:request_id', to: 'withdraw_requests#confirm', as: :confirm
+    end
+  end
+
   resources :personal_finances
 
   resources :personal_credits
@@ -79,14 +83,27 @@ WooulAdmin::Application.routes.draw do
   resources :roles
 
   devise_for :employees
-	root to: 'homes#index'
+  root to: 'homes#index'
 
-	resources :homes
-	resources :invests
-	resources :notices
+  resources :homes
+  resources :invests do
+    collection do
+      get 'list/:product_id', to: 'invests#list', as: :list
+      get 'userlist/:uinfo_id', to: 'invests#userlist', as: :userlist
+      get 'resale', to: 'invests#resale', as: :resale
+      get 'resale_confirm/:invest_id', to: 'invests#resale_confirm', as: :resale_confirm
+      get 'buy_back/:invest_id', to: 'invests#buy_back', as: :buy_back
+    end
+
+  end
+
+  resources :person_infos
+
+
+  resources :notices
   resources :account_records
   resources :account_operations
 
-	resources :users
-	resources :employees
+  resources :users
+  resources :employees
 end

@@ -1,4 +1,6 @@
-= link_to '返回列表', index_products_path(@product.product_type)
+%h4
+  产品详情
+= link_to '返回产品列表', index_products_path(@product.product_type)
 |
 = link_to '修改', edit_products_path(@product.product_type, @product.id)
 - dict = {"profit" => "只付利息",
@@ -74,6 +76,11 @@
         = "转让费率"
       %td
         = @product.fee
-
+    %tr
+      %td
+        = "借款人"
+      %td
+        -if @product.person_info
+          = @product.person_info.name
 
 

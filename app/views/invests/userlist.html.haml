@@ -1,0 +1,35 @@
+
+%h4
+  客户投资列表
+=link_to '返回客户详情', user_path(@uid)
+= will_paginate @invests
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th 编号
+      -#%th 已预约金额
+      %th 加入日
+      %th 投资金额
+      %th 利期数
+      %th 本期数
+      %th 产品信息
+      -#%th 本息返还
+
+  %tbody
+    - @invests.each do |inv|
+      %tr
+        %td
+          = inv.invest_number
+        %td
+          = inv.created_at
+        %td
+          = inv.amount
+        %td
+          = 2
+        %td
+          = 2
+        %td
+          = link_to inv.product.deposit_number, show_products_path(inv.product.product_type, inv.product.id)
+
+
+
