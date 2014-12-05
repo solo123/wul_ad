@@ -1,6 +1,5 @@
 class CreatePersonInfos < ActiveRecord::Migration
   def change
-    drop_table :person_infos
     create_table :person_infos do |t|
       t.integer :product_id
       t.string :gender, default: '男'
